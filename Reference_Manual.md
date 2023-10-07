@@ -1164,15 +1164,15 @@ A sample global serializer that integrates with a third party serializer is show
 ```c++
 class MyGlobalSerializer : public hazelcast::client::serialization::global_serializer {
 public:
-    void write(const boost::any &obj, hazelcast::client::serialization::object_data_output &out) override {
-        auto const &object = boost::any_cast<Person>(obj);
+    void write(const std::any &obj, hazelcast::client::serialization::object_data_output &out) override {
+        auto const &object = std::any_cast<Person>(obj);
         out.write(object.name);
         out.write(object.male);
         out.write(object.age);
     }
 
-    boost::any read(hazelcast::client::serialization::object_data_input &in) override {
-        return boost::any(Person{in.read<std::string>(), in.read<bool>(), in.read<int32_t>()});
+    std::any read(hazelcast::client::serialization::object_data_input &in) override {
+        return std::any(Person{in.read<std::string>(), in.read<bool>(), in.read<int32_t>()});
     }
 };
 ```
@@ -1187,7 +1187,7 @@ config.get_serialization_config().set_global_serializer(std::make_shared<MyGloba
 auto hz = hazelcast::new_client(std::move(config)).get();
 ```
 
-You need to utilize the `boost::any_cast` methods tyo actually use the objects provided for serialization and you are expected to return type `boost::any` from the `read` method. 
+You need to utilize the `std::any_cast` methods tyo actually use the objects provided for serialization and you are expected to return type `std::any` from the `read` method. 
 
 # 5. Setting Up Client Network
 

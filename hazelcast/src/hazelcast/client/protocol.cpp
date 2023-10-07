@@ -851,7 +851,7 @@ sql_page_codec::decode(ClientMessage& msg,
 
     auto column_type_ids = msg.get<std::vector<int32_t>>();
 
-    using column = std::vector<boost::any>;
+    using column = std::vector<std::any>;
 
     using namespace sql;
 
@@ -873,7 +873,7 @@ sql_page_codec::decode(ClientMessage& msg,
     page->construct_rows();
     return page;
 }
-std::vector<boost::any>
+std::vector<std::any>
 sql_page_codec::decode_column_values(ClientMessage& msg,
                                      sql::sql_column_type column_type)
 {
@@ -927,7 +927,7 @@ sql_page_codec::decode_column_values(ClientMessage& msg,
 
             auto size = msg.get<int32_t>();
             return
-              std::vector<boost::any>(static_cast<size_t>(size));
+              std::vector<std::any>(static_cast<size_t>(size));
         }
         case sql::sql_column_type::object:
             return to_vector_of_any(

@@ -18,7 +18,7 @@
 
 #include <unordered_set>
 
-#include <boost/any.hpp>
+#include <any>
 #include <boost/algorithm/string.hpp>
 #include <boost/property_tree/ptree.hpp>
 
@@ -1041,7 +1041,7 @@ private:
     friend bool HAZELCAST_API operator!=(const generic_record&,
                                          const generic_record&);
 
-    generic_record(std::shared_ptr<pimpl::schema>, std::unordered_map<std::string, boost::any>);
+    generic_record(std::shared_ptr<pimpl::schema>, std::unordered_map<std::string, std::any>);
 
     const pimpl::schema& get_schema() const;
     friend boost::property_tree::ptree write_generic_record(
@@ -1092,14 +1092,14 @@ private:
     const T& get(const std::string& field_name, field_kind kind) const
     {
         check(field_name, kind);
-        return boost::any_cast<const T&>(objects_.at(field_name));
+        return std::any_cast<const T&>(objects_.at(field_name));
     }
 
     template<typename T>
     T& get(const std::string& field_name, field_kind kind)
     {
         check(field_name, kind);
-        return boost::any_cast<T&>(objects_.at(field_name));
+        return std::any_cast<T&>(objects_.at(field_name));
     }
 
     template<typename T>
@@ -1112,7 +1112,7 @@ private:
           check(field_name, primitive_field_kind, nullable_field_kind);
 
         if (kind == nullable_field_kind) {
-            const auto& val_opt = boost::any_cast<const std::optional<T>&>(
+            const auto& val_opt = std::any_cast<const std::optional<T>&>(
               objects_.at(field_name));
 
             if (!val_opt) {
@@ -1126,7 +1126,7 @@ private:
             return *val_opt;
         }
 
-        return boost::any_cast<const T&>(objects_.at(field_name));
+        return std::any_cast<const T&>(objects_.at(field_name));
     }
 
     template<typename T>
@@ -1162,18 +1162,18 @@ private:
             auto primitive_array_itr = adopteds_.find(field_name);
 
             if (primitive_array_itr != end(adopteds_)) {
-                return boost::any_cast<const optional_primitive_array_t&>(
+                return std::any_cast<const optional_primitive_array_t&>(
                   primitive_array_itr->second);
             }
 
             const auto& optional_nullable_array =
-              boost::any_cast<const optional_nullable_array_t&>(
+              std::any_cast<const optional_nullable_array_t&>(
                 objects_.at(field_name));
 
             if (!optional_nullable_array) {
                 (void)adopteds_.emplace(field_name,
                                         optional_primitive_array_t{});
-                return boost::any_cast<const optional_primitive_array_t&>(
+                return std::any_cast<const optional_primitive_array_t&>(
                   adopteds_.at(field_name));
             }
 
@@ -1195,11 +1195,11 @@ private:
             }
 
             (void)adopteds_.emplace(field_name, std::move(primitive_array));
-            return boost::any_cast<const optional_primitive_array_t&>(
+            return std::any_cast<const optional_primitive_array_t&>(
               adopteds_.at(field_name));
         }
 
-        return boost::any_cast<const optional_primitive_array_t&>(
+        return std::any_cast<const optional_primitive_array_t&>(
           objects_.at(field_name));
     }
 
@@ -1234,18 +1234,18 @@ private:
             auto primitive_array_itr = adopteds_.find(field_name);
 
             if (primitive_array_itr != end(adopteds_)) {
-                return boost::any_cast<const optional_nullable_array_t&>(
+                return std::any_cast<const optional_nullable_array_t&>(
                   primitive_array_itr->second);
             }
 
             const auto& optional_primitive_array =
-              boost::any_cast<const optional_primitive_array_t&>(
+              std::any_cast<const optional_primitive_array_t&>(
                 objects_.at(field_name));
 
             if (!optional_primitive_array) {
                 (void)adopteds_.emplace(field_name,
                                         optional_nullable_array_t{});
-                return boost::any_cast<const optional_nullable_array_t&>(
+                return std::any_cast<const optional_nullable_array_t&>(
                   adopteds_.at(field_name));
             }
 
@@ -1258,11 +1258,11 @@ private:
             }
 
             (void)adopteds_.emplace(field_name, std::move(array_of_nullable));
-            return boost::any_cast<const optional_nullable_array_t&>(
+            return std::any_cast<const optional_nullable_array_t&>(
               adopteds_.at(field_name));
         }
 
-        return boost::any_cast<const optional_nullable_array_t&>(
+        return std::any_cast<const optional_nullable_array_t&>(
           objects_.at(field_name));
     }
 
@@ -1279,7 +1279,7 @@ private:
     }
 
     std::shared_ptr<pimpl::schema> schema_;
-    std::unordered_map<std::string, boost::any> objects_;
+    std::unordered_map<std::string, std::any> objects_;
 
     /**
      * Exceptional case for C++
@@ -1289,7 +1289,7 @@ private:
      * for array is returned by reference, so if the adoption happens then
      * adopted objects must live somewhere, 'adopteds_' hosts those adoptions.
      */
-    mutable std::unordered_map<std::string, boost::any> adopteds_;
+    mutable std::unordered_map<std::string, std::any> adopteds_;
 };
 
 } // namespace generic_record

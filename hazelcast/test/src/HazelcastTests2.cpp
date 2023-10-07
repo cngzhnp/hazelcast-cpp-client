@@ -1163,16 +1163,16 @@ protected:
     class DummyGlobalSerializer : public serialization::global_serializer
     {
     public:
-        void write(const boost::any& object,
+        void write(const std::any& object,
                    serialization::object_data_output& out) override
         {
-            auto const& obj = boost::any_cast<NonSerializableObject>(object);
+            auto const& obj = std::any_cast<NonSerializableObject>(object);
             out.write<std::string>(obj.s);
         }
 
-        boost::any read(serialization::object_data_input& in) override
+        std::any read(serialization::object_data_input& in) override
         {
-            return boost::any(NonSerializableObject{ in.read<std::string>() });
+            return std::any(NonSerializableObject{ in.read<std::string>() });
         }
     };
 

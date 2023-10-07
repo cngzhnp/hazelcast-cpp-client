@@ -97,7 +97,7 @@ generic_record_builder::generic_record_builder(std::shared_ptr<pimpl::schema> re
 
 generic_record_builder::generic_record_builder(
   std::shared_ptr<pimpl::schema> record_schema,
-  std::unordered_map<std::string, boost::any> objects)
+  std::unordered_map<std::string, std::any> objects)
   : strategy_{ strategy::cloner }
   , already_built_{ false }
   , objects_{ std::move(objects) }
@@ -730,7 +730,7 @@ generic_record_builder::set_array_of_generic_record(
 
 generic_record::generic_record(
   std::shared_ptr<pimpl::schema> s,
-  std::unordered_map<std::string, boost::any> objects)
+  std::unordered_map<std::string, std::any> objects)
   : schema_{ std::move(s) }
   , objects_{ std::move(objects) }
 {
@@ -1431,7 +1431,7 @@ write_generic_record(const generic_record& record)
 {
     boost::property_tree::ptree node;
 
-    for (const std::pair<const std::string, boost::any>& p : record.objects_) {
+    for (const std::pair<const std::string, std::any>& p : record.objects_) {
         const std::string& field_name = p.first;
 
         field_kind kind = record.get_schema().get_field(field_name)->kind;
@@ -1458,226 +1458,226 @@ operator<<(std::ostream& os, const generic_record& record)
 bool
 operator==(const generic_record& x, const generic_record& y)
 {
-    static const std::function<bool(const boost::any&, const boost::any&)>
+    static const std::function<bool(const std::any&, const std::any&)>
       COMPARATORS[] = {
-          [](const boost::any&, const boost::any&) {
+          [](const std::any&, const std::any&) {
               return false;
           },                                             //[0] NOT_AVAILABLE
-          [](const boost::any& x, const boost::any& y) { //[1] BOOLEAN
-              return boost::any_cast<bool>(x) == boost::any_cast<bool>(y);
+          [](const std::any& x, const std::any& y) { //[1] BOOLEAN
+              return std::any_cast<bool>(x) == std::any_cast<bool>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[2] ARRAY_OF_BOOLEAN
-              return boost::any_cast<std::optional<std::vector<bool>>>(x) ==
-                     boost::any_cast<std::optional<std::vector<bool>>>(y);
+          [](const std::any& x, const std::any& y) { //[2] ARRAY_OF_BOOLEAN
+              return std::any_cast<std::optional<std::vector<bool>>>(x) ==
+                     std::any_cast<std::optional<std::vector<bool>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[3] INT8
-              return boost::any_cast<int8_t>(x) == boost::any_cast<int8_t>(y);
+          [](const std::any& x, const std::any& y) { //[3] INT8
+              return std::any_cast<int8_t>(x) == std::any_cast<int8_t>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[4] ARRAY_OF_INT8
-              return boost::any_cast<std::optional<std::vector<int8_t>>>(x) ==
-                     boost::any_cast<std::optional<std::vector<int8_t>>>(y);
+          [](const std::any& x, const std::any& y) { //[4] ARRAY_OF_INT8
+              return std::any_cast<std::optional<std::vector<int8_t>>>(x) ==
+                     std::any_cast<std::optional<std::vector<int8_t>>>(y);
           },
-          [](const boost::any&, const boost::any&) { return false; }, // [5]
-          [](const boost::any&, const boost::any&) { return false; }, // [6]
-          [](const boost::any& x, const boost::any& y) { //[7] INT16
-              return boost::any_cast<int16_t>(x) == boost::any_cast<int16_t>(y);
+          [](const std::any&, const std::any&) { return false; }, // [5]
+          [](const std::any&, const std::any&) { return false; }, // [6]
+          [](const std::any& x, const std::any& y) { //[7] INT16
+              return std::any_cast<int16_t>(x) == std::any_cast<int16_t>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[8] ARRAY_OF_INT16
-              return boost::any_cast<std::optional<std::vector<int16_t>>>(
+          [](const std::any& x, const std::any& y) { //[8] ARRAY_OF_INT16
+              return std::any_cast<std::optional<std::vector<int16_t>>>(
                        x) ==
-                     boost::any_cast<std::optional<std::vector<int16_t>>>(y);
+                     std::any_cast<std::optional<std::vector<int16_t>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[9] INT32
-              return boost::any_cast<int32_t>(x) == boost::any_cast<int32_t>(y);
+          [](const std::any& x, const std::any& y) { //[9] INT32
+              return std::any_cast<int32_t>(x) == std::any_cast<int32_t>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[10] ARRAY_OF_INT32
-              return boost::any_cast<std::optional<std::vector<int32_t>>>(
+          [](const std::any& x, const std::any& y) { //[10] ARRAY_OF_INT32
+              return std::any_cast<std::optional<std::vector<int32_t>>>(
                        x) ==
-                     boost::any_cast<std::optional<std::vector<int32_t>>>(y);
+                     std::any_cast<std::optional<std::vector<int32_t>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[11] INT64
-              return boost::any_cast<int64_t>(x) == boost::any_cast<int64_t>(y);
+          [](const std::any& x, const std::any& y) { //[11] INT64
+              return std::any_cast<int64_t>(x) == std::any_cast<int64_t>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[12] ARRAY_OF_INT64
-              return boost::any_cast<std::optional<std::vector<int64_t>>>(
+          [](const std::any& x, const std::any& y) { //[12] ARRAY_OF_INT64
+              return std::any_cast<std::optional<std::vector<int64_t>>>(
                        x) ==
-                     boost::any_cast<std::optional<std::vector<int64_t>>>(y);
+                     std::any_cast<std::optional<std::vector<int64_t>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[13] FLOAT32
-              return boost::any_cast<float>(x) == boost::any_cast<float>(y);
+          [](const std::any& x, const std::any& y) { //[13] FLOAT32
+              return std::any_cast<float>(x) == std::any_cast<float>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[14] ARRAY_OF_FLOAT32
-              return boost::any_cast<std::optional<std::vector<float>>>(x) ==
-                     boost::any_cast<std::optional<std::vector<float>>>(y);
+          [](const std::any& x, const std::any& y) { //[14] ARRAY_OF_FLOAT32
+              return std::any_cast<std::optional<std::vector<float>>>(x) ==
+                     std::any_cast<std::optional<std::vector<float>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[15] FLOAT64
-              return boost::any_cast<double>(x) == boost::any_cast<double>(y);
+          [](const std::any& x, const std::any& y) { //[15] FLOAT64
+              return std::any_cast<double>(x) == std::any_cast<double>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[16] ARRAY_OF_FLOAT64
-              return boost::any_cast<std::optional<std::vector<double>>>(x) ==
-                     boost::any_cast<std::optional<std::vector<double>>>(y);
+          [](const std::any& x, const std::any& y) { //[16] ARRAY_OF_FLOAT64
+              return std::any_cast<std::optional<std::vector<double>>>(x) ==
+                     std::any_cast<std::optional<std::vector<double>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[17] STRING
-              return boost::any_cast<std::optional<std::string>>(x) ==
-                     boost::any_cast<std::optional<std::string>>(y);
+          [](const std::any& x, const std::any& y) { //[17] STRING
+              return std::any_cast<std::optional<std::string>>(x) ==
+                     std::any_cast<std::optional<std::string>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[18] ARRAY_OF_STRING
-              return boost::any_cast<std::optional<
+          [](const std::any& x, const std::any& y) { //[18] ARRAY_OF_STRING
+              return std::any_cast<std::optional<
                        std::vector<std::optional<std::string>>>>(x) ==
-                     boost::any_cast<std::optional<
+                     std::any_cast<std::optional<
                        std::vector<std::optional<std::string>>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[19] DECIMAL
-              return boost::any_cast<std::optional<big_decimal>>(x) ==
-                     boost::any_cast<std::optional<big_decimal>>(y);
+          [](const std::any& x, const std::any& y) { //[19] DECIMAL
+              return std::any_cast<std::optional<big_decimal>>(x) ==
+                     std::any_cast<std::optional<big_decimal>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[20] ARRAY_OF_DECIMAL
-              return boost::any_cast<std::optional<
+          [](const std::any& x, const std::any& y) { //[20] ARRAY_OF_DECIMAL
+              return std::any_cast<std::optional<
                        std::vector<std::optional<big_decimal>>>>(x) ==
-                     boost::any_cast<std::optional<
+                     std::any_cast<std::optional<
                        std::vector<std::optional<big_decimal>>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[21] TIME
-              return boost::any_cast<std::optional<local_time>>(x) ==
-                     boost::any_cast<std::optional<local_time>>(y);
+          [](const std::any& x, const std::any& y) { //[21] TIME
+              return std::any_cast<std::optional<local_time>>(x) ==
+                     std::any_cast<std::optional<local_time>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[22] ARRAY_OF_TIME
-              return boost::any_cast<std::optional<
+          [](const std::any& x, const std::any& y) { //[22] ARRAY_OF_TIME
+              return std::any_cast<std::optional<
                        std::vector<std::optional<local_time>>>>(x) ==
-                     boost::any_cast<std::optional<
+                     std::any_cast<std::optional<
                        std::vector<std::optional<local_time>>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[23] DATE
-              return boost::any_cast<std::optional<local_date>>(x) ==
-                     boost::any_cast<std::optional<local_date>>(y);
+          [](const std::any& x, const std::any& y) { //[23] DATE
+              return std::any_cast<std::optional<local_date>>(x) ==
+                     std::any_cast<std::optional<local_date>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[24] ARRAY_OF_DATE
-              return boost::any_cast<std::optional<
+          [](const std::any& x, const std::any& y) { //[24] ARRAY_OF_DATE
+              return std::any_cast<std::optional<
                        std::vector<std::optional<local_date>>>>(x) ==
-                     boost::any_cast<std::optional<
+                     std::any_cast<std::optional<
                        std::vector<std::optional<local_date>>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[25] TIMESTAMP
-              return boost::any_cast<std::optional<local_date_time>>(x) ==
-                     boost::any_cast<std::optional<local_date_time>>(y);
+          [](const std::any& x, const std::any& y) { //[25] TIMESTAMP
+              return std::any_cast<std::optional<local_date_time>>(x) ==
+                     std::any_cast<std::optional<local_date_time>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[26] ARRAY_OF_TIMESTAMP
-              return boost::any_cast<std::optional<
+          [](const std::any& x,
+             const std::any& y) { //[26] ARRAY_OF_TIMESTAMP
+              return std::any_cast<std::optional<
                        std::vector<std::optional<local_date_time>>>>(x) ==
-                     boost::any_cast<std::optional<
+                     std::any_cast<std::optional<
                        std::vector<std::optional<local_date_time>>>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[27] TIMESTAMP_WITH_TIMEZONE
-              return boost::any_cast<std::optional<offset_date_time>>(x) ==
-                     boost::any_cast<std::optional<offset_date_time>>(y);
+          [](const std::any& x,
+             const std::any& y) { //[27] TIMESTAMP_WITH_TIMEZONE
+              return std::any_cast<std::optional<offset_date_time>>(x) ==
+                     std::any_cast<std::optional<offset_date_time>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[28] ARRAY_OF_TIMESTAMP_WITH_TIMEZON
-              return boost::any_cast<std::optional<
+          [](const std::any& x,
+             const std::any& y) { //[28] ARRAY_OF_TIMESTAMP_WITH_TIMEZON
+              return std::any_cast<std::optional<
                        std::vector<std::optional<offset_date_time>>>>(x) ==
-                     boost::any_cast<std::optional<
+                     std::any_cast<std::optional<
                        std::vector<std::optional<offset_date_time>>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[29] COMPACT
-              return boost::any_cast<std::optional<generic_record>>(x) ==
-                     boost::any_cast<std::optional<generic_record>>(y);
+          [](const std::any& x, const std::any& y) { //[29] COMPACT
+              return std::any_cast<std::optional<generic_record>>(x) ==
+                     std::any_cast<std::optional<generic_record>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[30] ARRAY_OF_COMPACT
-              return boost::any_cast<std::optional<
+          [](const std::any& x, const std::any& y) { //[30] ARRAY_OF_COMPACT
+              return std::any_cast<std::optional<
                        std::vector<std::optional<generic_record>>>>(x) ==
-                     boost::any_cast<std::optional<
+                     std::any_cast<std::optional<
                        std::vector<std::optional<generic_record>>>>(y);
           },
-          [](const boost::any& /*x*/, const boost::any& /*y*/) { return false; }, //[31]
-          [](const boost::any& /*x*/, const boost::any& /*y*/) { return false; }, //[32]
-          [](const boost::any& x, const boost::any& y) { //[33] NULLABLE_BOOLEAN
-              return boost::any_cast<std::optional<bool>>(x) ==
-                     boost::any_cast<std::optional<bool>>(y);
+          [](const std::any& /*x*/, const std::any& /*y*/) { return false; }, //[31]
+          [](const std::any& /*x*/, const std::any& /*y*/) { return false; }, //[32]
+          [](const std::any& x, const std::any& y) { //[33] NULLABLE_BOOLEAN
+              return std::any_cast<std::optional<bool>>(x) ==
+                     std::any_cast<std::optional<bool>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[34] ARRAY_OF_NULLABLE_BOOLEAN
-              return boost::any_cast<
+          [](const std::any& x,
+             const std::any& y) { //[34] ARRAY_OF_NULLABLE_BOOLEAN
+              return std::any_cast<
                        std::optional<std::vector<std::optional<bool>>>>(
                        x) ==
-                     boost::any_cast<
+                     std::any_cast<
                        std::optional<std::vector<std::optional<bool>>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[35] NULLABLE_INT8
-              return boost::any_cast<std::optional<int8_t>>(x) ==
-                     boost::any_cast<std::optional<int8_t>>(y);
+          [](const std::any& x, const std::any& y) { //[35] NULLABLE_INT8
+              return std::any_cast<std::optional<int8_t>>(x) ==
+                     std::any_cast<std::optional<int8_t>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[36] ARRAY_OF_NULLABLE_INT8
-              return boost::any_cast<
+          [](const std::any& x,
+             const std::any& y) { //[36] ARRAY_OF_NULLABLE_INT8
+              return std::any_cast<
                        std::optional<std::vector<std::optional<int8_t>>>>(
                        x) ==
-                     boost::any_cast<
+                     std::any_cast<
                        std::optional<std::vector<std::optional<int8_t>>>>(
                        y);
           },
-          [](const boost::any& x, const boost::any& y) { //[37] NULLABLE_INT16
-              return boost::any_cast<std::optional<int16_t>>(x) ==
-                     boost::any_cast<std::optional<int16_t>>(y);
+          [](const std::any& x, const std::any& y) { //[37] NULLABLE_INT16
+              return std::any_cast<std::optional<int16_t>>(x) ==
+                     std::any_cast<std::optional<int16_t>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[38] ARRAY_OF_NULLABLE_INT16
-              return boost::any_cast<
+          [](const std::any& x,
+             const std::any& y) { //[38] ARRAY_OF_NULLABLE_INT16
+              return std::any_cast<
                        std::optional<std::vector<std::optional<int16_t>>>>(
                        x) ==
-                     boost::any_cast<
+                     std::any_cast<
                        std::optional<std::vector<std::optional<int16_t>>>>(
                        y);
           },
-          [](const boost::any& x, const boost::any& y) { //[39] NULLABLE_INT32
-              return boost::any_cast<std::optional<int32_t>>(x) ==
-                     boost::any_cast<std::optional<int32_t>>(y);
+          [](const std::any& x, const std::any& y) { //[39] NULLABLE_INT32
+              return std::any_cast<std::optional<int32_t>>(x) ==
+                     std::any_cast<std::optional<int32_t>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[40] ARRAY_OF_NULLABLE_INT32
-              return boost::any_cast<
+          [](const std::any& x,
+             const std::any& y) { //[40] ARRAY_OF_NULLABLE_INT32
+              return std::any_cast<
                        std::optional<std::vector<std::optional<int32_t>>>>(
                        x) ==
-                     boost::any_cast<
+                     std::any_cast<
                        std::optional<std::vector<std::optional<int32_t>>>>(
                        y);
           },
-          [](const boost::any& x, const boost::any& y) { //[41] NULLABLE_INT64
-              return boost::any_cast<std::optional<int64_t>>(x) ==
-                     boost::any_cast<std::optional<int64_t>>(y);
+          [](const std::any& x, const std::any& y) { //[41] NULLABLE_INT64
+              return std::any_cast<std::optional<int64_t>>(x) ==
+                     std::any_cast<std::optional<int64_t>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[42] ARRAY_OF_NULLABLE_INT64
-              return boost::any_cast<
+          [](const std::any& x,
+             const std::any& y) { //[42] ARRAY_OF_NULLABLE_INT64
+              return std::any_cast<
                        std::optional<std::vector<std::optional<int64_t>>>>(
                        x) ==
-                     boost::any_cast<
+                     std::any_cast<
                        std::optional<std::vector<std::optional<int64_t>>>>(
                        y);
           },
-          [](const boost::any& x, const boost::any& y) { //[43] NULLABLE_FLOAT32
-              return boost::any_cast<std::optional<float>>(x) ==
-                     boost::any_cast<std::optional<float>>(y);
+          [](const std::any& x, const std::any& y) { //[43] NULLABLE_FLOAT32
+              return std::any_cast<std::optional<float>>(x) ==
+                     std::any_cast<std::optional<float>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[44] ARRAY_OF_NULLABLE_FLOAT32
-              return boost::any_cast<
+          [](const std::any& x,
+             const std::any& y) { //[44] ARRAY_OF_NULLABLE_FLOAT32
+              return std::any_cast<
                        std::optional<std::vector<std::optional<float>>>>(
                        x) ==
-                     boost::any_cast<
+                     std::any_cast<
                        std::optional<std::vector<std::optional<float>>>>(y);
           },
-          [](const boost::any& x, const boost::any& y) { //[45] NULLABLE_FLOAT64
-              return boost::any_cast<std::optional<double>>(x) ==
-                     boost::any_cast<std::optional<double>>(y);
+          [](const std::any& x, const std::any& y) { //[45] NULLABLE_FLOAT64
+              return std::any_cast<std::optional<double>>(x) ==
+                     std::any_cast<std::optional<double>>(y);
           },
-          [](const boost::any& x,
-             const boost::any& y) { //[46] ARRAY_OF_NULLABLE_FLOAT64
-              return boost::any_cast<
+          [](const std::any& x,
+             const std::any& y) { //[46] ARRAY_OF_NULLABLE_FLOAT64
+              return std::any_cast<
                        std::optional<std::vector<std::optional<double>>>>(
                        x) ==
-                     boost::any_cast<
+                     std::any_cast<
                        std::optional<std::vector<std::optional<double>>>>(
                        y);
           }
@@ -1689,10 +1689,10 @@ operator==(const generic_record& x, const generic_record& y)
     if (xs != ys)
         return false;
 
-    for (const std::pair<const std::string, boost::any>& xp : x.objects_) {
+    for (const std::pair<const std::string, std::any>& xp : x.objects_) {
         const std::string& field_name = xp.first;
-        const boost::any& value_of_x = xp.second;
-        const boost::any& value_of_y = y.objects_.at(field_name);
+        const std::any& value_of_x = xp.second;
+        const std::any& value_of_y = y.objects_.at(field_name);
 
         std::optional<pimpl::field_descriptor> kind_opt =
           xs.get_field(field_name);

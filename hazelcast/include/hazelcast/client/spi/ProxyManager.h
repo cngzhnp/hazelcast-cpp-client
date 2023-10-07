@@ -20,7 +20,7 @@
 #include <future>
 #include <unordered_map>
 
-#include <boost/any.hpp>
+#include <any>
 
 #include "hazelcast/util/export.h"
 #include "hazelcast/client/spi/DefaultObjectNamespace.h"

@@ -39,19 +39,19 @@ class MyGlobalSerializer
 {
 public:
     void write(
-      const boost::any& obj,
+      const std::any& obj,
       hazelcast::client::serialization::object_data_output& out) override
     {
-        auto const& object = boost::any_cast<Person>(obj);
+        auto const& object = std::any_cast<Person>(obj);
         out.write(object.name);
         out.write(object.male);
         out.write(object.age);
     }
 
-    boost::any read(
+    std::any read(
       hazelcast::client::serialization::object_data_input& in) override
     {
-        return boost::any(Person{
+        return std::any(Person{
           in.read<std::string>(), in.read<bool>(), in.read<int32_t>() });
     }
 };

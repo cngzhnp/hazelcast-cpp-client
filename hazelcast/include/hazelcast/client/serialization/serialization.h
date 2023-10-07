@@ -19,7 +19,7 @@
 #include <unordered_set>
 #include <type_traits>
 
-#include <boost/any.hpp>
+#include <any>
 #include <optional>
 #include <optional>
 #include <boost/uuid/uuid.hpp>
@@ -216,9 +216,9 @@ struct global_serializer
         return pimpl::serialization_constants::CONSTANT_TYPE_GLOBAL;
     }
 
-    virtual void write(const boost::any& object, object_data_output& out) = 0;
+    virtual void write(const std::any& object, object_data_output& out) = 0;
 
-    virtual boost::any read(object_data_input& in) = 0;
+    virtual std::any read(object_data_input& in) = 0;
 };
 
 /**
@@ -2421,7 +2421,7 @@ typename std::enable_if<
     }
     write(static_cast<int32_t>(global_serializer::get_type_id()),
           boost::endian::order::big);
-    global_serializer_->write(boost::any(std::move(object)), *this);
+    global_serializer_->write(std::any(std::move(object)), *this);
 }
 
 template<typename T>
@@ -2564,7 +2564,7 @@ typename std::enable_if<
     }
 
     return std::optional<T>(
-      boost::any_cast<T>(std::move(global_serializer_->read(*this))));
+      std::any_cast<T>(std::move(global_serializer_->read(*this))));
 }
 
 namespace pimpl {

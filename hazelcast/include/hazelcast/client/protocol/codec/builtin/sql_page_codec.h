@@ -39,11 +39,11 @@ public:
 
 private:
     template<typename T>
-    static std::vector<boost::any> to_vector_of_any(
+    static std::vector<std::any> to_vector_of_any(
       std::vector<std::optional<T>> values)
     {
         auto size = values.size();
-        std::vector<boost::any> vector_of_any(size);
+        std::vector<std::any> vector_of_any(size);
         for (std::size_t i = 0; i < size; ++i) {
             auto& value = values[i];
             if (value) {
@@ -53,7 +53,7 @@ private:
         return vector_of_any;
     }
 
-    static std::vector<boost::any> decode_column_values(
+    static std::vector<std::any> decode_column_values(
       ClientMessage& msg,
       sql::sql_column_type column_type);
 };

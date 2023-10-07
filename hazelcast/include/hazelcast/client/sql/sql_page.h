@@ -16,7 +16,7 @@
 #pragma once
 
 #include <vector>
-#include <boost/any.hpp>
+#include <any>
 #include <optional>
 #include <boost/enable_shared_from_this.hpp>
 
@@ -41,7 +41,7 @@ namespace sql {
  */
 class HAZELCAST_API sql_page
 {
-    using column = std::vector<boost::any>;
+    using column = std::vector<std::any>;
     struct HAZELCAST_API page_data;
 
 public:
@@ -88,7 +88,7 @@ public:
          *
          * @throws hazelcast::client::exception::illegal_argument if a column
          * with the given name is not found
-         * @throws boost::any_cast_exception if the type of the column type
+         * @throws std::any_cast_exception if the type of the column type
          * isn't assignable to the type \codeT\endcode
          *
          * @see row_metadata()
@@ -201,18 +201,18 @@ private:
             assert(row_index < row_count());
 
             auto& any_value = columns_[column_index][row_index];
-            if (any_value.empty()) {
+            if (any_value.has_value()) {
                 return std::nullopt;
             }
 
             if (column_types_[column_index] != sql_column_type::object) {
-                return boost::any_cast<T>(any_value);
+                return std::any_cast<T>(any_value);
             }
 
             // this is the object type, hence the value is `data`
             // and we need to de-serialize it
             return serialization_service_->to_object<T>(
-              boost::any_cast<serialization::pimpl::data>(any_value));
+              std::any_cast<serialization::pimpl::data>(any_value));
         }
 
         std::size_t column_count() const;

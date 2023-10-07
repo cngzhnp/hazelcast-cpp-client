@@ -21,6 +21,7 @@
 #include <vector>
 #include <cstdlib>
 #include <memory>
+#include <cstring>
 
 namespace hazelcast {
 namespace util {

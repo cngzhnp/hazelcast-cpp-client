@@ -411,16 +411,16 @@ public:
     class WriteReadIntGlobalSerializer : public serialization::global_serializer
     {
     public:
-        void write(const boost::any& object,
+        void write(const std::any& object,
                    serialization::object_data_output& out) override
         {
-            auto const& obj = boost::any_cast<UnknownObject>(object);
+            auto const& obj = std::any_cast<UnknownObject>(object);
             out.write<int32_t>(obj.get_value());
         }
 
-        boost::any read(serialization::object_data_input& in) override
+        std::any read(serialization::object_data_input& in) override
         {
-            return boost::any(UnknownObject(in.read<int32_t>()));
+            return std::any(UnknownObject(in.read<int32_t>()));
         }
     };
 

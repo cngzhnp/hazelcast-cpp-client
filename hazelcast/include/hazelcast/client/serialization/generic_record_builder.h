@@ -19,7 +19,7 @@
 #include <unordered_set>
 
 #include <optional>
-#include <boost/any.hpp>
+#include <any>
 #include <boost/variant.hpp>
 
 #include "hazelcast/client/serialization/pimpl/compact/schema_writer.h"
@@ -1473,7 +1473,7 @@ private:
     generic_record_builder(
       std::shared_ptr<pimpl::schema>,
       std::unordered_map<std::string,
-                         boost::any>); // DeserializedGenericRecordCloner
+                         std::any>); // DeserializedGenericRecordCloner
 
     template<typename T>
     generic_record_builder& write(std::string field_name,
@@ -1533,7 +1533,7 @@ private:
     strategy strategy_;
     bool already_built_;
     std::unordered_set<std::string> overwritten_fields_;
-    std::unordered_map<std::string, boost::any> objects_;
+    std::unordered_map<std::string, std::any> objects_;
     boost::variant<pimpl::schema_writer, std::shared_ptr<pimpl::schema>> writer_or_schema_;
 };
 
