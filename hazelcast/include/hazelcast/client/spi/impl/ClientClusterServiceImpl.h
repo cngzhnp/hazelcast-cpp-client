@@ -80,8 +80,8 @@ public:
     void wait_initial_member_list_fetched() const;
 
 private:
-    static constexpr boost::chrono::milliseconds INITIAL_MEMBERS_TIMEOUT{
-        boost::chrono::seconds(120)
+    static constexpr std::chrono::milliseconds INITIAL_MEMBERS_TIMEOUT{
+        std::chrono::seconds(120)
     };
     static const endpoint_qualifier CLIENT;
     static const endpoint_qualifier MEMBER;

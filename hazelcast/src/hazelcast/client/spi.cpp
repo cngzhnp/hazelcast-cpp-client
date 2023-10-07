@@ -893,7 +893,7 @@ const boost::shared_ptr<ClientClusterServiceImpl::member_list_snapshot>
   ClientClusterServiceImpl::EMPTY_SNAPSHOT(
     new ClientClusterServiceImpl::member_list_snapshot{ -1 });
 
-constexpr boost::chrono::milliseconds
+constexpr std::chrono::milliseconds
   ClientClusterServiceImpl::INITIAL_MEMBERS_TIMEOUT;
 const endpoint_qualifier ClientClusterServiceImpl::CLIENT{ 1, "" };
 const endpoint_qualifier ClientClusterServiceImpl::MEMBER{ 0, "" };
@@ -1262,12 +1262,13 @@ ClientClusterServiceImpl::wait_initial_member_list_fetched() const
 {
     // safe to const cast here since latch operations are already thread safe
     // ops.
-    if ((const_cast<boost::latch&>(initial_list_fetched_latch_))
+    //TODO(Cengo): Remove comment out part after when_all fixed
+    /*if ((const_cast<boost::latch&>(initial_list_fetched_latch_))
           .wait_for(INITIAL_MEMBERS_TIMEOUT) == boost::cv_status::timeout) {
         BOOST_THROW_EXCEPTION(exception::illegal_state(
           "ClientClusterServiceImpl::wait_initial_member_list_fetched",
           "Could not get initial member list from cluster!"));
-    }
+    }*/
 }
 
 bool

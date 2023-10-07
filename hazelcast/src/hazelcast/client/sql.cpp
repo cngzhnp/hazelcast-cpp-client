@@ -1113,8 +1113,9 @@ sql_result::page_iterator_sync::operator++()
         current_.reset();
     } else {
         if (!block_->preloaded_page_.is_ready() && timeout_.count() > 0) {
-            (void)block_->preloaded_page_.wait_for(
-              boost::chrono::milliseconds{ timeout_.count() });
+            //TODO(Cengo): Remove comment out part after when_all fixed
+            //(void)block_->preloaded_page_.wait_for(
+            //  std::chrono::milliseconds{ timeout_.count() });
 
             if (block_->preloaded_page_.is_ready()) {
                 current_ = block_->preloaded_page_.get();

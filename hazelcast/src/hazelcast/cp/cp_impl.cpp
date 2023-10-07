@@ -251,7 +251,8 @@ proxy_session_manager::shutdown()
     auto waiting_future =
       boost::when_all(invocations.begin(), invocations.end());
 
-    waiting_future.wait_for(boost::chrono::seconds(SHUTDOWN_TIMEOUT_SECONDS));
+    //TODO(Cengo): Remove comment out part after when_all fixed
+    //waiting_future.wait_for(std::chrono::seconds(SHUTDOWN_TIMEOUT_SECONDS));
 
     sessions_.clear();
     running_ = false;

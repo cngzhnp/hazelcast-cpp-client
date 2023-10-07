@@ -766,7 +766,7 @@ TEST_F(ConfiguredBehaviourTest, testRemoveLifecycleListener)
     hazelcastInstance.shutdown();
 
     ASSERT_EQ(boost::cv_status::timeout,
-              shutdownLatch.wait_for(boost::chrono::seconds(5)));
+              shutdownLatch.wait_for(std::chrono::seconds(5)));
 
     ASSERT_THROW(map->put(1, 5).get(), exception::hazelcast_client_not_active);
 

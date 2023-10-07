@@ -652,7 +652,7 @@ TEST_F(basic_lock_test, test_lock_when_locked_by_other)
     });
 
     ASSERT_EQ(boost::cv_status::no_timeout,
-              start.wait_for(boost::chrono::seconds(120)));
+              start.wait_for(std::chrono::seconds(120)));
     ASSERT_EQ(std::future_status::timeout, f.wait_for(std::chrono::seconds(3)));
     // the following line is ready for the async task to finish and hence the
     // test can finish
@@ -746,7 +746,7 @@ TEST_F(basic_lock_test, test_lock_unlock_when_pending_lock_of_other_thread)
     });
 
     ASSERT_EQ(boost::cv_status::no_timeout,
-              start.wait_for(boost::chrono::seconds(120)));
+              start.wait_for(std::chrono::seconds(120)));
 
     cp_structure_->unlock().get();
 

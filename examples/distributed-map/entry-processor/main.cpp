@@ -59,7 +59,7 @@ main()
         ->submit_to_key<std::string, int, employee_raise_entry_processor>(
           "Mark", employee_raise_entry_processor{});
     // wait for 1 second
-    if (future.wait_for(boost::chrono::seconds(1)) ==
+    if (future.wait_for(std::chrono::seconds(1)) ==
         boost::future_status::ready) {
         std::cout << "Got the result of submitToKey in 1 second for Mark"
                   << " new salary: " << *future.get() << std::endl;

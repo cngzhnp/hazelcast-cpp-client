@@ -149,7 +149,7 @@ hazelcast_client::get_sql()
     return client_impl_->get_sql();
 }
 
-const boost::string_view
+const std::string_view
 version()
 {
     return HAZELCAST_VERSION;

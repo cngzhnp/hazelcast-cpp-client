@@ -2648,7 +2648,7 @@ executor::tasks::CancellationAwareTask task{INT64_MAX};
 auto promise = service->submit<executor::tasks::CancellationAwareTask, bool>(task);
 
 auto future = promise.get_future();
-if (future.wait_for(boost::chrono::seconds(3) == boost::future_status::timeout) {
+if (future.wait_for(std::chrono::seconds(3) == boost::future_status::timeout) {
     std::cout << "Could not get response back in 3 seconds\n";
 }
 

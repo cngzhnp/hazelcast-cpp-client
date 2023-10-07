@@ -2952,7 +2952,7 @@ TEST_P(ClientMapTest, testListenerWithtrue_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchUpdate).add(latchEvict);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -2989,7 +2989,7 @@ TEST_P(ClientMapTest, testListenerWithfalse_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchUpdate).add(latchEvict);
     ASSERT_EQ(boost::cv_status::timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3029,12 +3029,12 @@ TEST_P(ClientMapTest, testListenerWithequal_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchEvict);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     latches.reset();
     latches.add(latchUpdate).add(latchRemove);
     ASSERT_EQ(boost::cv_status::timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3074,12 +3074,12 @@ TEST_P(ClientMapTest, testListenerWithnot_equal_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchUpdate);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     latches.reset();
     latches.add(latchEvict);
     ASSERT_EQ(boost::cv_status::timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3119,10 +3119,10 @@ TEST_P(ClientMapTest, testListenerWithgreater_less_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchUpdate);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_EQ(boost::cv_status::timeout,
-              latchEvict.wait_for(boost::chrono::seconds(2)));
+              latchEvict.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3163,10 +3163,10 @@ TEST_P(ClientMapTest, testListenerWithbetween_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchUpdate);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_EQ(boost::cv_status::timeout,
-              latchEvict.wait_for(boost::chrono::seconds(2)));
+              latchEvict.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3204,12 +3204,12 @@ TEST_P(ClientMapTest, testListenerWithsql_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchUpdate);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     latches.reset();
     latches.add(latchRemove).add(latchEvict);
     ASSERT_EQ(boost::cv_status::timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3255,10 +3255,10 @@ TEST_P(ClientMapTest, testListenerWithRegExPredicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchEvict);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_EQ(boost::cv_status::timeout,
-              latchUpdate.wait_for(boost::chrono::seconds(2)));
+              latchUpdate.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(imap_->remove_entry_listener(listenerId).get());
 }
@@ -3295,7 +3295,7 @@ TEST_P(ClientMapTest, testListenerWithinstance_of_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchUpdate).add(latchEvict);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3333,12 +3333,12 @@ TEST_P(ClientMapTest, testListenerWithnot_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchRemove).add(latchUpdate);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     latches.reset();
     latches.add(latchEvict);
     ASSERT_EQ(boost::cv_status::timeout,
-              latches.wait_for(boost::chrono::seconds(1)));
+              latches.wait_for(std::chrono::seconds(1)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3379,12 +3379,12 @@ TEST_P(ClientMapTest, testListenerWithand_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchUpdate);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     latches.reset();
     latches.add(latchEvict).add(latchRemove);
     ASSERT_EQ(boost::cv_status::timeout,
-              latches.wait_for(boost::chrono::seconds(1)));
+              latches.wait_for(std::chrono::seconds(1)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }
@@ -3426,10 +3426,10 @@ TEST_P(ClientMapTest, testListenerWithor_predicate)
     CountDownLatchWaiter latches;
     latches.add(latchAdd).add(latchEvict).add(latchRemove);
     ASSERT_EQ(boost::cv_status::no_timeout,
-              latches.wait_for(boost::chrono::seconds(2)));
+              latches.wait_for(std::chrono::seconds(2)));
 
     ASSERT_EQ(boost::cv_status::timeout,
-              latchUpdate.wait_for(boost::chrono::seconds(2)));
+              latchUpdate.wait_for(std::chrono::seconds(2)));
 
     ASSERT_TRUE(int_map_->remove_entry_listener(listenerId).get());
 }

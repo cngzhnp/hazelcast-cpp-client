@@ -104,7 +104,7 @@ random_string()
 #define ASSERT_OPEN_EVENTUALLY(latch1)                                         \
     ASSERT_EQ(boost::cv_status::no_timeout,                                    \
               (const_cast<boost::latch&>(latch1))                              \
-                .wait_for(boost::chrono::seconds(120)))
+                .wait_for(std::chrono::seconds(120)))
 #define EXPECT_OPEN_EVENTUALLY_ASYNC(latch1)                                   \
     EXPECT_EQ(std::cv_status::no_timeout,                                      \
               (latch1->wait_for(std::chrono::seconds(120)).get()))

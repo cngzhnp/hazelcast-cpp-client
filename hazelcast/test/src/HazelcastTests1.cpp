@@ -1576,7 +1576,7 @@ TEST_F(SocketInterceptorTest, interceptSSLBasic)
     auto interceptor = make_socket_interceptor(interceptorLatch);
     config.set_socket_interceptor(std::move(interceptor));
     hazelcast_client hz{ hazelcast::new_client(std::move(config)).get() };
-    interceptorLatch.wait_for(boost::chrono::seconds(2));
+    interceptorLatch.wait_for(std::chrono::seconds(2));
     hz.shutdown().get();
 }
 
@@ -1590,7 +1590,7 @@ TEST_F(SocketInterceptorTest, interceptBasic)
     auto interceptor = make_socket_interceptor(interceptorLatch);
     config.set_socket_interceptor(std::move(interceptor));
     hazelcast_client hz{ hazelcast::new_client(std::move(config)).get() };
-    interceptorLatch.wait_for(boost::chrono::seconds(2));
+    interceptorLatch.wait_for(std::chrono::seconds(2));
     hz.shutdown().get();
 }
 } // namespace test

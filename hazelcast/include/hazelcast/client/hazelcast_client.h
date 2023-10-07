@@ -368,7 +368,7 @@ private:
 /**
  * @return the version of the client
  */
-const boost::string_view HAZELCAST_API
+const std::string_view HAZELCAST_API
 version();
 
 } // namespace client

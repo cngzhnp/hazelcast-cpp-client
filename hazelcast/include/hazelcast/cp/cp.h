@@ -18,6 +18,7 @@
 
 #include <string>
 #include <condition_variable>
+#include <chrono>
 #include <boost/thread/future.hpp>
 
 #include "hazelcast/util/SynchronizedMap.h"

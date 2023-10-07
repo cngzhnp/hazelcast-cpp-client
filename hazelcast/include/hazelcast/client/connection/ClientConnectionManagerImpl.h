@@ -302,7 +302,7 @@ private:
     const bool smart_routing_enabled_;
     std::optional<boost::asio::steady_timer> connect_to_members_timer_;
     boost::uuids::uuid client_uuid_;
-    boost::chrono::milliseconds authentication_timeout_;
+    std::chrono::milliseconds authentication_timeout_;
     std::vector<std::string> labels_;
     load_balancer& load_balancer_;
     wait_strategy wait_strategy_;

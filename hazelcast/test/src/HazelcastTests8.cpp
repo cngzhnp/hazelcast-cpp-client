@@ -1293,7 +1293,7 @@ TEST_F(ReliableTopicTest, removeMessageListener_whenExisting)
     ASSERT_NO_THROW(topic_->publish(empl1).get());
 
     ASSERT_EQ(boost::cv_status::timeout,
-              state->latch1.wait_for(boost::chrono::seconds(2)));
+              state->latch1.wait_for(std::chrono::seconds(2)));
     ASSERT_EQ(0, state->messages.size());
 }
 
@@ -2224,15 +2224,15 @@ CountDownLatchWaiter::add(boost::latch& latch1)
 }
 
 boost::cv_status
-CountDownLatchWaiter::wait_for(boost::chrono::steady_clock::duration duration)
+CountDownLatchWaiter::wait_for(std::chrono::steady_clock::duration duration)
 {
     if (latches_.empty()) {
         return boost::cv_status::no_timeout;
     }
 
-    auto end = boost::chrono::steady_clock::now() + duration;
+    auto end = std::chrono::steady_clock::now() + duration;
     for (auto& l : latches_) {
-        auto waitDuration = end - boost::chrono::steady_clock::now();
+        auto waitDuration = end - std::chrono::steady_clock::now();
         auto status = l->wait_for(waitDuration);
         if (boost::cv_status::timeout == status) {
             return boost::cv_status::timeout;

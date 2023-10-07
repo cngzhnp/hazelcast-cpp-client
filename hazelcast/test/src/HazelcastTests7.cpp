@@ -1007,7 +1007,7 @@ TEST_F(ClientExecutorServiceTest, testCancellationAwareTask_whenTimeOut)
       service->submit<executor::tasks::CancellationAwareTask, bool>(task);
 
     ASSERT_EQ(boost::future_status::timeout,
-              promise.get_future().wait_for(boost::chrono::seconds(1)));
+              promise.get_future().wait_for(std::chrono::seconds(1)));
 }
 
 TEST_F(ClientExecutorServiceTest, testFutureAfterCancellationAwareTaskTimeOut)
@@ -1022,7 +1022,7 @@ TEST_F(ClientExecutorServiceTest, testFutureAfterCancellationAwareTaskTimeOut)
     auto future = promise.get_future();
 
     ASSERT_EQ(boost::future_status::timeout,
-              future.wait_for(boost::chrono::seconds(1)));
+              future.wait_for(std::chrono::seconds(1)));
 
     ASSERT_FALSE(future.is_ready());
 }
@@ -1039,7 +1039,7 @@ TEST_F(ClientExecutorServiceTest, testGetFutureAfterCancel)
 
     auto future = promise.get_future();
     ASSERT_EQ(boost::future_status::timeout,
-              future.wait_for(boost::chrono::seconds(1)));
+              future.wait_for(std::chrono::seconds(1)));
 
     ASSERT_TRUE(promise.cancel(true));
 

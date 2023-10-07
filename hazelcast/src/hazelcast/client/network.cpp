@@ -80,7 +80,7 @@ ClientConnectionManagerImpl::ClientConnectionManagerImpl(
       client.get_client_config().get_network_config().is_smart_routing())
   , client_uuid_(client.random_uuid())
   , authentication_timeout_(
-      boost::chrono::milliseconds(heartbeat_.get_heartbeat_timeout().count()))
+      std::chrono::milliseconds(heartbeat_.get_heartbeat_timeout().count()))
   , load_balancer_(client.get_client_config().get_load_balancer())
   , wait_strategy_(client.get_client_config()
                      .get_connection_strategy_config()
@@ -235,7 +235,8 @@ ClientConnectionManagerImpl::authenticate_on_cluster(
 
     struct auth_response result;
     try {
-        if (f.wait_for(authentication_timeout_) !=
+        //TODO(Cengo): Remove comment out part after when_all fixed
+        /*if (f.wait_for(authentication_timeout_) !=
             boost::future_status::ready) {
             BOOST_THROW_EXCEPTION(exception::timeout(
               "ClientConnectionManagerImpl::authenticate",
@@ -243,7 +244,7 @@ ClientConnectionManagerImpl::authenticate_on_cluster(
                              "not received for %1% msecs for %2%") %
                authentication_timeout_.count() % *clientInvocation)
                 .str()));
-        }
+        }*/
         auto response = f.get();
         auto* initial_frame =
           reinterpret_cast<protocol::ClientMessage::frame_header_type*>(

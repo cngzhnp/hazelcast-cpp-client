@@ -120,10 +120,10 @@ target_compile_features(
 # links the library against the system's thread library
 target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads)
 
-# add Boost::thread and Boost::chrono as dependencies
+# add Boost::thread and std::chrono as dependencies
 target_link_libraries(
         ${PROJECT_NAME}
-        PUBLIC Boost::boost Boost::thread Boost::chrono
+        PUBLIC Boost::boost Boost::thread
 )
 # set the Boost thread version
 target_compile_definitions(

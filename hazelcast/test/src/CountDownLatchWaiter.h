@@ -24,7 +24,7 @@ class CountDownLatchWaiter
 public:
     CountDownLatchWaiter& add(boost::latch& latch1);
 
-    boost::cv_status wait_for(boost::chrono::steady_clock::duration duration);
+    boost::cv_status wait_for(std::chrono::steady_clock::duration duration);
 
     void reset();
 
