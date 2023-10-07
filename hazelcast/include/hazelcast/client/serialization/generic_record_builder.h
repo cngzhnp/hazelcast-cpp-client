@@ -16,11 +16,10 @@
 
 #pragma once
 
-#include <unordered_set>
-
-#include <optional>
 #include <any>
-#include <boost/variant.hpp>
+#include <optional>
+#include <unordered_set>
+#include <variant>
 
 #include "hazelcast/client/serialization/pimpl/compact/schema_writer.h"
 #include "hazelcast/client/serialization/generic_record.h"
@@ -1490,7 +1489,7 @@ private:
         if (strategy_ == strategy::cloner ||
             strategy_ == strategy::schema_bounded) {
             const auto& schema =
-              *boost::get<std::shared_ptr<pimpl::schema>>(writer_or_schema_);
+              *std::get<std::shared_ptr<pimpl::schema>>(writer_or_schema_);
 
             check_type_with_schema(schema, field_name, kind);
         }
@@ -1518,7 +1517,7 @@ private:
 
         if (strategy_ == strategy::default_builder) {
             pimpl::schema_writer& writer =
-              boost::get<pimpl::schema_writer>(writer_or_schema_);
+              std::get<pimpl::schema_writer>(writer_or_schema_);
 
             writer.add_field(move(field_name), kind);
         }
@@ -1534,7 +1533,7 @@ private:
     bool already_built_;
     std::unordered_set<std::string> overwritten_fields_;
     std::unordered_map<std::string, std::any> objects_;
-    boost::variant<pimpl::schema_writer, std::shared_ptr<pimpl::schema>> writer_or_schema_;
+    std::variant<pimpl::schema_writer, std::shared_ptr<pimpl::schema>> writer_or_schema_;
 };
 
 } // namespace generic_record

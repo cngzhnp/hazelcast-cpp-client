@@ -131,12 +131,12 @@ generic_record_builder::build()
 {
     if (strategy_ == strategy::default_builder) {
         pimpl::schema_writer& writer =
-          boost::get<pimpl::schema_writer>(writer_or_schema_);
+          std::get<pimpl::schema_writer>(writer_or_schema_);
 
         already_built_ = true;
         return generic_record{ std::make_shared<pimpl::schema>(std::move(writer).build()), std::move(objects_) };
     } else {
-        std::shared_ptr<pimpl::schema> schema = boost::get<std::shared_ptr<pimpl::schema>>(writer_or_schema_);
+        std::shared_ptr<pimpl::schema> schema = std::get<std::shared_ptr<pimpl::schema>>(writer_or_schema_);
 
         if (strategy_ == strategy::schema_bounded) {
             const auto& fields = schema->fields();
