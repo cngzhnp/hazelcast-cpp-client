@@ -41,7 +41,7 @@ public:
     size_t fixed_size_fields_length() const;
     const std::string& type_name() const;
     const std::unordered_map<std::string, field_descriptor>& fields() const;
-    boost::optional<field_descriptor> get_field(
+    std::optional<field_descriptor> get_field(
       const std::string& field_name) const;
 
 private:

@@ -219,7 +219,7 @@ struct TestNamedPortableV4
 {
     int k;
     char16_t c_16;
-    boost::optional<TestInnerPortable> inner_portable;
+    std::optional<TestInnerPortable> inner_portable;
 
     friend bool operator==(const TestNamedPortableV4& lhs,
                            const TestNamedPortableV4& rhs);
@@ -256,7 +256,7 @@ struct ObjectCarryingPortable
 template<typename T>
 struct ParentTemplatedPortable
 {
-    boost::optional<T> child;
+    std::optional<T> child;
 
     friend bool operator==(const ParentTemplatedPortable& lhs,
                            const ParentTemplatedPortable& rhs)

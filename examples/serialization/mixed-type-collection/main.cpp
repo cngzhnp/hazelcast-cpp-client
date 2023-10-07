@@ -32,7 +32,7 @@ main()
 
     auto map = hz.get_map("map").get();
 
-    boost::optional<typed_data> value =
+    std::optional<typed_data> value =
       map->get<std::string, typed_data>("key").get();
     if (value) {
         std::cout << "value type id is: " << value->get_type() << std::endl;

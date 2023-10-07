@@ -25,7 +25,7 @@ namespace compact {
 
 struct named_dto
 {
-    boost::optional<std::string> name;
+    std::optional<std::string> name;
     int my_int;
 };
 

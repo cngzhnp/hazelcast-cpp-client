@@ -135,7 +135,7 @@ public:
      * blocking.
      */
     template<typename E>
-    boost::future<boost::optional<E>> read_one(int64_t sequence)
+    boost::future<std::optional<E>> read_one(int64_t sequence)
     {
         return to_object<E>(read_one_data(sequence));
     }

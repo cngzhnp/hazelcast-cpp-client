@@ -17,7 +17,7 @@
 #pragma once
 
 #include <vector>
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "hazelcast/util/export.h"
 #include "hazelcast/client/protocol/ClientMessage.h"
@@ -31,7 +31,7 @@ class HAZELCAST_API list_cn_fixed_size_codec
 {
 public:
     template<typename T>
-    static std::vector<boost::optional<T>> decode(ClientMessage& msg)
+    static std::vector<std::optional<T>> decode(ClientMessage& msg)
     {
         msg.skip_frame_header_bytes();
 
@@ -40,13 +40,13 @@ public:
         assert(count0 >= 0);
         auto count = static_cast<std::size_t>(count0);
 
-        std::vector<boost::optional<T>> res(count);
+        std::vector<std::optional<T>> res(count);
 
         auto element_type = static_cast<contains_nullable_list_type>(type);
         switch (element_type) {
             case contains_nullable_list_type::NULL_ONLY:
                 for (std::size_t i = 0; i < count; ++i) {
-                    res[i] = boost::none;
+                    res[i] = std::nullopt;
                 }
                 break;
             case contains_nullable_list_type::NOT_NULL_ONLY:
@@ -70,7 +70,7 @@ public:
                         if ((bit_mask & mask) == mask) {
                             res[read_count] = msg.get<T>();
                         } else {
-                            res[read_count] = boost::none;
+                            res[read_count] = std::nullopt;
                         }
 
                         ++read_count;

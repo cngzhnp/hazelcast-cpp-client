@@ -28,8 +28,8 @@ namespace compact {
 template<typename T>
 void
 ASSERT_SAME_CONTENT(
-  const boost::optional<std::vector<boost::optional<T>>>& expected,
-  const boost::optional<std::vector<T>>& actual)
+  const std::optional<std::vector<std::optional<T>>>& expected,
+  const std::optional<std::vector<T>>& actual)
 {
     ASSERT_EQ(expected->size(), actual->size());
     for (size_t i = 0; i < expected->size(); ++i) {
@@ -40,8 +40,8 @@ ASSERT_SAME_CONTENT(
 template<typename T>
 void
 ASSERT_SAME_CONTENT(
-  const boost::optional<std::vector<T>>& expected,
-  const boost::optional<std::vector<boost::optional<T>>>& actual)
+  const std::optional<std::vector<T>>& expected,
+  const std::optional<std::vector<std::optional<T>>>& actual)
 {
     ASSERT_EQ(expected->size(), actual->size());
     for (size_t i = 0; i < expected->size(); ++i) {
@@ -69,13 +69,13 @@ TEST_F(CompactNullablePrimitiveInteroperabilityTest,
         4444,
         8321.321F,
         41231.32,
-        boost::make_optional(std::vector<bool>{ true, false }),
-        boost::make_optional(std::vector<int8_t>{ 1, 2 }),
-        boost::make_optional(std::vector<int16_t>{ 1, 4 }),
-        boost::make_optional(std::vector<int32_t>{ 1, 8 }),
-        boost::make_optional(std::vector<int64_t>{ 1, 4444 }),
-        boost::make_optional(std::vector<float>{ 1.0F, 8321.321F }),
-        boost::make_optional(std::vector<double>{ 41231.32, 2 })
+        std::make_optional(std::vector<bool>{ true, false }),
+        std::make_optional(std::vector<int8_t>{ 1, 2 }),
+        std::make_optional(std::vector<int16_t>{ 1, 4 }),
+        std::make_optional(std::vector<int32_t>{ 1, 8 }),
+        std::make_optional(std::vector<int64_t>{ 1, 4444 }),
+        std::make_optional(std::vector<float>{ 1.0F, 8321.321F }),
+        std::make_optional(std::vector<double>{ 41231.32, 2 })
     };
 
     replicate_schema<primitive_object>();
@@ -105,40 +105,40 @@ TEST_F(CompactNullablePrimitiveInteroperabilityTest,
        testWriteNullableReadPrimitive)
 {
     nullable_primitive_object expected{
-        boost::make_optional<bool>(true),
-        boost::make_optional<int8_t>(4),
-        boost::make_optional<int16_t>(6),
-        boost::make_optional<int32_t>(8),
-        boost::make_optional<int64_t>(4444),
-        boost::make_optional<float>(8321.321F),
-        boost::make_optional<double>(41231.32),
-        boost::make_optional<std::vector<boost::optional<bool>>>(
-          std::vector<boost::optional<bool>>{
-            boost::make_optional<bool>(true),
-            boost::make_optional<bool>(false) }),
-        boost::make_optional<std::vector<boost::optional<int8_t>>>(
-          std::vector<boost::optional<int8_t>>{
-            boost::make_optional<int8_t>(1), boost::make_optional<int8_t>(2) }),
-        boost::make_optional<std::vector<boost::optional<int16_t>>>(
-          std::vector<boost::optional<int16_t>>{
-            boost::make_optional<int16_t>(1),
-            boost::make_optional<int16_t>(4) }),
-        boost::make_optional<std::vector<boost::optional<int32_t>>>(
-          std::vector<boost::optional<int32_t>>{
-            boost::make_optional<int32_t>(1),
-            boost::make_optional<int32_t>(8) }),
-        boost::make_optional<std::vector<boost::optional<int64_t>>>(
-          std::vector<boost::optional<int64_t>>{
-            boost::make_optional<int64_t>(1),
-            boost::make_optional<int64_t>(4444) }),
-        boost::make_optional<std::vector<boost::optional<float>>>(
-          std::vector<boost::optional<float>>{
-            boost::make_optional<float>(1.0F),
-            boost::make_optional<float>(8321.321F) }),
-        boost::make_optional<std::vector<boost::optional<double>>>(
-          std::vector<boost::optional<double>>{
-            boost::make_optional<double>(41231.32),
-            boost::make_optional<double>(2) })
+        std::make_optional<bool>(true),
+        std::make_optional<int8_t>(4),
+        std::make_optional<int16_t>(6),
+        std::make_optional<int32_t>(8),
+        std::make_optional<int64_t>(4444),
+        std::make_optional<float>(8321.321F),
+        std::make_optional<double>(41231.32),
+        std::make_optional<std::vector<std::optional<bool>>>(
+          std::vector<std::optional<bool>>{
+            std::make_optional<bool>(true),
+            std::make_optional<bool>(false) }),
+        std::make_optional<std::vector<std::optional<int8_t>>>(
+          std::vector<std::optional<int8_t>>{
+            std::make_optional<int8_t>(1), std::make_optional<int8_t>(2) }),
+        std::make_optional<std::vector<std::optional<int16_t>>>(
+          std::vector<std::optional<int16_t>>{
+            std::make_optional<int16_t>(1),
+            std::make_optional<int16_t>(4) }),
+        std::make_optional<std::vector<std::optional<int32_t>>>(
+          std::vector<std::optional<int32_t>>{
+            std::make_optional<int32_t>(1),
+            std::make_optional<int32_t>(8) }),
+        std::make_optional<std::vector<std::optional<int64_t>>>(
+          std::vector<std::optional<int64_t>>{
+            std::make_optional<int64_t>(1),
+            std::make_optional<int64_t>(4444) }),
+        std::make_optional<std::vector<std::optional<float>>>(
+          std::vector<std::optional<float>>{
+            std::make_optional<float>(1.0F),
+            std::make_optional<float>(8321.321F) }),
+        std::make_optional<std::vector<std::optional<double>>>(
+          std::vector<std::optional<double>>{
+            std::make_optional<double>(41231.32),
+            std::make_optional<double>(2) })
     };
 
     replicate_schema<primitive_object>();

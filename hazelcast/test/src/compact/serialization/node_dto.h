@@ -52,8 +52,8 @@ struct hz_serializer<test::compact::node_dto>
         writer.write_int32("id", object.id);
         writer.write_compact<test::compact::node_dto>(
           "child",
-          object.child == nullptr ? boost::none
-                                  : boost::make_optional(*object.child));
+          object.child == nullptr ? std::nullopt
+                                  : std::make_optional(*object.child));
     }
 
     static test::compact::node_dto read(compact::compact_reader& reader)

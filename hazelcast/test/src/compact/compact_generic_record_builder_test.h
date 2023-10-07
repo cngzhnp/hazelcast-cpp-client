@@ -138,7 +138,7 @@ TEST_F(CompactGenericRecordBuilderTest,
         auto& data = datas.at(i);
         auto& record = list.at(i);
 
-        boost::optional<generic_record> actual =
+        std::optional<generic_record> actual =
           ss.to_object<generic_record>(data);
 
         EXPECT_TRUE(actual.has_value());

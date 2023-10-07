@@ -82,17 +82,17 @@ public:
     /**
      * @param key the key of the cache entry
      * Returns the value to which the specified key is cached,
-     * or {@code boost::none} if this cache contains no mapping for the key.
+     * or {@code std::nullopt} if this cache contains no mapping for the key.
      * @returns Returns the value to which the specified key is cached
      */
-    boost::optional<V> get(const K& key)
+    std::optional<V> get(const K& key)
     {
         auto value_from_cache = cache_.get(key);
         if (value_from_cache == nullptr) {
-            return boost::none;
+            return std::nullopt;
         }
         value_from_cache->touch();
-        return boost::make_optional(value_from_cache->value_);
+        return std::make_optional(value_from_cache->value_);
     }
 
     /**

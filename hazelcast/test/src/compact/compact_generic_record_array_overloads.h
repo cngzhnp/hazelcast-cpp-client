@@ -34,10 +34,10 @@ protected:
     }
 
     template<typename T>
-    std::vector<boost::optional<T>> nullable_expecteds()
+    std::vector<std::optional<T>> nullable_expecteds()
     {
-        return std::vector<boost::optional<T>>{ boost::optional<T>{ T(0) },
-                                                boost::optional<T>{ T(1) } };
+        return std::vector<std::optional<T>>{ std::optional<T>{ T(0) },
+                                                std::optional<T>{ T(1) } };
     }
 };
 
@@ -47,40 +47,40 @@ TEST_F(CompactGenericRecordArrayOverloads, array_overloads)
     generic_record record =
       generic_record_builder{ random_string() }
         .set_array_of_boolean("aob_opt",
-                              boost::optional<std::vector<bool>>{
+                              std::optional<std::vector<bool>>{
                                 std::vector<bool>{ false, true } })
         .set_array_of_boolean("aob_vec", std::vector<bool>{ false, true })
         .set_array_of_boolean("aob_init", { false, true })
         .set_array_of_int8("aoi8_opt",
-                           boost::optional<std::vector<int8_t>>{
+                           std::optional<std::vector<int8_t>>{
                              std::vector<int8_t>{ int8_t(0), int8_t(1) } })
         .set_array_of_int8("aoi8_vec",
                            std::vector<int8_t>{ int8_t(0), int8_t(1) })
         .set_array_of_int8("aoi8_init", { int8_t(0), int8_t(1) })
         .set_array_of_int16("aoi16_opt",
-                            boost::optional<std::vector<int16_t>>{
+                            std::optional<std::vector<int16_t>>{
                               std::vector<int16_t>{ int16_t(0), int16_t(1) } })
         .set_array_of_int16("aoi16_vec",
                             std::vector<int16_t>{ int16_t(0), int16_t(1) })
         .set_array_of_int16("aoi16_init", { int16_t(0), int16_t(1) })
         .set_array_of_int32(
           "aoi32_opt",
-          boost::optional<std::vector<int32_t>>{ std::vector<int32_t>{ 0, 1 } })
+          std::optional<std::vector<int32_t>>{ std::vector<int32_t>{ 0, 1 } })
         .set_array_of_int32("aoi32_vec", std::vector<int32_t>{ 0, 1 })
         .set_array_of_int32("aoi32_init", { 0, 1 })
         .set_array_of_int64(
           "aoi64_opt",
-          boost::optional<std::vector<int64_t>>{ std::vector<int64_t>{ 0, 1 } })
+          std::optional<std::vector<int64_t>>{ std::vector<int64_t>{ 0, 1 } })
         .set_array_of_int64("aoi64_vec", std::vector<int64_t>{ 0, 1 })
         .set_array_of_int64("aoi64_init", { 0, 1 })
         .set_array_of_float32(
           "aof32_opt",
-          boost::optional<std::vector<float>>{ std::vector<float>{ 0, 1 } })
+          std::optional<std::vector<float>>{ std::vector<float>{ 0, 1 } })
         .set_array_of_float32("aof32_vec", std::vector<float>{ 0, 1 })
         .set_array_of_float32("aof32_init", { 0, 1 })
         .set_array_of_float64(
           "aof64_opt",
-          boost::optional<std::vector<double>>{ std::vector<double>{ 0, 1 } })
+          std::optional<std::vector<double>>{ std::vector<double>{ 0, 1 } })
         .set_array_of_float64("aof64_vec", std::vector<double>{ 0, 1 })
         .set_array_of_float64("aof64_init", { 0, 1 })
         .build();

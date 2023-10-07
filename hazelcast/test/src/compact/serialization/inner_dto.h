@@ -28,29 +28,29 @@ namespace compact {
 
 struct inner_dto
 {
-    boost::optional<std::vector<bool>> bools;
-    boost::optional<std::vector<int8_t>> bytes;
-    boost::optional<std::vector<int16_t>> shorts;
-    boost::optional<std::vector<int32_t>> ints;
-    boost::optional<std::vector<int64_t>> longs;
-    boost::optional<std::vector<float>> floats;
-    boost::optional<std::vector<double>> doubles;
-    boost::optional<std::vector<boost::optional<std::string>>> strings;
-    boost::optional<std::vector<boost::optional<named_dto>>> nn;
-    boost::optional<std::vector<boost::optional<big_decimal>>> bigDecimals;
-    boost::optional<std::vector<boost::optional<local_time>>> localTimes;
-    boost::optional<std::vector<boost::optional<local_date>>> localDates;
-    boost::optional<std::vector<boost::optional<local_date_time>>>
+    std::optional<std::vector<bool>> bools;
+    std::optional<std::vector<int8_t>> bytes;
+    std::optional<std::vector<int16_t>> shorts;
+    std::optional<std::vector<int32_t>> ints;
+    std::optional<std::vector<int64_t>> longs;
+    std::optional<std::vector<float>> floats;
+    std::optional<std::vector<double>> doubles;
+    std::optional<std::vector<std::optional<std::string>>> strings;
+    std::optional<std::vector<std::optional<named_dto>>> nn;
+    std::optional<std::vector<std::optional<big_decimal>>> bigDecimals;
+    std::optional<std::vector<std::optional<local_time>>> localTimes;
+    std::optional<std::vector<std::optional<local_date>>> localDates;
+    std::optional<std::vector<std::optional<local_date_time>>>
       localDateTimes;
-    boost::optional<std::vector<boost::optional<offset_date_time>>>
+    std::optional<std::vector<std::optional<offset_date_time>>>
       offsetDateTimes;
-    boost::optional<std::vector<boost::optional<bool>>> nullableBools;
-    boost::optional<std::vector<boost::optional<int8_t>>> nullableBytes;
-    boost::optional<std::vector<boost::optional<int16_t>>> nullableShorts;
-    boost::optional<std::vector<boost::optional<int32_t>>> nullableInts;
-    boost::optional<std::vector<boost::optional<int64_t>>> nullableLongs;
-    boost::optional<std::vector<boost::optional<float>>> nullableFloats;
-    boost::optional<std::vector<boost::optional<double>>> nullableDoubles;
+    std::optional<std::vector<std::optional<bool>>> nullableBools;
+    std::optional<std::vector<std::optional<int8_t>>> nullableBytes;
+    std::optional<std::vector<std::optional<int16_t>>> nullableShorts;
+    std::optional<std::vector<std::optional<int32_t>>> nullableInts;
+    std::optional<std::vector<std::optional<int64_t>>> nullableLongs;
+    std::optional<std::vector<std::optional<float>>> nullableFloats;
+    std::optional<std::vector<std::optional<double>>> nullableDoubles;
 };
 
 bool
@@ -78,78 +78,78 @@ inner_dto
 create_inner_dto()
 {
     return inner_dto{
-        boost::make_optional<std::vector<bool>>({ true, false }),
-        boost::make_optional<std::vector<int8_t>>({ 0, 1, 2 }),
-        boost::make_optional<std::vector<int16_t>>({ 3, 4, 5 }),
-        boost::make_optional<std::vector<int32_t>>({ 9, 8, 7, 6 }),
-        boost::make_optional<std::vector<int64_t>>({ 0, 1, 5, 7, 9, 11 }),
-        boost::make_optional<std::vector<float>>({ 0.6543f, -3.56f, 45.67f }),
-        boost::make_optional<std::vector<double>>(
+        std::make_optional<std::vector<bool>>({ true, false }),
+        std::make_optional<std::vector<int8_t>>({ 0, 1, 2 }),
+        std::make_optional<std::vector<int16_t>>({ 3, 4, 5 }),
+        std::make_optional<std::vector<int32_t>>({ 9, 8, 7, 6 }),
+        std::make_optional<std::vector<int64_t>>({ 0, 1, 5, 7, 9, 11 }),
+        std::make_optional<std::vector<float>>({ 0.6543f, -3.56f, 45.67f }),
+        std::make_optional<std::vector<double>>(
           { 456.456, 789.789, 321.321 }),
-        boost::make_optional<std::vector<boost::optional<std::string>>>(
-          { boost::make_optional<std::string>("test"), boost::none }),
-        boost::make_optional<std::vector<boost::optional<named_dto>>>(
-          { boost::make_optional(
-              named_dto{ boost::make_optional<std::string>("test"), 1 }),
-            boost::none }),
-        boost::make_optional<
-          std::vector<boost::optional<hazelcast::client::big_decimal>>>(
-          { boost::make_optional(hazelcast::client::big_decimal{
+        std::make_optional<std::vector<std::optional<std::string>>>(
+          { std::make_optional<std::string>("test"), std::nullopt }),
+        std::make_optional<std::vector<std::optional<named_dto>>>(
+          { std::make_optional(
+              named_dto{ std::make_optional<std::string>("test"), 1 }),
+            std::nullopt }),
+        std::make_optional<
+          std::vector<std::optional<hazelcast::client::big_decimal>>>(
+          { std::make_optional(hazelcast::client::big_decimal{
               boost::multiprecision::cpp_int{ "12345" }, 0 }),
-            boost::make_optional(hazelcast::client::big_decimal{
+            std::make_optional(hazelcast::client::big_decimal{
               boost::multiprecision::cpp_int{ "123456" }, 0 }) }),
-        boost::make_optional<
-          std::vector<boost::optional<hazelcast::client::local_time>>>(
-          { boost::make_optional(current_time()),
-            boost::none,
-            boost::make_optional(current_time()) }),
-        boost::make_optional<
-          std::vector<boost::optional<hazelcast::client::local_date>>>(
-          { boost::make_optional(current_date()),
-            boost::none,
-            boost::make_optional(current_date()) }),
-        boost::make_optional<
-          std::vector<boost::optional<hazelcast::client::local_date_time>>>(
-          { boost::make_optional(current_timestamp()), boost::none }),
-        boost::make_optional<
-          std::vector<boost::optional<hazelcast::client::offset_date_time>>>(
-          { boost::make_optional(current_timestamp_with_timezone()) }),
-        boost::make_optional<std::vector<boost::optional<bool>>>(
-          { boost::make_optional(true),
-            boost::make_optional(false),
-            boost::none }),
-        boost::make_optional<std::vector<boost::optional<int8_t>>>(
-          { boost::make_optional<int8_t>(0),
-            boost::make_optional<int8_t>(1),
-            boost::make_optional<int8_t>(2),
-            boost::none }),
-        boost::make_optional<std::vector<boost::optional<int16_t>>>(
-          { boost::make_optional<int16_t>(3),
-            boost::make_optional<int16_t>(4),
-            boost::make_optional<int16_t>(5),
-            boost::none }),
-        boost::make_optional<std::vector<boost::optional<int32_t>>>(
-          { boost::make_optional<int32_t>(9),
-            boost::make_optional<int32_t>(8),
-            boost::make_optional<int32_t>(7),
-            boost::make_optional<int32_t>(6),
-            boost::none }),
-        boost::make_optional<std::vector<boost::optional<int64_t>>>(
-          { boost::make_optional<int64_t>(0),
-            boost::make_optional<int64_t>(1),
-            boost::make_optional<int64_t>(5),
-            boost::make_optional<int64_t>(7),
-            boost::none }),
-        boost::make_optional<std::vector<boost::optional<float>>>(
-          { boost::make_optional(0.6543f),
-            boost::make_optional(-3.56f),
-            boost::make_optional(45.67f),
-            boost::none }),
-        boost::make_optional<std::vector<boost::optional<double>>>(
-          { boost::make_optional(456.456),
-            boost::make_optional(789.789),
-            boost::make_optional(321.321),
-            boost::none }),
+        std::make_optional<
+          std::vector<std::optional<hazelcast::client::local_time>>>(
+          { std::make_optional(current_time()),
+            std::nullopt,
+            std::make_optional(current_time()) }),
+        std::make_optional<
+          std::vector<std::optional<hazelcast::client::local_date>>>(
+          { std::make_optional(current_date()),
+            std::nullopt,
+            std::make_optional(current_date()) }),
+        std::make_optional<
+          std::vector<std::optional<hazelcast::client::local_date_time>>>(
+          { std::make_optional(current_timestamp()), std::nullopt }),
+        std::make_optional<
+          std::vector<std::optional<hazelcast::client::offset_date_time>>>(
+          { std::make_optional(current_timestamp_with_timezone()) }),
+        std::make_optional<std::vector<std::optional<bool>>>(
+          { std::make_optional(true),
+            std::make_optional(false),
+            std::nullopt }),
+        std::make_optional<std::vector<std::optional<int8_t>>>(
+          { std::make_optional<int8_t>(0),
+            std::make_optional<int8_t>(1),
+            std::make_optional<int8_t>(2),
+            std::nullopt }),
+        std::make_optional<std::vector<std::optional<int16_t>>>(
+          { std::make_optional<int16_t>(3),
+            std::make_optional<int16_t>(4),
+            std::make_optional<int16_t>(5),
+            std::nullopt }),
+        std::make_optional<std::vector<std::optional<int32_t>>>(
+          { std::make_optional<int32_t>(9),
+            std::make_optional<int32_t>(8),
+            std::make_optional<int32_t>(7),
+            std::make_optional<int32_t>(6),
+            std::nullopt }),
+        std::make_optional<std::vector<std::optional<int64_t>>>(
+          { std::make_optional<int64_t>(0),
+            std::make_optional<int64_t>(1),
+            std::make_optional<int64_t>(5),
+            std::make_optional<int64_t>(7),
+            std::nullopt }),
+        std::make_optional<std::vector<std::optional<float>>>(
+          { std::make_optional(0.6543f),
+            std::make_optional(-3.56f),
+            std::make_optional(45.67f),
+            std::nullopt }),
+        std::make_optional<std::vector<std::optional<double>>>(
+          { std::make_optional(456.456),
+            std::make_optional(789.789),
+            std::make_optional(321.321),
+            std::nullopt }),
     };
 }
 

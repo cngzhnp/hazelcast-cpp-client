@@ -877,7 +877,7 @@ DefaultAddressProvider::load_addresses()
     return addresses;
 }
 
-boost::optional<address>
+std::optional<address>
 DefaultAddressProvider::translate(const address& addr)
 {
     return addr;
@@ -916,14 +916,14 @@ ClientClusterServiceImpl::add_membership_listener_without_init(
     return id;
 }
 
-boost::optional<member>
+std::optional<member>
 ClientClusterServiceImpl::get_member(boost::uuids::uuid uuid) const
 {
     assert(!uuid.is_nil());
     auto members_view_ptr = member_list_snapshot_.load();
     const auto it = members_view_ptr->members.find(uuid);
     if (it == members_view_ptr->members.end()) {
-        return boost::none;
+        return std::nullopt;
     }
     return { it->second };
 }
@@ -1023,7 +1023,7 @@ ClientClusterServiceImpl::get_local_client() const
       client_.get_connection_manager();
     auto connection = cm.get_random_connection();
     auto inetSocketAddress =
-      connection ? connection->get_local_socket_address() : boost::none;
+      connection ? connection->get_local_socket_address() : std::nullopt;
     auto uuid = cm.get_client_uuid();
     return local_endpoint(
       uuid, std::move(inetSocketAddress), client_.get_name(), labels_);
@@ -2415,14 +2415,14 @@ ClientPartitionServiceImpl::PartitionImpl::get_partition_id() const
     return partition_id_;
 }
 
-boost::optional<member>
+std::optional<member>
 ClientPartitionServiceImpl::PartitionImpl::get_owner() const
 {
     auto owner = partition_service_.get_partition_owner(partition_id_);
     if (!owner.is_nil()) {
         return client_.get_client_cluster_service().get_member(owner);
     }
-    return boost::none;
+    return std::nullopt;
 }
 
 ClientPartitionServiceImpl::PartitionImpl::PartitionImpl(
@@ -2831,7 +2831,7 @@ listener_service_impl::deregister_listener_internal(
                            "Deregistration of listener with ID %1% "
                            "has failed to address %2% %3%") %
                          user_registration_id %
-                         subscriber->get_remote_address() % e));
+                         subscriber->get_remote_address().value() % e));
             }
         }
     }
@@ -3138,7 +3138,7 @@ remote_address_provider::load_addresses()
     return addresses;
 }
 
-boost::optional<address>
+std::optional<address>
 remote_address_provider::translate(const address& addr)
 {
     // if it is inside cloud, return private address otherwise we need to
@@ -3165,7 +3165,7 @@ remote_address_provider::translate(const address& addr)
         return found->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 #ifdef HZ_BUILD_WITH_SSL

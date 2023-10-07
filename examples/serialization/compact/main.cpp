@@ -51,13 +51,13 @@ struct hz_serializer<PersonDTO> : compact::compact_serializer
         PersonDTO person;
 
         person.age = in.read_int32("age");
-        boost::optional<std::string> name = in.read_string("name");
+        std::optional<std::string> name = in.read_string("name");
 
         if (name) {
             person.name = *name;
         }
 
-        boost::optional<std::string> surname = in.read_string("surname");
+        std::optional<std::string> surname = in.read_string("surname");
 
         if (surname) {
             person.surname = *surname;

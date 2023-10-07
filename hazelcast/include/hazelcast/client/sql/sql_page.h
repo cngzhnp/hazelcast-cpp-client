@@ -17,7 +17,7 @@
 
 #include <vector>
 #include <boost/any.hpp>
-#include <boost/optional.hpp>
+#include <optional>
 #include <boost/enable_shared_from_this.hpp>
 
 #include "hazelcast/util/export.h"
@@ -68,7 +68,7 @@ public:
          * @see sql_column_metadata::type
          */
         template<typename T>
-        boost::optional<T> get_object(std::size_t column_index) const
+        std::optional<T> get_object(std::size_t column_index) const
         {
             check_index(column_index);
 
@@ -97,7 +97,7 @@ public:
          * @see sql_column_metadata::type
          */
         template<typename T>
-        boost::optional<T> get_object(const std::string& column_name) const
+        std::optional<T> get_object(const std::string& column_name) const
         {
             auto column_index = resolve_index(column_name);
             return page_data_->get_column_value<T>(column_index, row_index_);
@@ -194,7 +194,7 @@ private:
         serialization::pimpl::SerializationService* serialization_service_;
 
         template<typename T>
-        boost::optional<T> get_column_value(std::size_t column_index,
+        std::optional<T> get_column_value(std::size_t column_index,
                                             std::size_t row_index) const
         {
             assert(column_index < column_count());
@@ -202,7 +202,7 @@ private:
 
             auto& any_value = columns_[column_index][row_index];
             if (any_value.empty()) {
-                return boost::none;
+                return std::nullopt;
             }
 
             if (column_types_[column_index] != sql_column_type::object) {

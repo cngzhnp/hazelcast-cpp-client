@@ -170,13 +170,13 @@ metric_descriptor::metric() const
     return metric_;
 }
 
-const boost::optional<std::string>&
+const std::optional<std::string>&
 metric_descriptor::discriminator() const
 {
     return discriminator_;
 }
 
-const boost::optional<std::string>&
+const std::optional<std::string>&
 metric_descriptor::discriminator_value() const
 {
     return discriminator_value_;
@@ -349,13 +349,13 @@ metrics_compressor::calculate_descriptor_mask(
 }
 
 int32_t
-metrics_compressor::get_dictionary_id(const boost::optional<std::string>& word)
+metrics_compressor::get_dictionary_id(const std::optional<std::string>& word)
 {
     if (!word) {
         return NULL_DICTIONARY_ID;
     }
 
-    return static_cast<int32_t>(dictionary_.get_dictionary_id(word.get()));
+    return static_cast<int32_t>(dictionary_.get_dictionary_id(word.value()));
 }
 
 void

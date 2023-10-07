@@ -405,7 +405,7 @@ protected:
 
     bool check_misses_and_hits(int64_t& expected_misses,
                                int64_t& expected_hits,
-                               boost::optional<std::string>& value)
+                               std::optional<std::string>& value)
     {
         expected_misses = get_expected_misses_with_local_update_policy();
         expected_hits = get_expected_hits_with_local_update_policy();
@@ -2008,7 +2008,7 @@ TEST_F(IssueTest, testIssue753)
     ASSERT_NO_THROW(map->put(1, 5).get());
     auto result = map->get<int, int>(1)
                     .then(boost::launch::async,
-                          [](boost::future<boost::optional<int>> f) {
+                          [](boost::future<std::optional<int>> f) {
                               return 3 * f.get().value();
                           })
                     .get();
@@ -2068,7 +2068,7 @@ TEST_F(
     constexpr int num_iterations = 100;
     auto pipe =
       hazelcast::client::pipelining<std::string>::create(num_iterations);
-    std::vector<boost::future<boost::optional<std::string>>> futures;
+    std::vector<boost::future<std::optional<std::string>>> futures;
     for (int i = 0; i < num_iterations; ++i) {
         auto key = "testKeyForLargePayload_" + std::to_string(i);
         pipe->add(map->put(key, output_data));
@@ -2417,15 +2417,15 @@ TEST(ClientMessageTest, test_decode_sql_page)
     auto& all_rows = page->rows();
     ASSERT_EQ(2, all_rows.size());
     auto& row1 = all_rows[0];
-    ASSERT_EQ(boost::make_optional<std::string>("foo"),
+    ASSERT_EQ(std::make_optional<std::string>("foo"),
               row1.get_object<std::string>(0));
-    ASSERT_EQ(boost::make_optional<std::string>("test"),
+    ASSERT_EQ(std::make_optional<std::string>("test"),
               row1.get_object<std::string>(1));
 
     auto& row2 = all_rows[1];
-    ASSERT_EQ(boost::make_optional<std::string>("bar"),
+    ASSERT_EQ(std::make_optional<std::string>("bar"),
               row2.get_object<std::string>(0));
-    ASSERT_EQ(boost::make_optional<std::string>(""),
+    ASSERT_EQ(std::make_optional<std::string>(""),
               row2.get_object<std::string>(1));
 }
 
@@ -2445,11 +2445,11 @@ TEST(ClientMessageTest, test_decode_sql_error)
     auto err = msg.get<sql::impl::sql_error>();
 
     EXPECT_EQ(42, err.code);
-    EXPECT_EQ(boost::optional<std::string>{ "foo" }, err.message);
+    EXPECT_EQ(std::optional<std::string>{ "foo" }, err.message);
     EXPECT_EQ(
       boost::uuids::string_generator{}("c79d4545-90cc-48eb-b9c9-164a4cf6fcc9"),
       err.originating_member_id);
-    EXPECT_EQ(boost::optional<std::string>{ "bar" }, err.suggestion);
+    EXPECT_EQ(std::optional<std::string>{ "bar" }, err.suggestion);
 }
 
 } // namespace test
@@ -2502,13 +2502,13 @@ public:
     class test_address_provider : public connection::AddressProvider
     {
     public:
-        boost::optional<address> translate(const address& addr) override
+        std::optional<address> translate(const address& addr) override
         {
             if (addr == private_address) {
                 return public_address;
             }
 
-            return boost::none;
+            return std::nullopt;
         }
 
         std::vector<address> load_addresses() override

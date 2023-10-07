@@ -90,8 +90,8 @@ private:
      * one can add membership through this class for future notifications.
      */
     std::function<void(cluster&)> init_ = util::noop<cluster&>;
-    std::function<boost::optional<member>(cluster&)> next_ = [](cluster&) {
-        return boost::none;
+    std::function<std::optional<member>(cluster&)> next_ = [](cluster&) {
+        return std::nullopt;
     };
 
     friend class connection::ClientConnectionManagerImpl;

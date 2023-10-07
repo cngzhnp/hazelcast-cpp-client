@@ -144,7 +144,7 @@ private:
         int64_t update_count;
         std::shared_ptr<sql_row_metadata> row_metadata;
         std::shared_ptr<sql_page> first_page;
-        boost::optional<impl::sql_error> error;
+        std::optional<impl::sql_error> error;
         bool is_infinite_rows = false;
         bool is_infinite_rows_exist = false;
         int32_t partition_argument_index = -1;
@@ -153,8 +153,8 @@ private:
 
     struct sql_fetch_response_parameters
     {
-        boost::optional<std::shared_ptr<sql_page>> page;
-        boost::optional<impl::sql_error> error;
+        std::optional<std::shared_ptr<sql_page>> page;
+        std::optional<impl::sql_error> error;
     };
 
     explicit sql_service(client::spi::ClientContext& context);
@@ -163,7 +163,7 @@ private:
     std::shared_ptr<connection::Connection> query_connection(
       int32_t partition_id);
 
-    boost::optional<int32_t> extract_partition_id(
+    std::optional<int32_t> extract_partition_id(
       const sql_statement& statement,
       const int32_t arg_index) const;
 
@@ -197,7 +197,7 @@ private:
       protocol::ClientMessage message);
 
     static void handle_fetch_response_error(
-      boost::optional<impl::sql_error> error);
+      std::optional<impl::sql_error> error);
 
     /**
      * Close remote query cursor.

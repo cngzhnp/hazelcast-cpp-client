@@ -18,7 +18,7 @@
 
 #include <string>
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "hazelcast/util/export.h"
 
@@ -55,15 +55,15 @@ public:
 
     const std::string& prefix() const;
     const std::string& metric() const;
-    const boost::optional<std::string>& discriminator() const;
-    const boost::optional<std::string>& discriminator_value() const;
+    const std::optional<std::string>& discriminator() const;
+    const std::optional<std::string>& discriminator_value() const;
     probe_unit unit() const;
 
 private:
     std::string prefix_;
     std::string metric_;
-    boost::optional<std::string> discriminator_;
-    boost::optional<std::string> discriminator_value_;
+    std::optional<std::string> discriminator_;
+    std::optional<std::string> discriminator_value_;
     probe_unit unit_;
 };
 

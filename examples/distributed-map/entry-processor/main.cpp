@@ -70,7 +70,7 @@ main()
     }
 
     // multiple futures
-    std::vector<boost::future<boost::optional<int>>> allFutures;
+    std::vector<boost::future<std::optional<int>>> allFutures;
 
     // test putting into a vector of futures
     future =

@@ -32,13 +32,13 @@ struct primitive_object
     int64_t long_;
     float float_;
     double double_;
-    boost::optional<std::vector<bool>> booleans;
-    boost::optional<std::vector<int8_t>> bytes;
-    boost::optional<std::vector<int16_t>> shorts;
-    boost::optional<std::vector<int32_t>> ints;
-    boost::optional<std::vector<int64_t>> longs;
-    boost::optional<std::vector<float>> floats;
-    boost::optional<std::vector<double>> doubles;
+    std::optional<std::vector<bool>> booleans;
+    std::optional<std::vector<int8_t>> bytes;
+    std::optional<std::vector<int16_t>> shorts;
+    std::optional<std::vector<int32_t>> ints;
+    std::optional<std::vector<int64_t>> longs;
+    std::optional<std::vector<float>> floats;
+    std::optional<std::vector<double>> doubles;
 };
 
 } // namespace compact

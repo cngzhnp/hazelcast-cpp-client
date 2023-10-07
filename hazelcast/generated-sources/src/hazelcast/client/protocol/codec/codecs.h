@@ -570,10 +570,10 @@ struct HAZELCAST_API map_addentrylistenerwithpredicate_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -615,10 +615,10 @@ struct HAZELCAST_API map_addentrylistenertokey_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -659,10 +659,10 @@ struct HAZELCAST_API map_addentrylistener_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -961,7 +961,7 @@ struct HAZELCAST_API map_addnearcacheinvalidationlistener_handler
      * @param sequence Sequence number of the invalidation event.
      */
     virtual void handle_imapinvalidation(
-      const boost::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& key,
       boost::uuids::uuid source_uuid,
       boost::uuids::uuid partition_uuid,
       int64_t sequence) = 0;
@@ -1119,10 +1119,10 @@ struct HAZELCAST_API multimap_addentrylistenertokey_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -1162,10 +1162,10 @@ struct HAZELCAST_API multimap_addentrylistener_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -1409,7 +1409,7 @@ struct HAZELCAST_API queue_addlistener_handler : public impl::BaseEventHandler
      * @param event_type Type of the event. It is either ADDED(1) or REMOVED(2).
      */
     virtual void handle_item(
-      const boost::optional<serialization::pimpl::data>& item,
+      const std::optional<serialization::pimpl::data>& item,
       boost::uuids::uuid uuid,
       int32_t event_type) = 0;
 };
@@ -1582,7 +1582,7 @@ struct HAZELCAST_API list_addlistener_handler : public impl::BaseEventHandler
      * @param event_type Type of the event. It is either ADDED(1) or REMOVED(2).
      */
     virtual void handle_item(
-      const boost::optional<serialization::pimpl::data>& item,
+      const std::optional<serialization::pimpl::data>& item,
       boost::uuids::uuid uuid,
       int32_t event_type) = 0;
 };
@@ -1798,7 +1798,7 @@ struct HAZELCAST_API set_addlistener_handler : public impl::BaseEventHandler
      * @param event_type Type of the event. It is either ADDED(1) or REMOVED(2).
      */
     virtual void handle_item(
-      const boost::optional<serialization::pimpl::data>& item,
+      const std::optional<serialization::pimpl::data>& item,
       boost::uuids::uuid uuid,
       int32_t event_type) = 0;
 };
@@ -2281,10 +2281,10 @@ struct HAZELCAST_API replicatedmap_addentrylistenertokeywithpredicate_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -2325,10 +2325,10 @@ struct HAZELCAST_API replicatedmap_addentrylistenerwithpredicate_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -2369,10 +2369,10 @@ struct HAZELCAST_API replicatedmap_addentrylistenertokey_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -2410,10 +2410,10 @@ struct HAZELCAST_API replicatedmap_addentrylistener_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;
@@ -2488,10 +2488,10 @@ struct HAZELCAST_API replicatedmap_addnearcacheentrylistener_handler
      * event.
      */
     virtual void handle_entry(
-      const boost::optional<serialization::pimpl::data>& key,
-      const boost::optional<serialization::pimpl::data>& value,
-      const boost::optional<serialization::pimpl::data>& old_value,
-      const boost::optional<serialization::pimpl::data>& merging_value,
+      const std::optional<serialization::pimpl::data>& key,
+      const std::optional<serialization::pimpl::data>& value,
+      const std::optional<serialization::pimpl::data>& old_value,
+      const std::optional<serialization::pimpl::data>& merging_value,
       int32_t event_type,
       boost::uuids::uuid uuid,
       int32_t number_of_affected_entries) = 0;

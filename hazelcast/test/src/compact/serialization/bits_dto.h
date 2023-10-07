@@ -35,7 +35,7 @@ struct bits_dto
     bool h = false;
     bool i = false;
     int id = 0;
-    boost::optional<std::vector<bool>> booleans;
+    std::optional<std::vector<bool>> booleans;
 };
 
 bool

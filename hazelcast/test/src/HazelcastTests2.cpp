@@ -1858,7 +1858,7 @@ TEST_F(ClientSerializationTest, object_data_input_output)
     ASSERT_EQ(str, *in.read_object<std::string>());
     ASSERT_EQ(utfStr, *in.read_object<std::string>());
     ASSERT_EQ(4, in.skip_bytes(4));
-    ASSERT_FALSE(in.read<boost::optional<std::string>>().has_value())
+    ASSERT_FALSE(in.read<std::optional<std::string>>().has_value())
       << "Expected null string";
     ASSERT_FALSE(in.read<std::vector<std::string>>().has_value())
       << "Expected null string array";
@@ -1934,7 +1934,7 @@ TEST_F(ClientSerializationTest, testWriteNullPortable)
     EXPECT_EQ(u'a', t->c_16);
     EXPECT_FALSE(t->inner_portable.has_value());
 
-    boost::optional<test::TestInnerPortable> tmp_inner = inner;
+    std::optional<test::TestInnerPortable> tmp_inner = inner;
     portable_object.k = 2;
     portable_object.inner_portable = tmp_inner;
     data = serializationService.to_data<TestNamedPortableV4>(portable_object);

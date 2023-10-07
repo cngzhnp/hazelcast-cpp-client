@@ -34,19 +34,19 @@ struct main_dto
     float f;
     double d;
     std::string str;
-    boost::optional<inner_dto> p;
-    boost::optional<hazelcast::client::big_decimal> bigDecimal;
-    boost::optional<hazelcast::client::local_time> localTime;
-    boost::optional<hazelcast::client::local_date> localDate;
-    boost::optional<hazelcast::client::local_date_time> localDateTime;
-    boost::optional<hazelcast::client::offset_date_time> offsetDateTime;
-    boost::optional<bool> nullableBool;
-    boost::optional<int8_t> nullableB;
-    boost::optional<int16_t> nullableS;
-    boost::optional<int32_t> nullableI;
-    boost::optional<int64_t> nullableL;
-    boost::optional<float> nullableF;
-    boost::optional<double> nullableD;
+    std::optional<inner_dto> p;
+    std::optional<hazelcast::client::big_decimal> bigDecimal;
+    std::optional<hazelcast::client::local_time> localTime;
+    std::optional<hazelcast::client::local_date> localDate;
+    std::optional<hazelcast::client::local_date_time> localDateTime;
+    std::optional<hazelcast::client::offset_date_time> offsetDateTime;
+    std::optional<bool> nullableBool;
+    std::optional<int8_t> nullableB;
+    std::optional<int16_t> nullableS;
+    std::optional<int32_t> nullableI;
+    std::optional<int64_t> nullableL;
+    std::optional<float> nullableF;
+    std::optional<double> nullableD;
 };
 
 bool

@@ -37,7 +37,7 @@ public:
     boost::future<bool> offer(const serialization::pimpl::data& e,
                               std::chrono::milliseconds timeout);
 
-    boost::future<boost::optional<serialization::pimpl::data>> poll_data(
+    boost::future<std::optional<serialization::pimpl::data>> poll_data(
       std::chrono::milliseconds timeout);
 };
 } // namespace proxy

@@ -25,20 +25,20 @@ namespace compact {
 
 struct nullable_primitive_object
 {
-    boost::optional<bool> nullableBoolean;
-    boost::optional<int8_t> nullableByte;
-    boost::optional<int16_t> nullableShort;
-    boost::optional<int32_t> nullableInt;
-    boost::optional<int64_t> nullableLong;
-    boost::optional<float> nullableFloat;
-    boost::optional<double> nullableDouble;
-    boost::optional<std::vector<boost::optional<bool>>> nullableBooleans;
-    boost::optional<std::vector<boost::optional<int8_t>>> nullableBytes;
-    boost::optional<std::vector<boost::optional<int16_t>>> nullableShorts;
-    boost::optional<std::vector<boost::optional<int32_t>>> nullableInts;
-    boost::optional<std::vector<boost::optional<int64_t>>> nullableLongs;
-    boost::optional<std::vector<boost::optional<float>>> nullableFloats;
-    boost::optional<std::vector<boost::optional<double>>> nullableDoubles;
+    std::optional<bool> nullableBoolean;
+    std::optional<int8_t> nullableByte;
+    std::optional<int16_t> nullableShort;
+    std::optional<int32_t> nullableInt;
+    std::optional<int64_t> nullableLong;
+    std::optional<float> nullableFloat;
+    std::optional<double> nullableDouble;
+    std::optional<std::vector<std::optional<bool>>> nullableBooleans;
+    std::optional<std::vector<std::optional<int8_t>>> nullableBytes;
+    std::optional<std::vector<std::optional<int16_t>>> nullableShorts;
+    std::optional<std::vector<std::optional<int32_t>>> nullableInts;
+    std::optional<std::vector<std::optional<int64_t>>> nullableLongs;
+    std::optional<std::vector<std::optional<float>>> nullableFloats;
+    std::optional<std::vector<std::optional<double>>> nullableDoubles;
 };
 
 } // namespace compact

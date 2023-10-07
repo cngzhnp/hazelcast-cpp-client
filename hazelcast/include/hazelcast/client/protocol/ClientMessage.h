@@ -33,7 +33,7 @@
 
 #include <boost/endian/arithmetic.hpp>
 #include <boost/endian/conversion.hpp>
-#include <boost/optional.hpp>
+#include <optional>
 #include <boost/uuid/nil_generator.hpp>
 #include <boost/uuid/uuid.hpp>
 
@@ -109,7 +109,7 @@ struct is_trivial_entry_vector<std::vector<std::pair<T, U>>> : std::true_type
 template<>
 struct HAZELCAST_API is_trivial_entry_vector<std::vector<
   std::pair<serialization::pimpl::data,
-            boost::optional<hazelcast::client::serialization::pimpl::data>>>>
+            std::optional<hazelcast::client::serialization::pimpl::data>>>>
   : std::false_type
 {};
 
@@ -881,7 +881,7 @@ public:
     typename std::enable_if<
       std::is_same<
         T,
-        typename boost::optional<typename std::remove_reference<
+        typename std::optional<typename std::remove_reference<
           typename std::remove_cv<typename T::value_type>::type>::type>>::value,
       T>::type inline get()
     {
@@ -1029,7 +1029,7 @@ public:
 
         auto message = get_nullable<std::string>();
 
-        boost::optional<std::string> suggestion;
+        std::optional<std::string> suggestion;
         if (!next_frame_is_data_structure_end_frame()) {
             suggestion = get_nullable<std::string>();
         }
@@ -1043,15 +1043,15 @@ public:
     }
 
     template<typename T>
-    boost::optional<T> get_nullable(
+    std::optional<T> get_nullable(
       std::function<T(ClientMessage&)> decoder = default_nullable_decoder<T>{})
     {
         if (next_frame_is_null_frame()) {
             // skip next frame with null flag
             rd_ptr(SIZE_OF_FRAME_LENGTH_AND_FLAGS);
-            return boost::none;
+            return std::nullopt;
         }
-        return boost::make_optional(decoder(*this));
+        return std::make_optional(decoder(*this));
     }
 
     template<typename T>
@@ -1072,7 +1072,7 @@ public:
     }
 
     template<typename T>
-    boost::optional<T> get_first_var_sized_field()
+    std::optional<T> get_first_var_sized_field()
     {
         assert(buffer_index_ == 0 && offset_ == 0);
         skip_frame();
@@ -1080,7 +1080,7 @@ public:
     }
 
     template<typename T>
-    boost::optional<T> get_first_optional_var_sized_field()
+    std::optional<T> get_first_optional_var_sized_field()
     {
         assert(buffer_index_ == 0 && offset_ == 0);
         skip_frame();
@@ -1300,13 +1300,13 @@ public:
     typename std::enable_if<
       std::is_same<
         T,
-        typename boost::optional<typename std::remove_reference<
+        typename std::optional<typename std::remove_reference<
           typename std::remove_cv<typename T::value_type>::type>::type>>::value,
       void>::type inline set(const T& value, bool is_final = false)
     {
         typedef typename std::remove_reference<
           typename std::remove_cv<typename T::value_type>::type>::type type;
-        return set_nullable<type>(value.get_ptr(), is_final);
+        return set_nullable<type>(&value.value(), is_final);
     }
 
     void set(unsigned char* memory, boost::uuids::uuid uuid);

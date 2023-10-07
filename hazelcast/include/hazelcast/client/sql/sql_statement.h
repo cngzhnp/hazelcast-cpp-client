@@ -19,7 +19,7 @@
 #include <cstddef>
 #include <string>
 
-#include <boost/optional/optional.hpp>
+#include <optional>
 
 #include "hazelcast/util/export.h"
 #include "hazelcast/client/serialization/pimpl/data.h"
@@ -204,10 +204,10 @@ public:
     /**
      * Gets the schema name.
      *
-     * @return the schema name or \code{.cpp}boost::none\endcode if there is
+     * @return the schema name or \code{.cpp}std::nullopt\endcode if there is
      * none
      */
-    const boost::optional<std::string>& schema() const;
+    const std::optional<std::string>& schema() const;
 
     /**
      * Sets the schema name. The engine will try to resolve the non-qualified
@@ -217,13 +217,13 @@ public:
      * \code{.unparsed}"public"\endcode. <p> The schema name is case sensitive.
      * For example, \code{.cpp}"foo"\endcode and \code{.cpp}"Foo"\endcode are
      * different schemas. <p> The default value is
-     * \code{.cpp}boost::none\endcode meaning only the default search path is
+     * \code{.cpp}std::nullopt\endcode meaning only the default search path is
      * used.
      *
      * @param schema the current schema name
      * @return this instance for chaining
      */
-    sql_statement& schema(boost::optional<std::string> schema);
+    sql_statement& schema(std::optional<std::string> schema);
 
 private:
     using data = serialization::pimpl::data;
@@ -249,7 +249,7 @@ private:
     int32_t cursor_buffer_size_;
     std::chrono::milliseconds timeout_;
     sql::sql_expected_result_type expected_result_type_;
-    boost::optional<std::string> schema_;
+    std::optional<std::string> schema_;
     std::shared_ptr<std::atomic<int32_t>> partition_argument_index_;
 
     serialization_service& serialization_service_;

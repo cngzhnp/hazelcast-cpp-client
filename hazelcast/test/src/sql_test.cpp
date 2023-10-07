@@ -341,7 +341,7 @@ protected:
 
 
     void create_mapping(std::string value_format = "INTEGER",
-                        boost::optional<std::string> par_map_name = boost::none)
+                        std::optional<std::string> par_map_name = std::nullopt)
     {
         // Mapping is not supported before 5.0.0
         if (cluster_version() < member::version{ 5, 0, 0 })
@@ -722,42 +722,42 @@ protected:
     }
     template<typename... Params>
     void check_partition_argument_index(std::string sql,
-                                        boost::optional<int32_t> expected_index,
+                                        std::optional<int32_t> expected_index,
                                         Params&&... arguments)
     {
         auto& sql_service = client.get_sql();
         EXPECT_EQ(sql_service.partition_argument_index_cache_->get(sql),
-                  boost::none);
+                  std::nullopt);
         sql_service.execute(sql, std::forward<Params>(arguments)...).get();
 
-        if (expected_index == boost::none) {
+        if (expected_index == std::nullopt) {
             EXPECT_EQ(sql_service.partition_argument_index_cache_->get(sql),
-                      boost::none);
+                      std::nullopt);
         } else {
             ASSERT_NE(sql_service.partition_argument_index_cache_->get(sql),
-                      boost::none);
+                      std::nullopt);
             EXPECT_EQ(*sql_service.partition_argument_index_cache_->get(sql),
                       *expected_index);
         }
     }
 
     void check_partition_argument_index(sql::sql_statement statement,
-                                        boost::optional<int32_t> expected_index)
+                                        std::optional<int32_t> expected_index)
     {
         auto& sql_service = client.get_sql();
         EXPECT_EQ(
           sql_service.partition_argument_index_cache_->get(statement.sql()),
-          boost::none);
+          std::nullopt);
         sql_service.execute(statement).get();
 
-        if (expected_index == boost::none) {
+        if (expected_index == std::nullopt) {
             EXPECT_EQ(
               sql_service.partition_argument_index_cache_->get(statement.sql()),
-              boost::none);
+              std::nullopt);
         } else {
             ASSERT_NE(
               sql_service.partition_argument_index_cache_->get(statement.sql()),
-              boost::none);
+              std::nullopt);
             EXPECT_EQ(*sql_service.partition_argument_index_cache_->get(
                         statement.sql()),
                       *expected_index);
@@ -1960,13 +1960,13 @@ TEST_F(SqlTest, test_partition_based_routing_simple_type_test)
     check_partition_argument_index(
       (boost::format("INSERT INTO %1% (__key, this) VALUES (?, ?)") % map_name)
         .str(),
-      boost::make_optional<int32_t>(0),
+      std::make_optional<int32_t>(0),
       1,
       "value");
     check_partition_argument_index(
       (boost::format("INSERT INTO %1% (this, __key) VALUES (?, ?)") % map_name)
         .str(),
-      boost::make_optional<int32_t>(1),
+      std::make_optional<int32_t>(1),
       "value",
       2);
     // no dynamic argument
@@ -1974,19 +1974,19 @@ TEST_F(SqlTest, test_partition_based_routing_simple_type_test)
       (boost::format("INSERT INTO %1% (this, __key) VALUES ('value', 3)") %
        map_name)
         .str(),
-      boost::none);
+      std::nullopt);
     check_partition_argument_index(
       (boost::format("INSERT INTO %1% (this, __key) "
                      "VALUES ('value', 4), ('value', 5)") %
        map_name)
         .str(),
-      boost::none);
+      std::nullopt);
     // has dynamic argument, but multiple rows
     check_partition_argument_index(
       (boost::format("INSERT INTO %1% (this, __key) VALUES (?, ?), (?, ?)") %
        map_name)
         .str(),
-      boost::none,
+      std::nullopt,
       "value",
       6,
       "value",
@@ -2007,7 +2007,7 @@ TEST_F(SqlTest, test_partition_based_routing_with_statements)
     statement1.add_parameter(1);
     statement1.add_parameter("value");
     check_partition_argument_index(statement1,
-                                   boost::make_optional<int32_t>(0));
+                                   std::make_optional<int32_t>(0));
     EXPECT_EQ(*statement1.partition_argument_index(), 0);
 
     sql::sql_statement statement2(
@@ -2018,7 +2018,7 @@ TEST_F(SqlTest, test_partition_based_routing_with_statements)
     statement2.add_parameter(2);
 
     check_partition_argument_index(statement2,
-                                   boost::make_optional<int32_t>(1));
+                                   std::make_optional<int32_t>(1));
     EXPECT_EQ(*statement2.partition_argument_index(), 1);
 
     sql::sql_statement statement3(
@@ -2028,7 +2028,7 @@ TEST_F(SqlTest, test_partition_based_routing_with_statements)
         .str());
 
     // no dynamic argument
-    check_partition_argument_index(statement3, boost::none);
+    check_partition_argument_index(statement3, std::nullopt);
     EXPECT_EQ(*statement3.partition_argument_index(), -1);
 
     sql::sql_statement statement4(
@@ -2038,7 +2038,7 @@ TEST_F(SqlTest, test_partition_based_routing_with_statements)
        map_name)
         .str());
 
-    check_partition_argument_index(statement4, boost::none);
+    check_partition_argument_index(statement4, std::nullopt);
     EXPECT_EQ(*statement4.partition_argument_index(), -1);
 
     sql::sql_statement statement5(
@@ -2052,7 +2052,7 @@ TEST_F(SqlTest, test_partition_based_routing_with_statements)
     statement5.add_parameter(7);
 
     // has dynamic argument, but multiple rows
-    check_partition_argument_index(statement5, boost::none);
+    check_partition_argument_index(statement5, std::nullopt);
     EXPECT_EQ(*statement5.partition_argument_index(), -1);
 }
 
@@ -2068,19 +2068,19 @@ TEST_F(SqlTest, test_partition_based_routing)
 
     check_partition_argument_index(
       (boost::format("SELECT * FROM %1% WHERE __key = ?") % map_name).str(),
-      boost::make_optional<int32_t>(0),
+      std::make_optional<int32_t>(0),
       1);
 
     check_partition_argument_index(
       (boost::format("UPDATE %1% SET this = ? WHERE __key = ?") % map_name)
         .str(),
-      boost::make_optional<int32_t>(1),
+      std::make_optional<int32_t>(1),
       "testVal",
       1);
 
     check_partition_argument_index(
       (boost::format("DELETE FROM %1% WHERE __key = ?") % map_name).str(),
-      boost::make_optional<int32_t>(0),
+      std::make_optional<int32_t>(0),
       1);
 
     check_partition_argument_index(
@@ -2088,7 +2088,7 @@ TEST_F(SqlTest, test_partition_based_routing)
          "SELECT JSON_OBJECT(this : __key) FROM %1% WHERE __key = ?") %
        map_name)
         .str(),
-      boost::make_optional<int32_t>(0),
+      std::make_optional<int32_t>(0),
       1);
 
     check_partition_argument_index(
@@ -2096,7 +2096,7 @@ TEST_F(SqlTest, test_partition_based_routing)
          "SELECT JSON_ARRAY(__key, this) FROM %1% WHERE __key = ?") %
        map_name)
         .str(),
-      boost::make_optional<int32_t>(0),
+      std::make_optional<int32_t>(0),
       1);
 
     // aggregation
@@ -2105,17 +2105,17 @@ TEST_F(SqlTest, test_partition_based_routing)
          "SELECT JSON_OBJECTAGG(this : __key) FROM %1% WHERE __key = ?") %
        map_name)
         .str(),
-      boost::none,
+      std::nullopt,
       1);
     check_partition_argument_index(
       (boost::format("SELECT SUM(__key) FROM %1% WHERE __key = ?") % map_name)
         .str(),
-      boost::none,
+      std::nullopt,
       1);
     check_partition_argument_index(
       (boost::format("SELECT COUNT(*) FROM %1% WHERE __key = ?") % map_name)
         .str(),
-      boost::none,
+      std::nullopt,
       1);
 
     // join
@@ -2124,7 +2124,7 @@ TEST_F(SqlTest, test_partition_based_routing)
                      "WHERE t1.__key = ?") %
        map_name % test_map_name)
         .str(),
-      boost::none,
+      std::nullopt,
       1);
 
     check_partition_argument_index(
@@ -2132,7 +2132,7 @@ TEST_F(SqlTest, test_partition_based_routing)
                      "WHERE t1.__key = ?") %
        map_name % test_map_name)
         .str(),
-      boost::none,
+      std::nullopt,
       1);
 }
 
@@ -2166,7 +2166,7 @@ TEST_F(SqlTest, test_partition_based_routing_complex_type_test)
       (boost::format("INSERT INTO %1% (this, key) VALUES (?, ?)") %
        custom_map_name)
         .str(),
-      boost::none,
+      std::nullopt,
       "value1",
       1);
 
@@ -2178,7 +2178,7 @@ TEST_F(SqlTest, test_partition_based_routing_complex_type_test)
           (boost::format("INSERT INTO %1% (this, __key) VALUES (?, ?)") %
            map_name)
             .str(),
-          boost::none,
+          std::nullopt,
           "value-1",
           student{ 2, 1.72 });
     } catch (exception::iexception& ie) {
@@ -2198,19 +2198,19 @@ TEST_F(SqlTest, test_partition_based_routing_complex_key)
 
     check_partition_argument_index(
       (boost::format("SELECT * FROM %1% WHERE __key = ?") % map_name).str(),
-      boost::make_optional<int32_t>(0),
+      std::make_optional<int32_t>(0),
       student{ 2, 1.72 });
 
     check_partition_argument_index(
       (boost::format("UPDATE %1% SET this = ? WHERE __key = ?") % map_name)
         .str(),
-      boost::make_optional<int32_t>(1),
+      std::make_optional<int32_t>(1),
       "testVal",
       student{ 2, 1.72 });
 
     check_partition_argument_index(
       (boost::format("DELETE FROM %1% WHERE __key = ?") % map_name).str(),
-      boost::make_optional<int32_t>(0),
+      std::make_optional<int32_t>(0),
       student{ 2, 1.72 });
 }
 
@@ -2455,7 +2455,7 @@ TEST_F(read_optimized_lru_cache_test, put_test)
 TEST_F(read_optimized_lru_cache_test, get_test)
 {
     EXPECT_EQ(0, lru.get_cache_size());
-    EXPECT_EQ(boost::none, lru.get(1));
+    EXPECT_EQ(std::nullopt, lru.get(1));
     lru.put(1, 10);
     EXPECT_EQ(10, *(lru.get(1)));
 }

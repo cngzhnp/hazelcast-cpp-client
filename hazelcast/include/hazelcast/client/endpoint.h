@@ -34,7 +34,7 @@ namespace client {
 class HAZELCAST_API endpoint
 {
 public:
-    endpoint(boost::uuids::uuid uuid, boost::optional<address> socket_address);
+    endpoint(boost::uuids::uuid uuid, std::optional<address> socket_address);
 
     /**
      * Returns the UUID of this endpoint
@@ -48,11 +48,11 @@ public:
      *
      * @return the socket address for this endpoint
      */
-    const boost::optional<address>& get_socket_address() const;
+    const std::optional<address>& get_socket_address() const;
 
 private:
     boost::uuids::uuid uuid_;
-    boost::optional<address> socket_address_;
+    std::optional<address> socket_address_;
 };
 } // namespace client
 } // namespace hazelcast

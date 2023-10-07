@@ -350,7 +350,7 @@ private:
     boost::future<std::shared_ptr<sql_page>> fetch_page();
 
     template<typename T>
-    boost::optional<T> to_object(serialization::pimpl::data data)
+    std::optional<T> to_object(serialization::pimpl::data data)
     {
         return client_context_->get_serialization_service().to_object<T>(data);
     }

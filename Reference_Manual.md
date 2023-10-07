@@ -1017,13 +1017,13 @@ struct hz_serializer<PersonDTO> : compact::compact_serializer
         PersonDTO person;
 
         person.age = in.read_int32("age");
-        boost::optional<std::string> name = in.read_string("name");
+        std::optional<std::string> name = in.read_string("name");
 
         if (name) {
             person.name = *name;
         }
 
-        boost::optional<std::string> surname = in.read_string("surname");
+        std::optional<std::string> surname = in.read_string("surname");
 
         if (surname) {
             person.surname = *surname;
@@ -1077,7 +1077,7 @@ A generic record can be used as such:
 auto rec = map->get<int, generic_record>(1234).get();
 bool field1 = rec->get_boolean("field-name-1");
 int field2 = rec->get_int32("field-name-2");
-boost::optional<std::string> field3 = rec->get_string("field-name-3");
+std::optional<std::string> field3 = rec->get_string("field-name-3");
 ```
 
 Refer to the general [documentation](https://docs.hazelcast.com/hazelcast/latest/serialization/compact-serialization) for more details on how to access domain objects without domain classes. [Supported types](https://docs.hazelcast.com/hazelcast/latest/serialization/compact-serialization#supported-types) are listed here.
@@ -3432,7 +3432,7 @@ serialization::pimpl::object_type get_type() const;
  * @return The object instance of type T.
  */
 template <typename T>
-boost::optional<T> get() const;
+std::optional<T> get() const;
 ```
 
 typed_data does late deserialization of the data only when the get method is called.
@@ -3672,7 +3672,7 @@ result->row_metadata(); // Throws an `exception::illegal_state`
 ```
 
 ### 7.11.6 Read Table Column Value
-`boost::optional<T> sql_page::sql_row::get_object<T>` is used for reading column value. `T` specifies the return type and it should correspond with the column type. Otherwise it will throw `boost::bad_any_cast`. There are two overloads one can be used to read value by column idx and other by column name.
+`std::optional<T> sql_page::sql_row::get_object<T>` is used for reading column value. `T` specifies the return type and it should correspond with the column type. Otherwise it will throw `boost::bad_any_cast`. There are two overloads one can be used to read value by column idx and other by column name.
 
 ``` C++
 for (auto itr = result->iterator(); itr.has_next();)

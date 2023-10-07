@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "hazelcast/client/impl/metrics/metric_descriptor.h"
 #include "hazelcast/client/impl/metrics/metrics_dictionary.h"
@@ -56,13 +56,13 @@ public:
 
 private:
     byte calculate_descriptor_mask(const metric_descriptor& descriptor);
-    int get_dictionary_id(const boost::optional<std::string>& word);
+    int get_dictionary_id(const std::optional<std::string>& word);
     void write_descriptor(const metric_descriptor& descriptor);
     void write_dictionary();
 
     int metrics_count{ 0 };
     metrics_dictionary dictionary_{};
-    boost::optional<metric_descriptor> last_descriptor_{};
+    std::optional<metric_descriptor> last_descriptor_{};
     output_buffer metrics_buffer_{};
     output_buffer dictionary_buffer_{};
 };

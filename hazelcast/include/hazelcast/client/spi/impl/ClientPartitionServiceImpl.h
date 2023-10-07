@@ -89,7 +89,7 @@ private:
 
         int get_partition_id() const override;
 
-        boost::optional<member> get_owner() const override;
+        std::optional<member> get_owner() const override;
 
     private:
         int partition_id_;

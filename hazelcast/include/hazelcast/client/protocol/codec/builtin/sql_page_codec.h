@@ -17,7 +17,7 @@
 #pragma once
 
 #include <vector>
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "hazelcast/util/export.h"
 #include "hazelcast/client/protocol/ClientMessage.h"
@@ -40,7 +40,7 @@ public:
 private:
     template<typename T>
     static std::vector<boost::any> to_vector_of_any(
-      std::vector<boost::optional<T>> values)
+      std::vector<std::optional<T>> values)
     {
         auto size = values.size();
         std::vector<boost::any> vector_of_any(size);

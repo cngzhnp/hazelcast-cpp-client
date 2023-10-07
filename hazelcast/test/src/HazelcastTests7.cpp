@@ -694,7 +694,7 @@ TEST_F(ClientQueueTest, testOfferPoll)
         q->offer("item1").get();
     });
 
-    boost::optional<std::string> item =
+    std::optional<std::string> item =
       q->poll<std::string>(std::chrono::seconds(30)).get();
     ASSERT_TRUE(item.has_value());
     ASSERT_EQ("item1", item.value());
@@ -705,7 +705,7 @@ TEST_F(ClientQueueTest, testOfferPoll)
 TEST_F(ClientQueueTest, testPeek)
 {
     offer(3);
-    boost::optional<std::string> item = q->peek<std::string>().get();
+    std::optional<std::string> item = q->peek<std::string>().get();
     ASSERT_TRUE(item.has_value());
     ASSERT_EQ("item1", item.value());
 }
@@ -716,7 +716,7 @@ TEST_F(ClientQueueTest, testTake)
     ASSERT_TRUE(q->offer("peek 2").get());
     ASSERT_TRUE(q->offer("peek 3").get());
 
-    boost::optional<std::string> item = q->take<std::string>().get();
+    std::optional<std::string> item = q->take<std::string>().get();
     ASSERT_TRUE(item.has_value());
     ASSERT_EQ("peek 1", item.value());
 

@@ -1078,10 +1078,10 @@ client_config::get_load_balancer()
         load_balancer_ = load_balancer().next([=](cluster& c) {
             auto members = c.get_members();
             if (members.empty()) {
-                return boost::optional<member>();
+                return std::optional<member>();
             }
             auto i = index->fetch_add(1);
-            return boost::make_optional(std::move(members[i % members.size()]));
+            return std::make_optional(std::move(members[i % members.size()]));
         });
     }
     return *load_balancer_;
@@ -1241,7 +1241,7 @@ client_config::set_network_config(
     return *this;
 }
 
-const boost::optional<std::string>&
+const std::optional<std::string>&
 client_config::get_instance_name() const
 {
     return instance_name_;

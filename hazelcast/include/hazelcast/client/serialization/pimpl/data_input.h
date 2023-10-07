@@ -163,16 +163,16 @@ public:
 
     template<typename T>
     typename std::enable_if<
-      std::is_same<boost::optional<std::string>,
+      std::is_same<std::optional<std::string>,
                    typename std::remove_cv<T>::type>::value,
       T>::type inline read()
     {
         int32_t charCount = read<int32_t>();
         if (util::Bits::NULL_ARRAY == charCount) {
-            return boost::none;
+            return std::nullopt;
         }
 
-        return boost::make_optional(read_string(charCount));
+        return std::make_optional(read_string(charCount));
     }
 
     template<typename T>
@@ -217,17 +217,17 @@ public:
                      typename std::remove_cv<T>::type>::value ||
         std::is_same<std::vector<std::string>,
                      typename std::remove_cv<T>::type>::value ||
-        std::is_same<std::vector<boost::optional<std::string>>,
+        std::is_same<std::vector<std::optional<std::string>>,
                      typename std::remove_cv<T>::type>::value,
-      typename boost::optional<T>>::type inline read()
+      typename std::optional<T>>::type inline read()
     {
         int32_t len = read<int32_t>();
         if (util::Bits::NULL_ARRAY == len) {
-            return boost::none;
+            return std::nullopt;
         }
 
         if (len == 0) {
-            return boost::none;
+            return std::nullopt;
         }
 
         if (len < 0) {
@@ -244,7 +244,7 @@ public:
         for (int32_t i = 0; i < len; i++) {
             values.push_back(read<typename T::value_type>());
         }
-        return boost::make_optional(values);
+        return std::make_optional(values);
     }
 
     int position() { return pos_; }

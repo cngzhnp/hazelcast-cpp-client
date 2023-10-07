@@ -232,7 +232,7 @@ sql_service::decode_fetch_response(protocol::ClientMessage message)
       [](protocol::ClientMessage& msg) {
           return protocol::codec::builtin::sql_page_codec::decode(msg);
       });
-    auto error = message.get<boost::optional<impl::sql_error>>();
+    auto error = message.get<std::optional<impl::sql_error>>();
     return { std::move(page), std::move(error) };
 }
 
@@ -339,22 +339,22 @@ sql_service::query_connection(int32_t partition_id)
     return connection;
 }
 
-boost::optional<int32_t>
+std::optional<int32_t>
 sql_service::extract_partition_id(const sql_statement& statement,
                                   int32_t arg_index) const
 {
     if (!is_smart_routing_) {
-        return boost::none;
+        return std::nullopt;
     }
 
     if (statement.serialized_parameters_.size() == 0) {
-        return boost::none;
+        return std::nullopt;
     }
 
     if (arg_index >=
           static_cast<int32_t>(statement.serialized_parameters_.size()) ||
         arg_index < 0) {
-        return boost::none;
+        return std::nullopt;
     }
 
     const auto& key = statement.serialized_parameters_[arg_index];
@@ -386,7 +386,7 @@ sql_service::rethrow(const std::exception& cause,
     if (!connection->is_alive()) {
         auto msg = (boost::format("Cluster topology changed while a query was "
                                   "executed: Member cannot be reached: %1%") %
-                    connection->get_remote_address())
+                    connection->get_remote_address().value())
                      .str();
         return impl::query_utils::throw_public_exception(
           std::make_exception_ptr(exception::query(
@@ -441,7 +441,7 @@ sql_service::fetch_page(
 }
 
 void
-sql_service::handle_fetch_response_error(boost::optional<impl::sql_error> error)
+sql_service::handle_fetch_response_error(std::optional<impl::sql_error> error)
 {
     if (error) {
         throw hazelcast_sql_exception(
@@ -548,14 +548,14 @@ sql_statement::timeout(std::chrono::milliseconds timeout)
     return *this;
 }
 
-const boost::optional<std::string>&
+const std::optional<std::string>&
 sql_statement::schema() const
 {
     return schema_;
 }
 
 sql_statement&
-sql_statement::schema(boost::optional<std::string> schema)
+sql_statement::schema(std::optional<std::string> schema)
 {
     schema_ = std::move(schema);
     return *this;
@@ -595,8 +595,8 @@ hazelcast_sql_exception::hazelcast_sql_exception(
   std::string source,
   boost::uuids::uuid originating_member_id,
   int32_t code,
-  boost::optional<std::string> message,
-  boost::optional<std::string> suggestion,
+  std::optional<std::string> message,
+  std::optional<std::string> suggestion,
   std::exception_ptr cause)
   : hazelcast_(std::move(source),
                message ? std::move(message).value() : "",
@@ -620,7 +620,7 @@ hazelcast_sql_exception::code() const
     return code_;
 }
 
-const boost::optional<std::string>&
+const std::optional<std::string>&
 hazelcast_sql_exception::suggestion() const
 {
     return suggestion_;
@@ -662,12 +662,12 @@ query_utils::throw_public_exception(std::exception_ptr exc,
           id,
           static_cast<int32_t>(sql_error_code::GENERIC),
           ie.get_message(),
-          boost::none,
+          std::nullopt,
           exc);
     }
 }
 
-boost::optional<member>
+std::optional<member>
 query_utils::member_of_same_larger_version_group(
   const std::vector<member>& members)
 {
@@ -675,8 +675,8 @@ query_utils::member_of_same_larger_version_group(
     // version). Find a random member from the larger same-version group.
 
     // we don't use 2-element array to save on litter
-    boost::optional<member::version> version0;
-    boost::optional<member::version> version1;
+    std::optional<member::version> version0;
+    std::optional<member::version> version1;
     size_t count0 = 0;
     size_t count1 = 0;
 
@@ -696,7 +696,7 @@ query_utils::member_of_same_larger_version_group(
               "query_utils::member_of_same_larger_version_group",
               (boost::format(
                  "More than 2 distinct member versions found: %1% , %2%") %
-               version0 % version1)
+               version0.value() % version1.value())
                 .str());
         }
     }
@@ -705,7 +705,7 @@ query_utils::member_of_same_larger_version_group(
 
     // no data members
     if (count0 == 0) {
-        return boost::none;
+        return std::nullopt;
     }
 
     size_t count;

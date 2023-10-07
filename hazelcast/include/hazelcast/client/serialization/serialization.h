@@ -20,8 +20,8 @@
 #include <type_traits>
 
 #include <boost/any.hpp>
-#include <boost/optional.hpp>
-#include <boost/optional/optional_io.hpp>
+#include <optional>
+#include <optional>
 #include <boost/uuid/uuid.hpp>
 
 #include "hazelcast/client/hazelcast_json_value.h"
@@ -161,7 +161,7 @@ public:
      * @return The object instance of type T.
      */
     template<typename T>
-    boost::optional<T> get() const;
+    std::optional<T> get() const;
 
     /**
      * Internal API
@@ -786,43 +786,43 @@ public:
     typename std::enable_if<
       !(std::is_array<T>::value &&
         std::is_same<typename std::remove_all_extents<T>::type, char>::value),
-      boost::optional<T>>::type inline read_object();
+      std::optional<T>>::type inline read_object();
 
     template<typename T>
     typename std::enable_if<
       std::is_array<T>::value &&
         std::is_same<typename std::remove_all_extents<T>::type, char>::value,
-      boost::optional<std::string>>::type inline read_object();
+      std::optional<std::string>>::type inline read_object();
 
     template<typename T>
     typename std::enable_if<
       std::is_base_of<identified_data_serializer, hz_serializer<T>>::value,
-      boost::optional<T>>::type inline read_object(int32_t type_id);
+      std::optional<T>>::type inline read_object(int32_t type_id);
 
     template<typename T>
     typename std::enable_if<
       std::is_base_of<portable_serializer, hz_serializer<T>>::value,
-      boost::optional<T>>::type inline read_object(int32_t type_id);
+      std::optional<T>>::type inline read_object(int32_t type_id);
 
     template<typename T>
     typename std::enable_if<
       std::is_base_of<compact::compact_serializer, hz_serializer<T>>::value,
-      boost::optional<T>>::type inline read_object(int32_t type_id);
+      std::optional<T>>::type inline read_object(int32_t type_id);
 
     template<typename T>
     typename std::enable_if<
       std::is_base_of<builtin_serializer, hz_serializer<T>>::value,
-      boost::optional<T>>::type inline read_object(int32_t type_id);
+      std::optional<T>>::type inline read_object(int32_t type_id);
 
     template<typename T>
     typename std::enable_if<
       std::is_base_of<custom_serializer, hz_serializer<T>>::value,
-      boost::optional<T>>::type inline read_object(int32_t type_id);
+      std::optional<T>>::type inline read_object(int32_t type_id);
 
     template<typename T>
     typename std::enable_if<
       std::is_same<generic_record::generic_record, T>::value,
-      boost::optional<T>>::type
+      std::optional<T>>::type
     read_object(int32_t type_id);
 
     /**
@@ -839,7 +839,7 @@ public:
         std::is_base_of<builtin_serializer, hz_serializer<T>>::value ||
         std::is_base_of<custom_serializer, hz_serializer<T>>::value ||
         std::is_same<generic_record::generic_record, T>::value),
-      boost::optional<T>>::type inline read_object(int32_t type_id);
+      std::optional<T>>::type inline read_object(int32_t type_id);
 
 private:
     pimpl::PortableSerializer& portable_serializer_;
@@ -868,14 +868,14 @@ public:
     template<typename T>
     void write_object(const T* object);
 
-    /* enable_if needed here since 'boost::optional<char [5]>' can not be
+    /* enable_if needed here since 'std::optional<char [5]>' can not be
      * composed this template match */
     template<typename T>
     typename std::enable_if<
       !(std::is_array<T>::value &&
         std::is_same<typename std::remove_all_extents<T>::type, char>::value),
       void>::type
-    write_object(const boost::optional<T>& object);
+    write_object(const std::optional<T>& object);
 
     template<typename T>
     typename std::enable_if<
@@ -1437,7 +1437,7 @@ public:
 
     template<typename T>
     typename std::enable_if<
-      std::is_same<boost::optional<std::string>,
+      std::is_same<std::optional<std::string>,
                    typename std::remove_cv<T>::type>::value,
       T>::type
     read(const std::string& field_name)
@@ -1466,7 +1466,7 @@ public:
                      typename std::remove_cv<T>::type>::value ||
         std::is_same<std::vector<std::string>,
                      typename std::remove_cv<T>::type>::value,
-      boost::optional<T>>::type
+      std::optional<T>>::type
     read(const std::string& field_name)
     {
         set_position(field_name, PortableContext::get_type<T>());
@@ -1486,7 +1486,7 @@ protected:
                                  int class_id) const;
 
     template<typename T>
-    boost::optional<T> get_portable_instance(const std::string& field_name);
+    std::optional<T> get_portable_instance(const std::string& field_name);
 
     std::shared_ptr<ClassDefinition> cd_;
     object_data_input* data_input_;
@@ -1506,10 +1506,10 @@ public:
                           std::shared_ptr<ClassDefinition> cd);
 
     template<typename T>
-    boost::optional<T> read_portable(const std::string& field_name);
+    std::optional<T> read_portable(const std::string& field_name);
 
     template<typename T>
-    boost::optional<std::vector<T>> read_portable_array(
+    std::optional<std::vector<T>> read_portable_array(
       const std::string& field_name);
 };
 
@@ -1566,13 +1566,13 @@ public:
 
     template<typename T>
     typename std::enable_if<
-      std::is_same<boost::optional<std::string>,
+      std::is_same<std::optional<std::string>,
                    typename std::remove_cv<T>::type>::value,
       T>::type
     read(const std::string& field_name)
     {
         if (!cd_->has_field(field_name)) {
-            return boost::none;
+            return std::nullopt;
         }
         return PortableReaderBase::read<T>(field_name);
     }
@@ -1597,20 +1597,20 @@ public:
                      typename std::remove_cv<T>::type>::value ||
         std::is_same<std::vector<std::string>,
                      typename std::remove_cv<T>::type>::value,
-      boost::optional<T>>::type
+      std::optional<T>>::type
     read(const std::string& field_name)
     {
         if (!cd_->has_field(field_name)) {
-            return boost::none;
+            return std::nullopt;
         }
         return PortableReaderBase::read<T>(field_name);
     }
 
     template<typename T>
-    boost::optional<T> read_portable(const std::string& field_name);
+    std::optional<T> read_portable(const std::string& field_name);
 
     template<typename T>
-    boost::optional<std::vector<T>> read_portable_array(
+    std::optional<std::vector<T>> read_portable_array(
       const std::string& field_name);
 
 private:
@@ -1742,7 +1742,7 @@ class HAZELCAST_API DataSerializer
 {
 public:
     template<typename T>
-    static boost::optional<T> read_object(object_data_input& in)
+    static std::optional<T> read_object(object_data_input& in)
     {
         bool identified = in.read<bool>();
         if (!identified) {
@@ -1765,7 +1765,7 @@ public:
                 .str()));
         }
 
-        return boost::make_optional(hz_serializer<T>::read_data(in));
+        return std::make_optional(hz_serializer<T>::read_data(in));
     }
 
     template<typename T>
@@ -1889,10 +1889,10 @@ public:
     }
 
     template<typename T>
-    inline boost::optional<T> to_object(const data* data)
+    inline std::optional<T> to_object(const data* data)
     {
         if (!data) {
-            return boost::none;
+            return std::nullopt;
         }
         return to_object<T>(*data);
     }
@@ -1902,10 +1902,10 @@ public:
       !(std::is_same<T, const char*>::value ||
         std::is_same<T, const char*>::value ||
         std::is_same<T, typed_data>::value),
-      boost::optional<T>>::type inline to_object(const data& data)
+      std::optional<T>>::type inline to_object(const data& data)
     {
         if (is_null_data(data)) {
-            return boost::none;
+            return std::nullopt;
         }
 
         int32_t typeId = data.get_type();
@@ -1926,15 +1926,15 @@ public:
     template<typename T>
     typename std::enable_if<
       std::is_same<T, typed_data>::value,
-      boost::optional<T>>::type inline to_object(const data& d)
+      std::optional<T>>::type inline to_object(const data& d)
     {
-        return boost::make_optional(typed_data(data(d), *this));
+        return std::make_optional(typed_data(data(d), *this));
     }
 
     template<typename T>
     typename std::enable_if<
       std::is_same<T, const char*>::value,
-      boost::optional<std::string>>::type inline to_object(const data& data)
+      std::optional<std::string>>::type inline to_object(const data& data)
     {
         return to_object<std::string>(data);
     }
@@ -1943,7 +1943,7 @@ public:
     typename std::enable_if<
       std::is_array<T>::value &&
         std::is_same<typename std::remove_all_extents<T>::type, char>::value,
-      boost::optional<std::string>>::type inline to_object(const data& data)
+      std::optional<std::string>>::type inline to_object(const data& data)
     {
         return to_object<std::string>(data);
     }
@@ -2065,7 +2065,7 @@ public:
                      typename std::remove_cv<T>::type>::value ||
         std::is_same<std::vector<std::string>,
                      typename std::remove_cv<T>::type>::value,
-      boost::optional<T>>::type
+      std::optional<T>>::type
     read(const std::string& field_name)
     {
         if (is_default_reader_)
@@ -2079,7 +2079,7 @@ public:
      * @return the portable value read
      */
     template<typename T>
-    boost::optional<T> read_portable(const std::string& field_name);
+    std::optional<T> read_portable(const std::string& field_name);
 
     /**
      * @tparam type of the portable class in array
@@ -2087,7 +2087,7 @@ public:
      * @return the portable array value read
      */
     template<typename T>
-    boost::optional<std::vector<T>> read_portable_array(
+    std::optional<std::vector<T>> read_portable_array(
       const std::string& field_name);
 
     /**
@@ -2108,8 +2108,8 @@ public:
 
 private:
     bool is_default_reader_;
-    boost::optional<pimpl::DefaultPortableReader> default_portable_reader_;
-    boost::optional<pimpl::MorphingPortableReader> morphing_portable_reader_;
+    std::optional<pimpl::DefaultPortableReader> default_portable_reader_;
+    std::optional<pimpl::MorphingPortableReader> morphing_portable_reader_;
 };
 
 /**
@@ -2193,7 +2193,7 @@ private:
 };
 
 template<typename T>
-boost::optional<T>
+std::optional<T>
 portable_reader::read_portable(const std::string& field_name)
 {
     if (is_default_reader_)
@@ -2208,7 +2208,7 @@ portable_reader::read_portable(const std::string& field_name)
  * @throws io_exception
  */
 template<typename T>
-boost::optional<std::vector<T>>
+std::optional<std::vector<T>>
 portable_reader::read_portable_array(const std::string& field_name)
 {
     if (is_default_reader_)
@@ -2280,7 +2280,7 @@ typename std::enable_if<
   !(std::is_array<T>::value &&
     std::is_same<typename std::remove_all_extents<T>::type, char>::value),
   void>::type
-object_data_output::write_object(const boost::optional<T>& object)
+object_data_output::write_object(const std::optional<T>& object)
 {
     if (is_no_write_) {
         return;
@@ -2428,12 +2428,12 @@ template<typename T>
 typename std::enable_if<
   !(std::is_array<T>::value &&
     std::is_same<typename std::remove_all_extents<T>::type, char>::value),
-  boost::optional<T>>::type inline object_data_input::read_object()
+  std::optional<T>>::type inline object_data_input::read_object()
 {
     int32_t typeId = read(boost::endian::order::big);
     if (static_cast<int32_t>(
           pimpl::serialization_constants::CONSTANT_TYPE_NULL) == typeId) {
-        return boost::none;
+        return std::nullopt;
     }
     return read_object<T>(typeId);
 }
@@ -2442,7 +2442,7 @@ template<typename T>
 typename std::enable_if<
   std::is_array<T>::value &&
     std::is_same<typename std::remove_all_extents<T>::type, char>::value,
-  boost::optional<std::string>>::type inline object_data_input::read_object()
+  std::optional<std::string>>::type inline object_data_input::read_object()
 {
     return read_object<std::string>();
 }
@@ -2450,7 +2450,7 @@ typename std::enable_if<
 template<typename T>
 typename std::enable_if<
   std::is_base_of<identified_data_serializer, hz_serializer<T>>::value,
-  boost::optional<T>>::type inline object_data_input::read_object(int32_t
+  std::optional<T>>::type inline object_data_input::read_object(int32_t
                                                                     type_id)
 {
     if (type_id != static_cast<int32_t>(
@@ -2470,7 +2470,7 @@ typename std::enable_if<
 template<typename T>
 typename std::enable_if<
   std::is_base_of<portable_serializer, hz_serializer<T>>::value,
-  boost::optional<T>>::type inline object_data_input::read_object(int32_t
+  std::optional<T>>::type inline object_data_input::read_object(int32_t
                                                                     type_id)
 {
     if (type_id != static_cast<int32_t>(
@@ -2490,7 +2490,7 @@ typename std::enable_if<
 template<typename T>
 typename std::enable_if<
   std::is_base_of<compact::compact_serializer, hz_serializer<T>>::value,
-  boost::optional<T>>::type inline object_data_input::read_object(int32_t
+  std::optional<T>>::type inline object_data_input::read_object(int32_t
                                                                     type_id)
 {
     return compact_serializer_.template read<T>(*this);
@@ -2499,7 +2499,7 @@ typename std::enable_if<
 template<typename T>
 typename std::enable_if<
   std::is_base_of<custom_serializer, hz_serializer<T>>::value,
-  boost::optional<T>>::type inline object_data_input::read_object(int32_t
+  std::optional<T>>::type inline object_data_input::read_object(int32_t
                                                                     type_id)
 {
     if (type_id != hz_serializer<T>::get_type_id()) {
@@ -2512,24 +2512,24 @@ typename std::enable_if<
             .str()));
     }
 
-    return boost::optional<T>(hz_serializer<T>::read(*this));
+    return std::optional<T>(hz_serializer<T>::read(*this));
 }
 
 template<typename T>
 typename std::enable_if<
   std::is_base_of<builtin_serializer, hz_serializer<T>>::value,
-  boost::optional<T>>::type inline object_data_input::read_object(int32_t
+  std::optional<T>>::type inline object_data_input::read_object(int32_t
                                                                     type_id)
 {
     assert(type_id == static_cast<int32_t>(hz_serializer<T>::get_type_id()));
     (void)type_id;
 
-    return boost::optional<T>(read<T>());
+    return std::optional<T>(read<T>());
 }
 
 template<typename T>
 typename std::enable_if<std::is_same<generic_record::generic_record, T>::value,
-                        boost::optional<T>>::type
+                        std::optional<T>>::type
 object_data_input::read_object(int32_t type_id)
 {
     return compact_serializer_.read_generic_record(*this);
@@ -2543,7 +2543,7 @@ typename std::enable_if<
     std::is_base_of<builtin_serializer, hz_serializer<T>>::value ||
     std::is_base_of<custom_serializer, hz_serializer<T>>::value ||
     std::is_same<generic_record::generic_record, T>::value),
-  boost::optional<T>>::type inline object_data_input::read_object(int32_t
+  std::optional<T>>::type inline object_data_input::read_object(int32_t
                                                                     type_id)
 {
     if (!global_serializer_) {
@@ -2563,7 +2563,7 @@ typename std::enable_if<
             .str()));
     }
 
-    return boost::optional<T>(
+    return std::optional<T>(
       boost::any_cast<T>(std::move(global_serializer_->read(*this))));
 }
 
@@ -2573,14 +2573,14 @@ data
 SerializationService::to_data(const typed_data* object);
 
 template<typename T>
-boost::optional<T>
+std::optional<T>
 DefaultPortableReader::read_portable(const std::string& field_name)
 {
     return get_portable_instance<T>(field_name);
 }
 
 template<typename T>
-boost::optional<std::vector<T>>
+std::optional<std::vector<T>>
 DefaultPortableReader::read_portable_array(const std::string& field_name)
 {
     PortableReaderBase::set_position(field_name,
@@ -2593,7 +2593,7 @@ DefaultPortableReader::read_portable_array(const std::string& field_name)
 
     int32_t len = data_input_->read<int32_t>();
     if (len == util::Bits::NULL_ARRAY) {
-        return boost::none;
+        return std::nullopt;
     }
     int32_t factoryId = data_input_->read<int32_t>();
     int32_t classId = data_input_->read<int32_t>();
@@ -2615,14 +2615,14 @@ DefaultPortableReader::read_portable_array(const std::string& field_name)
 }
 
 template<typename T>
-boost::optional<T>
+std::optional<T>
 MorphingPortableReader::read_portable(const std::string& field_name)
 {
     return get_portable_instance<T>(field_name);
 }
 
 template<typename T>
-boost::optional<std::vector<T>>
+std::optional<std::vector<T>>
 MorphingPortableReader::read_portable_array(const std::string& field_name)
 {
     PortableReaderBase::set_position(field_name,
@@ -2635,7 +2635,7 @@ MorphingPortableReader::read_portable_array(const std::string& field_name)
 
     int32_t len = data_input_->read<int32_t>();
     if (len == util::Bits::NULL_ARRAY) {
-        return boost::none;
+        return std::nullopt;
     }
     int32_t factoryId = data_input_->read<int32_t>();
     int32_t classId = data_input_->read<int32_t>();
@@ -2655,7 +2655,7 @@ MorphingPortableReader::read_portable_array(const std::string& field_name)
         }
     }
 
-    return boost::make_optional(std::move(portables));
+    return std::make_optional(std::move(portables));
 }
 
 template<typename T>
@@ -2783,7 +2783,7 @@ PortableContext::lookup_or_register_class_definition(const T& portable)
 }
 
 template<typename T>
-boost::optional<T>
+std::optional<T>
 PortableReaderBase::get_portable_instance(const std::string& field_name)
 {
     set_position(field_name, field_type::TYPE_PORTABLE);
@@ -2795,7 +2795,7 @@ PortableReaderBase::get_portable_instance(const std::string& field_name)
     check_factory_and_class(cd_->get_field(field_name), factoryId, classId);
 
     if (isNull) {
-        return boost::none;
+        return std::nullopt;
     } else {
         return portable_serializer_->read<T>(*data_input_, factoryId, classId);
     }
@@ -2906,7 +2906,7 @@ ClassDefinitionWriter::create_nested_class_def(const T& portable)
 } // namespace serialization
 
 template<typename T>
-boost::optional<T>
+std::optional<T>
 typed_data::get() const
 {
     return ss_->to_object<T>(data_);

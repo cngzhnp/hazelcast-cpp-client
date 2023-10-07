@@ -353,10 +353,10 @@ private:
         topic::message to_message(
           topic::impl::reliable::ReliableTopicMessage& message)
         {
-            boost::optional<member> m;
+            std::optional<member> m;
             auto& addr = message.get_publisher_address();
             if (addr.has_value()) {
-                m = boost::make_optional<member>(addr.value());
+                m = std::make_optional<member>(addr.value());
             }
             return topic::message(name_,
                                   typed_data(std::move(message.get_payload()),

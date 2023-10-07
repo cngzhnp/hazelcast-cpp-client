@@ -40,9 +40,9 @@ public:
      * network or service
      *
      * @param address to be translated
-     * @return translated address or boost::none if no translation is found.
+     * @return translated address or std::nullopt if no translation is found.
      */
-    virtual boost::optional<address> translate(const address& addr) = 0;
+    virtual std::optional<address> translate(const address& addr) = 0;
 
     /**
      * @return true for the \DefaultAddressProvider , false otherwise.

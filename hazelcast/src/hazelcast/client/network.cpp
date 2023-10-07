@@ -657,7 +657,7 @@ ClientConnectionManagerImpl::on_connection_close(
               boost::str(boost::format(
                            "Destroying a connection, but there is no mapping "
                            "%1% -> %2% in the connection map.") %
-                         endpoint % *connection));
+                         endpoint.value() % *connection));
         }
     }
 }
@@ -857,7 +857,7 @@ ClientConnectionManagerImpl::on_authenticated(
                 boost::format(
                   "Authenticated with server %1%:%2%, server version: %3%, "
                   "local address: %4%. %5%") %
-                response.server_address % response.member_uuid %
+                response.server_address.value() % response.member_uuid %
                 response.server_version % *local_address % *connection));
         } else {
             HZ_LOG(
@@ -867,7 +867,7 @@ ClientConnectionManagerImpl::on_authenticated(
                 boost::format(
                   "Authenticated with server %1%:%2%, server version: %3%, "
                   "no local address: (connection disconnected ?). %4%") %
-                response.server_address % response.member_uuid %
+                response.server_address.value() % response.member_uuid %
                 response.server_version % *connection));
         }
 
@@ -1081,7 +1081,7 @@ ClientConnectionManagerImpl::translate(const member& m)
     }
 
     try {
-        boost::optional<address> addr =
+        std::optional<address> addr =
           address_provider_->translate(m.get_address());
 
         if (!addr) {
@@ -1102,8 +1102,8 @@ ClientConnectionManagerImpl::translate(const member& m)
 
 std::shared_ptr<connection::Connection>
 ClientConnectionManagerImpl::connection_for_sql(
-  std::function<boost::optional<member>()> member_of_large_same_version_group,
-  std::function<boost::optional<member>(boost::uuids::uuid)> get_cluster_member)
+  std::function<std::optional<member>()> member_of_large_same_version_group,
+  std::function<std::optional<member>(boost::uuids::uuid)> get_cluster_member)
 {
     if (smart_routing_enabled_) {
         // There might be a race - the chosen member might be just connected or
@@ -1312,14 +1312,14 @@ Connection::write(
     socket_->async_write(shared_from_this(), client_invocation);
 }
 
-const boost::optional<address>&
+const std::optional<address>&
 Connection::get_remote_address() const
 {
     return remote_address_;
 }
 
 void
-Connection::set_remote_address(boost::optional<address> endpoint)
+Connection::set_remote_address(std::optional<address> endpoint)
 {
     this->remote_address_ = std::move(endpoint);
 }
@@ -1441,7 +1441,7 @@ Connection::set_connected_server_version(const std::string& connected_server)
     Connection::connected_server_version_string_ = connected_server;
 }
 
-boost::optional<address>
+std::optional<address>
 Connection::get_local_socket_address() const
 {
     return socket_->local_socket_address();

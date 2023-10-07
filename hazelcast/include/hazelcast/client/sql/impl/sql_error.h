@@ -18,7 +18,7 @@
 #include <cstdint>
 #include <string>
 
-#include <boost/optional.hpp>
+#include <optional>
 #include <boost/uuid/uuid.hpp>
 
 #include "hazelcast/util/export.h"
@@ -31,9 +31,9 @@ namespace impl {
 struct HAZELCAST_API sql_error
 {
     int32_t code;
-    boost::optional<std::string> message;
+    std::optional<std::string> message;
     boost::uuids::uuid originating_member_id;
-    boost::optional<std::string> suggestion;
+    std::optional<std::string> suggestion;
 };
 
 } // namespace impl

@@ -110,7 +110,7 @@ protected:
     {
         execute_for_each([=](size_t i) {
             auto key = std::string("foo-") + std::to_string(i);
-            boost::optional<std::string> val =
+            std::optional<std::string> val =
               map->get<std::string, std::string>(key).get();
             ASSERT_TRUE((val));
             ASSERT_EQ(expected_value, (val.value()));
@@ -1151,7 +1151,7 @@ protected:
 
     bool check_misses_and_hits(int64_t& expected_misses,
                                int64_t& expected_hits,
-                               boost::optional<std::string>& value)
+                               std::optional<std::string>& value)
     {
         expected_misses = get_expected_misses_with_local_update_policy();
         expected_hits = get_expected_hits_with_local_update_policy();

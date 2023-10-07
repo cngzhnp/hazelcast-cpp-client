@@ -266,7 +266,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::string>& get_string(
+    const std::optional<std::string>& get_string(
       const std::string& field_name) const;
 
     /**
@@ -277,7 +277,7 @@ public:
      *                                         match the one in the schema/class
      *                                         definition.
      */
-    boost::optional<std::string>& get_string(const std::string& field_name);
+    std::optional<std::string>& get_string(const std::string& field_name);
 
     /**
      * @param field_name the name of the field
@@ -287,7 +287,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<big_decimal>& get_decimal(
+    const std::optional<big_decimal>& get_decimal(
       const std::string& field_name) const;
 
     /**
@@ -298,7 +298,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<big_decimal>& get_decimal(const std::string& field_name);
+    std::optional<big_decimal>& get_decimal(const std::string& field_name);
 
     /**
      * @param field_name the name of the field
@@ -308,7 +308,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<local_time>& get_time(
+    const std::optional<local_time>& get_time(
       const std::string& field_name) const;
 
     /**
@@ -319,7 +319,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<local_time>& get_time(const std::string& field_name);
+    std::optional<local_time>& get_time(const std::string& field_name);
 
     /**
      * @param field_name the name of the field
@@ -329,7 +329,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<local_date>& get_date(
+    const std::optional<local_date>& get_date(
       const std::string& field_name) const;
 
     /**
@@ -340,7 +340,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<local_date>& get_date(const std::string& field_name);
+    std::optional<local_date>& get_date(const std::string& field_name);
 
     /**
      * @param field_name the name of the field
@@ -350,7 +350,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<local_date_time>& get_timestamp(
+    const std::optional<local_date_time>& get_timestamp(
       const std::string& field_name) const;
 
     /**
@@ -361,7 +361,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<local_date_time>& get_timestamp(
+    std::optional<local_date_time>& get_timestamp(
       const std::string& field_name);
 
     /**
@@ -373,7 +373,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<offset_date_time>& get_timestamp_with_timezone(
+    const std::optional<offset_date_time>& get_timestamp_with_timezone(
       const std::string& field_name) const;
 
     /**
@@ -385,7 +385,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<offset_date_time>& get_timestamp_with_timezone(
+    std::optional<offset_date_time>& get_timestamp_with_timezone(
       const std::string& field_name);
 
     /**
@@ -395,7 +395,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<generic_record>& get_generic_record(
+    const std::optional<generic_record>& get_generic_record(
       const std::string& field_name) const;
 
     /**
@@ -405,7 +405,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<generic_record>& get_generic_record(
+    std::optional<generic_record>& get_generic_record(
       const std::string& field_name);
 
     /**
@@ -415,7 +415,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<bool>>& get_array_of_boolean(
+    const std::optional<std::vector<bool>>& get_array_of_boolean(
       const std::string& field_name) const;
 
     /**
@@ -425,7 +425,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<bool>>& get_array_of_boolean(
+    std::optional<std::vector<bool>>& get_array_of_boolean(
       const std::string& field_name);
 
     /**
@@ -435,7 +435,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<int8_t>>& get_array_of_int8(
+    const std::optional<std::vector<int8_t>>& get_array_of_int8(
       const std::string& field_name) const;
 
     /**
@@ -445,7 +445,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<int8_t>>& get_array_of_int8(
+    std::optional<std::vector<int8_t>>& get_array_of_int8(
       const std::string& field_name);
 
     /**
@@ -455,7 +455,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<int16_t>>& get_array_of_int16(
+    const std::optional<std::vector<int16_t>>& get_array_of_int16(
       const std::string& field_name) const;
 
     /**
@@ -465,7 +465,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<int16_t>>& get_array_of_int16(
+    std::optional<std::vector<int16_t>>& get_array_of_int16(
       const std::string& field_name);
 
     /**
@@ -475,7 +475,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<int32_t>>& get_array_of_int32(
+    const std::optional<std::vector<int32_t>>& get_array_of_int32(
       const std::string& field_name) const;
 
     /**
@@ -485,7 +485,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<int32_t>>& get_array_of_int32(
+    std::optional<std::vector<int32_t>>& get_array_of_int32(
       const std::string& field_name);
 
     /**
@@ -495,7 +495,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<int64_t>>& get_array_of_int64(
+    const std::optional<std::vector<int64_t>>& get_array_of_int64(
       const std::string& field_name) const;
 
     /**
@@ -505,7 +505,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<int64_t>>& get_array_of_int64(
+    std::optional<std::vector<int64_t>>& get_array_of_int64(
       const std::string& field_name);
 
     /**
@@ -515,7 +515,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<float>>& get_array_of_float32(
+    const std::optional<std::vector<float>>& get_array_of_float32(
       const std::string& field_name) const;
 
     /**
@@ -525,7 +525,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<float>>& get_array_of_float32(
+    std::optional<std::vector<float>>& get_array_of_float32(
       const std::string& field_name);
 
     /**
@@ -535,7 +535,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<double>>& get_array_of_float64(
+    const std::optional<std::vector<double>>& get_array_of_float64(
       const std::string& field_name) const;
 
     /**
@@ -545,7 +545,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<double>>& get_array_of_float64(
+    std::optional<std::vector<double>>& get_array_of_float64(
       const std::string& field_name);
 
     /**
@@ -555,7 +555,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<boost::optional<std::string>>>&
+    const std::optional<std::vector<std::optional<std::string>>>&
     get_array_of_string(const std::string& field_name) const;
 
     /**
@@ -565,7 +565,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<boost::optional<std::string>>>&
+    std::optional<std::vector<std::optional<std::string>>>&
     get_array_of_string(const std::string& field_name);
 
     /**
@@ -576,7 +576,7 @@ public:
      * the one in the schema/class definition.
      * @see get_decimal()
      */
-    const boost::optional<std::vector<boost::optional<big_decimal>>>&
+    const std::optional<std::vector<std::optional<big_decimal>>>&
     get_array_of_decimal(const std::string& field_name) const;
 
     /**
@@ -587,7 +587,7 @@ public:
      * the one in the schema definition.
      * @see get_decimal()
      */
-    boost::optional<std::vector<boost::optional<big_decimal>>>&
+    std::optional<std::vector<std::optional<big_decimal>>>&
     get_array_of_decimal(const std::string& field_name);
 
     /**
@@ -598,7 +598,7 @@ public:
      * the one in the schema definition.
      * @see get_time()
      */
-    const boost::optional<std::vector<boost::optional<local_time>>>&
+    const std::optional<std::vector<std::optional<local_time>>>&
     get_array_of_time(const std::string& field_name) const;
 
     /**
@@ -609,7 +609,7 @@ public:
      * one in the schema definition.
      * @see get_time()
      */
-    boost::optional<std::vector<boost::optional<local_time>>>&
+    std::optional<std::vector<std::optional<local_time>>>&
     get_array_of_time(const std::string& field_name);
 
     /**
@@ -620,7 +620,7 @@ public:
      * the one in the schema definition.
      * @see get_date()
      */
-    const boost::optional<std::vector<boost::optional<local_date>>>&
+    const std::optional<std::vector<std::optional<local_date>>>&
     get_array_of_date(const std::string& field_name) const;
 
     /**
@@ -631,7 +631,7 @@ public:
      * the one in the schema definition.
      * @see get_date()
      */
-    boost::optional<std::vector<boost::optional<local_date>>>&
+    std::optional<std::vector<std::optional<local_date>>>&
     get_array_of_date(const std::string& field_name);
 
     /**
@@ -642,7 +642,7 @@ public:
      * the one in the schema definition.
      * @see get_timestamp()
      */
-    const boost::optional<std::vector<boost::optional<local_date_time>>>&
+    const std::optional<std::vector<std::optional<local_date_time>>>&
     get_array_of_timestamp(const std::string& field_name) const;
 
     /**
@@ -653,7 +653,7 @@ public:
      * the one in the schema definition.
      * @see get_timestamp()
      */
-    boost::optional<std::vector<boost::optional<local_date_time>>>&
+    std::optional<std::vector<std::optional<local_date_time>>>&
     get_array_of_timestamp(const std::string& field_name);
 
     /**
@@ -664,7 +664,7 @@ public:
      * the one in the schema definition.
      * @see get_timestamp_with_timezone()
      */
-    const boost::optional<std::vector<boost::optional<offset_date_time>>>&
+    const std::optional<std::vector<std::optional<offset_date_time>>>&
     get_array_of_timestamp_with_timezone(const std::string& field_name) const;
 
     /**
@@ -675,7 +675,7 @@ public:
      * the one in the schema definition.
      * @see get_timestamp_with_timezone()
      */
-    boost::optional<std::vector<boost::optional<offset_date_time>>>&
+    std::optional<std::vector<std::optional<offset_date_time>>>&
     get_array_of_timestamp_with_timezone(const std::string& field_name);
 
     /**
@@ -685,7 +685,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    const boost::optional<std::vector<boost::optional<generic_record>>>&
+    const std::optional<std::vector<std::optional<generic_record>>>&
     get_array_of_generic_record(const std::string& field_name) const;
 
     /**
@@ -695,7 +695,7 @@ public:
      * exist in the schema definition or the type of the field does not match
      * the one in the schema definition.
      */
-    boost::optional<std::vector<boost::optional<generic_record>>>&
+    std::optional<std::vector<std::optional<generic_record>>>&
     get_array_of_generic_record(const std::string& field_name);
 
     /**
@@ -707,7 +707,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<bool> get_nullable_boolean(
+    std::optional<bool> get_nullable_boolean(
       const std::string& field_name) const;
 
     /**
@@ -719,7 +719,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<bool>& get_nullable_boolean(const std::string& field_name);
+    std::optional<bool>& get_nullable_boolean(const std::string& field_name);
 
     /**
      * Supported only for Compact
@@ -730,7 +730,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<int8_t> get_nullable_int8(
+    std::optional<int8_t> get_nullable_int8(
       const std::string& field_name) const;
 
     /**
@@ -742,7 +742,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<int8_t>& get_nullable_int8(const std::string& field_name);
+    std::optional<int8_t>& get_nullable_int8(const std::string& field_name);
 
     /**
      * Supported only for Compact
@@ -753,7 +753,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<int16_t> get_nullable_int16(
+    std::optional<int16_t> get_nullable_int16(
       const std::string& field_name) const;
 
     /**
@@ -765,7 +765,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<int16_t>& get_nullable_int16(const std::string& field_name);
+    std::optional<int16_t>& get_nullable_int16(const std::string& field_name);
 
     /**
      * Supported only for Compact
@@ -776,7 +776,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<int32_t> get_nullable_int32(
+    std::optional<int32_t> get_nullable_int32(
       const std::string& field_name) const;
 
     /**
@@ -788,7 +788,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<int32_t>& get_nullable_int32(const std::string& field_name);
+    std::optional<int32_t>& get_nullable_int32(const std::string& field_name);
 
     /**
      * Supported only for Compact
@@ -799,7 +799,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                             the schema.
      */
-    boost::optional<int64_t> get_nullable_int64(
+    std::optional<int64_t> get_nullable_int64(
       const std::string& field_name) const;
 
     /**
@@ -811,7 +811,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                         the schema.
      */
-    boost::optional<int64_t>& get_nullable_int64(const std::string& field_name);
+    std::optional<int64_t>& get_nullable_int64(const std::string& field_name);
 
     /**
      * Supported only for Compact
@@ -822,7 +822,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<float> get_nullable_float32(
+    std::optional<float> get_nullable_float32(
       const std::string& field_name) const;
 
     /**
@@ -834,7 +834,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<float>& get_nullable_float32(const std::string& field_name);
+    std::optional<float>& get_nullable_float32(const std::string& field_name);
 
     /**
      * Supported only for Compact
@@ -845,7 +845,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<double> get_nullable_float64(
+    std::optional<double> get_nullable_float64(
       const std::string& field_name) const;
 
     /**
@@ -857,7 +857,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<double>& get_nullable_float64(
+    std::optional<double>& get_nullable_float64(
       const std::string& field_name);
 
     /**
@@ -869,7 +869,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    const boost::optional<std::vector<boost::optional<bool>>>&
+    const std::optional<std::vector<std::optional<bool>>>&
     get_array_of_nullable_boolean(const std::string& field_name) const;
 
     /**
@@ -881,7 +881,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<std::vector<boost::optional<bool>>>&
+    std::optional<std::vector<std::optional<bool>>>&
     get_array_of_nullable_boolean(const std::string& field_name);
 
     /**
@@ -893,7 +893,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    const boost::optional<std::vector<boost::optional<int8_t>>>&
+    const std::optional<std::vector<std::optional<int8_t>>>&
     get_array_of_nullable_int8(const std::string& field_name) const;
 
     /**
@@ -905,7 +905,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<std::vector<boost::optional<int8_t>>>&
+    std::optional<std::vector<std::optional<int8_t>>>&
     get_array_of_nullable_int8(const std::string& field_name);
 
     /**
@@ -917,7 +917,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    const boost::optional<std::vector<boost::optional<int16_t>>>&
+    const std::optional<std::vector<std::optional<int16_t>>>&
     get_array_of_nullable_int16(const std::string& field_name) const;
 
     /**
@@ -929,7 +929,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<std::vector<boost::optional<int16_t>>>&
+    std::optional<std::vector<std::optional<int16_t>>>&
     get_array_of_nullable_int16(const std::string& field_name);
 
     /**
@@ -941,7 +941,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    const boost::optional<std::vector<boost::optional<int32_t>>>&
+    const std::optional<std::vector<std::optional<int32_t>>>&
     get_array_of_nullable_int32(const std::string& field_name) const;
 
     /**
@@ -953,7 +953,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<std::vector<boost::optional<int32_t>>>&
+    std::optional<std::vector<std::optional<int32_t>>>&
     get_array_of_nullable_int32(const std::string& field_name);
 
     /**
@@ -965,7 +965,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    const boost::optional<std::vector<boost::optional<int64_t>>>&
+    const std::optional<std::vector<std::optional<int64_t>>>&
     get_array_of_nullable_int64(const std::string& field_name) const;
 
     /**
@@ -977,7 +977,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<std::vector<boost::optional<int64_t>>>&
+    std::optional<std::vector<std::optional<int64_t>>>&
     get_array_of_nullable_int64(const std::string& field_name);
 
     /**
@@ -989,7 +989,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    const boost::optional<std::vector<boost::optional<float>>>&
+    const std::optional<std::vector<std::optional<float>>>&
     get_array_of_nullable_float32(const std::string& field_name) const;
 
     /**
@@ -1001,7 +1001,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<std::vector<boost::optional<float>>>&
+    std::optional<std::vector<std::optional<float>>>&
     get_array_of_nullable_float32(const std::string& field_name);
 
     /**
@@ -1013,7 +1013,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    const boost::optional<std::vector<boost::optional<double>>>&
+    const std::optional<std::vector<std::optional<double>>>&
     get_array_of_nullable_float64(const std::string& field_name) const;
 
     /**
@@ -1025,7 +1025,7 @@ public:
      * exist in the schema or the type of the field does not match the one in
      *                                            the schema.
      */
-    boost::optional<std::vector<boost::optional<double>>>&
+    std::optional<std::vector<std::optional<double>>>&
     get_array_of_nullable_float64(const std::string& field_name);
 
 private:
@@ -1051,7 +1051,7 @@ private:
     field_kind check(const std::string& field_name, Kinds... kinds_ts) const
     {
         field_kind kinds[] = { kinds_ts... };
-        boost::optional<pimpl::field_descriptor> desc =
+        std::optional<pimpl::field_descriptor> desc =
           schema_->get_field(field_name);
 
         if (!desc) {
@@ -1112,7 +1112,7 @@ private:
           check(field_name, primitive_field_kind, nullable_field_kind);
 
         if (kind == nullable_field_kind) {
-            const auto& val_opt = boost::any_cast<const boost::optional<T>&>(
+            const auto& val_opt = boost::any_cast<const std::optional<T>&>(
               objects_.at(field_name));
 
             if (!val_opt) {
@@ -1144,15 +1144,15 @@ private:
     }
 
     template<typename T>
-    const boost::optional<std::vector<T>>& get_array_of_primitive(
+    const std::optional<std::vector<T>>& get_array_of_primitive(
       const std::string& field_name,
       field_kind primitive_field_kind,
       field_kind nullable_field_kind,
       const std::string& method_suffix) const
     {
         using optional_nullable_array_t =
-          boost::optional<std::vector<boost::optional<T>>>;
-        using optional_primitive_array_t = boost::optional<std::vector<T>>;
+          std::optional<std::vector<std::optional<T>>>;
+        using optional_primitive_array_t = std::optional<std::vector<T>>;
         using primitive_array_t = std::vector<T>;
 
         auto kind =
@@ -1204,19 +1204,19 @@ private:
     }
 
     template<typename T>
-    boost::optional<std::vector<T>>& get_array_of_primitive(
+    std::optional<std::vector<T>>& get_array_of_primitive(
       const std::string& field_name,
       field_kind primitive,
       field_kind nullable,
       const std::string& method_suffix)
     {
-        return const_cast<boost::optional<std::vector<T>>&>(
+        return const_cast<std::optional<std::vector<T>>&>(
           static_cast<const generic_record*>(this)->get_array_of_primitive<T>(
             field_name, primitive, nullable, method_suffix));
     }
 
     template<typename T>
-    const boost::optional<std::vector<boost::optional<T>>>&
+    const std::optional<std::vector<std::optional<T>>>&
     get_array_of_nullable(const std::string& field_name,
                           field_kind primitive,
                           field_kind nullable,
@@ -1224,9 +1224,9 @@ private:
     {
         (void)method_suffix;
         using optional_nullable_array_t =
-          boost::optional<std::vector<boost::optional<T>>>;
-        using optional_primitive_array_t = boost::optional<std::vector<T>>;
-        using optional_array_t = std::vector<boost::optional<T>>;
+          std::optional<std::vector<std::optional<T>>>;
+        using optional_primitive_array_t = std::optional<std::vector<T>>;
+        using optional_array_t = std::vector<std::optional<T>>;
 
         auto kind = check(field_name, primitive, nullable);
 
@@ -1267,13 +1267,13 @@ private:
     }
 
     template<typename T>
-    boost::optional<std::vector<boost::optional<T>>>& get_array_of_nullable(
+    std::optional<std::vector<std::optional<T>>>& get_array_of_nullable(
       const std::string& field_name,
       field_kind primitive,
       field_kind nullable,
       const std::string& method_suffix)
     {
-        return const_cast<boost::optional<std::vector<boost::optional<T>>>&>(
+        return const_cast<std::optional<std::vector<std::optional<T>>>&>(
           static_cast<const generic_record*>(this)->get_array_of_nullable<T>(
             field_name, primitive, nullable, method_suffix));
     }

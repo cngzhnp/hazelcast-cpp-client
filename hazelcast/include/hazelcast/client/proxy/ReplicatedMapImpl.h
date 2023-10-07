@@ -91,7 +91,7 @@ public:
     }
 
 protected:
-    boost::future<boost::optional<serialization::pimpl::data>> put_data(
+    boost::future<std::optional<serialization::pimpl::data>> put_data(
       serialization::pimpl::data&& key_data,
       serialization::pimpl::data&& value_data,
       std::chrono::milliseconds ttl)
@@ -104,7 +104,7 @@ protected:
               std::chrono::duration_cast<std::chrono::milliseconds>(ttl)
                 .count());
             auto result = invoke_and_get_future<
-              boost::optional<serialization::pimpl::data>>(request, key_data);
+              std::optional<serialization::pimpl::data>>(request, key_data);
 
             invalidate(std::move(key_data));
 
@@ -115,7 +115,7 @@ protected:
         }
     }
 
-    boost::future<boost::optional<serialization::pimpl::data>> remove_data(
+    boost::future<std::optional<serialization::pimpl::data>> remove_data(
       serialization::pimpl::data&& key_data)
     {
         std::shared_ptr<serialization::pimpl::data> sharedKey(
@@ -124,7 +124,7 @@ protected:
             auto request =
               protocol::codec::replicatedmap_remove_encode(name_, *sharedKey);
             auto result = invoke_and_get_future<
-              boost::optional<serialization::pimpl::data>>(request, *sharedKey);
+              std::optional<serialization::pimpl::data>>(request, *sharedKey);
 
             invalidate(sharedKey);
 
@@ -232,25 +232,25 @@ protected:
           request, target_partition_id_);
     }
 
-    boost::future<boost::optional<serialization::pimpl::data>> get_data(
+    boost::future<std::optional<serialization::pimpl::data>> get_data(
       serialization::pimpl::data&& key)
     {
         auto sharedKey = std::make_shared<serialization::pimpl::data>(key);
         auto cachedValue = get_cached_data(sharedKey);
         if (cachedValue) {
-            return boost::make_ready_future(boost::make_optional(*cachedValue));
+            return boost::make_ready_future(std::make_optional(*cachedValue));
         }
         auto request =
           protocol::codec::replicatedmap_get_encode(get_name(), *sharedKey);
         return invoke_and_get_future<
-                 boost::optional<serialization::pimpl::data>>(request, key)
+                 std::optional<serialization::pimpl::data>>(request, key)
           .then(
             boost::launch::sync,
-            [=](boost::future<boost::optional<serialization::pimpl::data>> f) {
+            [=](boost::future<std::optional<serialization::pimpl::data>> f) {
                 try {
                     auto response = f.get();
                     if (!response) {
-                        return boost::optional<serialization::pimpl::data>();
+                        return std::optional<serialization::pimpl::data>();
                     }
 
                     auto sharedValue =
@@ -259,7 +259,7 @@ protected:
                     if (near_cache_) {
                         near_cache_->put(sharedKey, sharedValue);
                     }
-                    return boost::make_optional(*sharedValue);
+                    return std::make_optional(*sharedValue);
                 } catch (...) {
                     invalidate(sharedKey);
                     throw;
@@ -479,10 +479,10 @@ private:
         void on_listener_register() override { near_cache_->clear(); }
 
         void handle_entry(
-          const boost::optional<serialization::pimpl::data>& key,
-          const boost::optional<serialization::pimpl::data>& /* value */,
-          const boost::optional<serialization::pimpl::data>& /* old_value */,
-          const boost::optional<serialization::pimpl::data>& /* merging_value */,
+          const std::optional<serialization::pimpl::data>& key,
+          const std::optional<serialization::pimpl::data>& /* value */,
+          const std::optional<serialization::pimpl::data>& /* old_value */,
+          const std::optional<serialization::pimpl::data>& /* merging_value */,
           int32_t event_type,
           boost::uuids::uuid /* uuid */,
           int32_t /* number_of_affected_entries */) override

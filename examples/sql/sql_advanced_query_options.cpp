@@ -70,9 +70,9 @@ main()
         auto page = it.next().get();
 
         for (const sql_page::sql_row& row : page->rows()) {
-            // Note that it returns boost::optional<T>.
+            // Note that it returns std::optional<T>.
             // If the column doesn't exist returns
-            // boost::optional<T> is empty.
+            // std::optional<T> is empty.
             auto key = row.get_object<int64_t>("__key");
             auto value = row.get_object<std::string>("this");
 

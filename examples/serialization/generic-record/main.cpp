@@ -53,7 +53,7 @@ main()
     };
 
     for (int i = 1; i < 5; ++i) {
-        boost::optional<generic_record> record =
+        std::optional<generic_record> record =
           map->get<int, generic_record>(i).get();
 
         assert(record.has_value());

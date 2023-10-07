@@ -782,7 +782,7 @@ namespace codec {
 std::ostream&
 operator<<(std::ostream& out, const StackTraceElement& trace)
 {
-    return out << trace.file_name << " line " << trace.line_number << " :"
+    return out << trace.file_name.value() << " line " << trace.line_number << " :"
                << trace.declaring_class << "." << trace.method_name;
 }
 
@@ -880,7 +880,7 @@ sql_page_codec::decode_column_values(ClientMessage& msg,
     switch (column_type) {
         case sql::sql_column_type::varchar:
             return to_vector_of_any(
-              msg.get<std::vector<boost::optional<std::string>>>());
+              msg.get<std::vector<std::optional<std::string>>>());
         case sql::sql_column_type::boolean:
             return to_vector_of_any(
               builtin::list_cn_fixed_size_codec::decode<bool>(msg));
@@ -932,10 +932,10 @@ sql_page_codec::decode_column_values(ClientMessage& msg,
         case sql::sql_column_type::object:
             return to_vector_of_any(
               msg.get<std::vector<
-                boost::optional<serialization::pimpl::data>>>());
+                std::optional<serialization::pimpl::data>>>());
         case sql::sql_column_type::json:
             return to_vector_of_any(
-              msg.get<std::vector<boost::optional<hazelcast_json_value>>>());
+              msg.get<std::vector<std::optional<hazelcast_json_value>>>());
         default:
             throw exception::illegal_state(
               "ClientMessage::get<sql::sql_page>",

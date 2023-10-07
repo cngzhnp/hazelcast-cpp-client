@@ -18,7 +18,7 @@
 
 #include <unordered_set>
 
-#include <boost/optional.hpp>
+#include <optional>
 #include <boost/any.hpp>
 #include <boost/variant.hpp>
 
@@ -209,7 +209,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_nullable_boolean(std::string field_name,
-                                                 boost::optional<bool> value);
+                                                 std::optional<bool> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -227,7 +227,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_nullable_int8(std::string field_name,
-                                              boost::optional<int8_t> value);
+                                              std::optional<int8_t> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -245,7 +245,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_nullable_int16(std::string field_name,
-                                               boost::optional<int16_t> value);
+                                               std::optional<int16_t> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -263,7 +263,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_nullable_int32(std::string field_name,
-                                               boost::optional<int32_t> value);
+                                               std::optional<int32_t> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -281,7 +281,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_nullable_int64(std::string field_name,
-                                               boost::optional<int64_t> value);
+                                               std::optional<int64_t> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -299,7 +299,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_nullable_float32(std::string field_name,
-                                                 boost::optional<float> value);
+                                                 std::optional<float> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -317,7 +317,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_nullable_float64(std::string field_name,
-                                                 boost::optional<double> value);
+                                                 std::optional<double> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -335,7 +335,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_string(std::string field_name,
-                                       boost::optional<std::string> value);
+                                       std::optional<std::string> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -375,7 +375,7 @@ public:
      */
     generic_record_builder& set_generic_record(
       std::string field_name,
-      boost::optional<generic_record> value);
+      std::optional<generic_record> value);
 
     /**
      * Sets a decimal which is arbitrary precision and scale floating-point
@@ -396,7 +396,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_decimal(std::string field_name,
-                                        boost::optional<big_decimal> value);
+                                        std::optional<big_decimal> value);
 
     /**
      * Sets a time field consisting of hour, minute, seconds, and nanos parts.
@@ -417,7 +417,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_time(std::string field_name,
-                                     boost::optional<local_time> value);
+                                     std::optional<local_time> value);
 
     /**
      * Sets a date field consisting of year, month of the year, and day of the
@@ -439,7 +439,7 @@ public:
      * generic_record::new_builder_with_clone()}.
      */
     generic_record_builder& set_date(std::string field_name,
-                                     boost::optional<local_date> value);
+                                     std::optional<local_date> value);
 
     /**
      * Sets a timestamp field consisting of year, month of the year, and day of
@@ -462,7 +462,7 @@ public:
      */
     generic_record_builder& set_timestamp(
       std::string field_name,
-      boost::optional<local_date_time> value);
+      std::optional<local_date_time> value);
 
     /**
      * Sets a timestamp with timezone field consisting of year, month of the
@@ -486,7 +486,7 @@ public:
      */
     generic_record_builder& set_timestamp_with_timezone(
       std::string field_name,
-      boost::optional<offset_date_time> value);
+      std::optional<offset_date_time> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -506,7 +506,7 @@ public:
      */
     generic_record_builder& set_array_of_boolean(
       std::string field_name,
-      boost::optional<std::vector<bool>> value);
+      std::optional<std::vector<bool>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -564,7 +564,7 @@ public:
      */
     generic_record_builder& set_array_of_int8(
       std::string field_name,
-      boost::optional<std::vector<int8_t>> value);
+      std::optional<std::vector<int8_t>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -622,7 +622,7 @@ public:
      */
     generic_record_builder& set_array_of_int16(
       std::string field_name,
-      boost::optional<std::vector<int16_t>> value);
+      std::optional<std::vector<int16_t>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -680,7 +680,7 @@ public:
      */
     generic_record_builder& set_array_of_int32(
       std::string field_name,
-      boost::optional<std::vector<int32_t>> value);
+      std::optional<std::vector<int32_t>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -738,7 +738,7 @@ public:
      */
     generic_record_builder& set_array_of_int64(
       std::string field_name,
-      boost::optional<std::vector<int64_t>> value);
+      std::optional<std::vector<int64_t>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -796,7 +796,7 @@ public:
      */
     generic_record_builder& set_array_of_float32(
       std::string field_name,
-      boost::optional<std::vector<float>> value);
+      std::optional<std::vector<float>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -854,7 +854,7 @@ public:
      */
     generic_record_builder& set_array_of_float64(
       std::string field_name,
-      boost::optional<std::vector<double>> value);
+      std::optional<std::vector<double>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -911,7 +911,7 @@ public:
      */
     generic_record_builder& set_array_of_nullable_boolean(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<bool>>> value);
+      std::optional<std::vector<std::optional<bool>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -970,7 +970,7 @@ public:
      */
     generic_record_builder& set_array_of_nullable_int8(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<int8_t>>> value);
+      std::optional<std::vector<std::optional<int8_t>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1029,7 +1029,7 @@ public:
      */
     generic_record_builder& set_array_of_nullable_int16(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<int16_t>>> value);
+      std::optional<std::vector<std::optional<int16_t>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1088,7 +1088,7 @@ public:
      */
     generic_record_builder& set_array_of_nullable_int32(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<int32_t>>> value);
+      std::optional<std::vector<std::optional<int32_t>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1147,7 +1147,7 @@ public:
      */
     generic_record_builder& set_array_of_nullable_int64(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<int64_t>>> value);
+      std::optional<std::vector<std::optional<int64_t>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1206,7 +1206,7 @@ public:
      */
     generic_record_builder& set_array_of_nullable_float32(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<float>>> value);
+      std::optional<std::vector<std::optional<float>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1265,7 +1265,7 @@ public:
      */
     generic_record_builder& set_array_of_nullable_float64(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<double>>> value);
+      std::optional<std::vector<std::optional<double>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1325,7 +1325,7 @@ public:
      */
     generic_record_builder& set_array_of_string(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<std::string>>> value);
+      std::optional<std::vector<std::optional<std::string>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1346,7 +1346,7 @@ public:
      */
     generic_record_builder& set_array_of_decimal(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<big_decimal>>> value);
+      std::optional<std::vector<std::optional<big_decimal>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1367,7 +1367,7 @@ public:
      */
     generic_record_builder& set_array_of_time(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<local_time>>> value);
+      std::optional<std::vector<std::optional<local_time>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1388,7 +1388,7 @@ public:
      */
     generic_record_builder& set_array_of_date(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<local_date>>> value);
+      std::optional<std::vector<std::optional<local_date>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1409,7 +1409,7 @@ public:
      */
     generic_record_builder& set_array_of_timestamp(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<local_date_time>>> value);
+      std::optional<std::vector<std::optional<local_date_time>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1430,7 +1430,7 @@ public:
      */
     generic_record_builder& set_array_of_timestamp_with_timezone(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<offset_date_time>>> value);
+      std::optional<std::vector<std::optional<offset_date_time>>> value);
 
     /**
      * It is legal to set the field again only when Builder is created with
@@ -1456,7 +1456,7 @@ public:
      */
     generic_record_builder& set_array_of_generic_record(
       std::string field_name,
-      boost::optional<std::vector<boost::optional<generic_record>>> value);
+      std::optional<std::vector<std::optional<generic_record>>> value);
 
 private:
     enum class strategy

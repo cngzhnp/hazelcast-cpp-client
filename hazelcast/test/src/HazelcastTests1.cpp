@@ -2295,7 +2295,7 @@ TEST_P(SimpleListenerTest, testEmptyListener)
       map->add_entry_listener(std::move(listener), true).get();
 
     // entry added
-    ASSERT_EQ(boost::none, map->put(1, 1).get());
+    ASSERT_EQ(std::nullopt, map->put(1, 1).get());
     // entry updated
     ASSERT_EQ(1, map->put(1, 2).get());
     // entry removed
@@ -2964,14 +2964,14 @@ ClientTxnTest::ClientTxnTest()
         std::vector<member> members = c.get_members();
         size_t len = members.size();
         if (len == 0) {
-            return boost::optional<member>();
+            return std::optional<member>();
         }
         for (size_t i = 0; i < len; i++) {
             if (members[i].get_address().get_port() == 5701) {
-                return boost::make_optional<member>(std::move(members[i]));
+                return std::make_optional<member>(std::move(members[i]));
             }
         }
-        return boost::make_optional<member>(std::move(members[0]));
+        return std::make_optional<member>(std::move(members[0]));
     }));
     client_.reset(
       new hazelcast_client{ new_client(std::move(clientConfig)).get() });
@@ -3160,14 +3160,14 @@ TEST_F(ClientTxnTest, testTxnInitAndNextMethod)
           std::vector<member> members = c.get_members();
           size_t len = members.size();
           if (len == 0) {
-              return boost::optional<member>();
+              return std::optional<member>();
           }
           for (size_t i = 0; i < len; i++) {
               if (members[i].get_address().get_port() == 5701) {
-                  return boost::make_optional<member>(std::move(members[i]));
+                  return std::make_optional<member>(std::move(members[i]));
               }
           }
-          return boost::make_optional<member>(std::move(members[0]));
+          return std::make_optional<member>(std::move(members[0]));
       });
 
     clientConfig.set_load_balancer(std::move(tmp_load_balancer));
@@ -3190,14 +3190,14 @@ TEST_F(ClientTxnTest, testTxnInitAndNextMethodRValue)
             std::vector<member> members = c.get_members();
             size_t len = members.size();
             if (len == 0) {
-                return boost::optional<member>();
+                return std::optional<member>();
             }
             for (size_t i = 0; i < len; i++) {
                 if (members[i].get_address().get_port() == 5701) {
-                    return boost::make_optional<member>(std::move(members[i]));
+                    return std::make_optional<member>(std::move(members[i]));
                 }
             }
-            return boost::make_optional<member>(std::move(members[0]));
+            return std::make_optional<member>(std::move(members[0]));
         }));
 
     client_->shutdown().get();
@@ -3446,7 +3446,7 @@ TEST_F(ClientTxnQueueTest, testTransactionalOfferPoll2)
     context.begin_transaction().get();
     auto q0 = context.get_queue("defQueue0");
     auto q1 = context.get_queue("defQueue1");
-    boost::optional<std::string> s;
+    std::optional<std::string> s;
     latch1.count_down();
     s = q0->poll<std::string>(std::chrono::seconds(10)).get();
     ASSERT_EQ("item0", s.value());

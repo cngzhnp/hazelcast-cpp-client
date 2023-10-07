@@ -164,15 +164,15 @@ public:
      *
      * @returns An address that represents the local endpoint of the socket.
      */
-    boost::optional<address> local_socket_address() const override
+    std::optional<address> local_socket_address() const override
     {
         boost::system::error_code ec;
         boost::asio::ip::basic_endpoint<boost::asio::ip::tcp> localEndpoint =
           socket_.lowest_layer().local_endpoint(ec);
         if (ec) {
-            return boost::none;
+            return std::nullopt;
         }
-        return boost::optional<address>(
+        return std::optional<address>(
           address(localEndpoint.address().to_string(), localEndpoint.port()));
     }
 

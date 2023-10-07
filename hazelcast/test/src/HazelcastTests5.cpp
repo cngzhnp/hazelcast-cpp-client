@@ -466,7 +466,7 @@ TEST_F(MapGlobalSerializerTest, testPutGetUnserializableObject)
       ->put<int, MapGlobalSerializerTest::UnknownObject>(2, myObject)
       .get();
 
-    boost::optional<MapGlobalSerializerTest::UnknownObject> data =
+    std::optional<MapGlobalSerializerTest::UnknownObject> data =
       unknown_object_map->get<int, MapGlobalSerializerTest::UnknownObject>(2)
         .get();
     ASSERT_TRUE(data.has_value());
@@ -997,7 +997,7 @@ TEST_P(ClientMapTest, testGet)
         std::string key = e.first;
         std::string value = e.second;
 
-        boost::optional<std::string> temp =
+        std::optional<std::string> temp =
           imap_->get<std::string, std::string>(key).get();
 
         ASSERT_TRUE(temp.has_value());
@@ -1012,7 +1012,7 @@ TEST_P(ClientMapTest, testPartitionAwareKey)
     std::shared_ptr<imap> map = client_.get_map(intMapName).get();
     PartitionAwareInt partitionAwareInt(partitionKey, 7);
     map->put(partitionAwareInt, value).get();
-    boost::optional<int> val =
+    std::optional<int> val =
       map->get<PartitionAwareInt, int>(partitionAwareInt).get();
     ASSERT_TRUE(val.has_value());
     ASSERT_EQ(*val, value);
@@ -1021,7 +1021,7 @@ TEST_P(ClientMapTest, testPartitionAwareKey)
 TEST_P(ClientMapTest, testRemoveAndDelete)
 {
     auto entries = fill_map();
-    boost::optional<std::string> temp =
+    std::optional<std::string> temp =
       imap_->remove<std::string, std::string>("key10").get();
     ASSERT_FALSE(temp.has_value());
     imap_->delete_entry("key9").get();
@@ -1029,7 +1029,7 @@ TEST_P(ClientMapTest, testRemoveAndDelete)
     for (int i = 0; i < 9; i++) {
         std::string key = "key";
         key += std::to_string(i);
-        boost::optional<std::string> temp2 =
+        std::optional<std::string> temp2 =
           imap_->remove<std::string, std::string>(key).get();
         std::string value = "value";
         value += std::to_string(i);
@@ -1058,7 +1058,7 @@ TEST_P(ClientMapTest, testRemoveAll)
         client_, query::query_constants::KEY_ATTRIBUTE_NAME, "key5"))
       .get();
 
-    boost::optional<std::string> value =
+    std::optional<std::string> value =
       imap_->get<std::string, std::string>("key5").get();
 
     ASSERT_FALSE(value.has_value()) << "key5 should not exist";
@@ -1084,7 +1084,7 @@ TEST_P(ClientMapTest, testGetAllPutAll)
 
     for (int i = 0; i < 100; i++) {
         std::string expected = std::to_string(i);
-        boost::optional<std::string> actual =
+        std::optional<std::string> actual =
           imap_->get<std::string, std::string>(std::to_string(i)).get();
         ASSERT_EQ(expected, *actual);
     }
@@ -1183,7 +1183,7 @@ TEST_P(ClientMapTest, testPutConfigTtl)
 
 TEST_P(ClientMapTest, testPutIfAbsent)
 {
-    boost::optional<std::string> o =
+    std::optional<std::string> o =
       imap_->put_if_absent<std::string, std::string>("key1", "value1").get();
     ASSERT_FALSE(o.has_value());
     ASSERT_EQ("value1",
@@ -2830,7 +2830,7 @@ TEST_P(ClientMapTest, testEntrySetWithpaging_predicate)
 
 TEST_P(ClientMapTest, testReplace)
 {
-    boost::optional<std::string> temp =
+    std::optional<std::string> temp =
       imap_->replace<std::string, std::string>("key1", "value").get();
     ASSERT_FALSE(temp);
 
@@ -2945,7 +2945,7 @@ TEST_P(ClientMapTest, testListenerWithtrue_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -2982,7 +2982,7 @@ TEST_P(ClientMapTest, testListenerWithfalse_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3022,7 +3022,7 @@ TEST_P(ClientMapTest, testListenerWithequal_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3067,7 +3067,7 @@ TEST_P(ClientMapTest, testListenerWithnot_equal_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3112,7 +3112,7 @@ TEST_P(ClientMapTest, testListenerWithgreater_less_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3156,7 +3156,7 @@ TEST_P(ClientMapTest, testListenerWithbetween_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3197,7 +3197,7 @@ TEST_P(ClientMapTest, testListenerWithsql_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3247,7 +3247,7 @@ TEST_P(ClientMapTest, testListenerWithRegExPredicate)
 
     // update an entry
     imap_->set("hasan", "suphi").get();
-    boost::optional<std::string> value =
+    std::optional<std::string> value =
       imap_->get<std::string, std::string>("hasan").get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ("suphi", value.value());
@@ -3288,7 +3288,7 @@ TEST_P(ClientMapTest, testListenerWithinstance_of_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3326,7 +3326,7 @@ TEST_P(ClientMapTest, testListenerWithnot_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3372,7 +3372,7 @@ TEST_P(ClientMapTest, testListenerWithand_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3419,7 +3419,7 @@ TEST_P(ClientMapTest, testListenerWithor_predicate)
 
     // update an entry
     int_map_->set(1, 5).get();
-    boost::optional<int> value = int_map_->get<int, int>(1).get();
+    std::optional<int> value = int_map_->get<int, int>(1).get();
     ASSERT_TRUE(value.has_value());
     ASSERT_EQ(5, value.value());
 
@@ -3468,10 +3468,10 @@ TEST_P(ClientMapTest, testEvictAllEvent)
 
 TEST_P(ClientMapTest, testMapWithPortable)
 {
-    boost::optional<employee> n1 = employees_->get<int, employee>(1).get();
+    std::optional<employee> n1 = employees_->get<int, employee>(1).get();
     ASSERT_FALSE(n1);
     employee e("sancar", 24);
-    boost::optional<employee> ptr = employees_->put(1, e).get();
+    std::optional<employee> ptr = employees_->put(1, e).get();
     ASSERT_FALSE(ptr);
     ASSERT_FALSE(employees_->is_empty().get());
     entry_view<int, employee> view =
@@ -3511,7 +3511,7 @@ TEST_P(ClientMapTest, testExecuteOnKey)
 
     EntryMultiplier processor(4);
 
-    boost::optional<int> result =
+    std::optional<int> result =
       employees_->execute_on_key<int, int, EntryMultiplier>(4, processor).get();
 
     ASSERT_TRUE(result.has_value());
@@ -3538,7 +3538,7 @@ TEST_P(ClientMapTest, testExecuteOnNonExistentKey)
 {
     EntryMultiplier processor(4);
 
-    boost::optional<int> result =
+    std::optional<int> result =
       employees_->execute_on_key<int, int, EntryMultiplier>(17, processor)
         .get();
 
@@ -3564,7 +3564,7 @@ TEST_P(ClientMapTest, testExecuteOnKeys)
     // put non existent key
     keys.insert(999);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_->execute_on_keys<int, int, EntryMultiplier>(keys, processor)
         .get();
 
@@ -3589,7 +3589,7 @@ TEST_P(ClientMapTest, testExecuteOnEntries)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_->execute_on_entries<int, int, EntryMultiplier>(processor)
         .get();
 
@@ -3614,7 +3614,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithtrue_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::true_predicate(client_))
@@ -3641,7 +3641,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithfalse_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::false_predicate(client_))
@@ -3668,7 +3668,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithand_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(processor, andPredicate)
         .get();
@@ -3696,7 +3696,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithor_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(processor, orPredicate)
         .get();
@@ -3720,7 +3720,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithbetween_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::between_predicate(client_, "a", 25, 35))
@@ -3745,7 +3745,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithequal_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::equal_predicate(client_, "a", 25))
@@ -3774,7 +3774,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithnot_equal_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::not_equal_predicate(client_, "a", 25))
@@ -3797,7 +3797,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithgreater_less_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor,
@@ -3849,7 +3849,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithlike_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::like_predicate(client_, "n", "deniz"))
@@ -3871,7 +3871,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithilike_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::ilike_predicate(client_, "n", "deniz"))
@@ -3894,7 +3894,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithin_predicate)
     EntryMultiplier processor(4);
 
     query::in_predicate predicate(client_, "n", "ahmet", "mehmet");
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(processor, predicate)
         .get();
@@ -3915,7 +3915,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithinstance_of_predicate)
     employees_->put(5, empl3).get();
 
     EntryMultiplier processor(4);
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor,
@@ -3942,7 +3942,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithnot_predicate)
     EntryMultiplier processor(4);
     query::equal_predicate eqPredicate(client_, "a", 25);
     query::not_predicate notPredicate(client_, eqPredicate);
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(processor, notPredicate)
         .get();
@@ -3986,7 +3986,7 @@ TEST_P(ClientMapTest, testExecuteOnEntriesWithregex_predicate)
 
     EntryMultiplier processor(4);
 
-    std::unordered_map<int, boost::optional<int>> result =
+    std::unordered_map<int, std::optional<int>> result =
       employees_
         ->execute_on_entries<int, int, EntryMultiplier>(
           processor, query::regex_predicate(client_, "n", ".*met"))
@@ -4004,7 +4004,7 @@ TEST_P(ClientMapTest, testAddInterceptor)
     std::string interceptorId =
       imap_->add_interceptor<MapGetInterceptor>(interceptor).get();
 
-    boost::optional<std::string> val =
+    std::optional<std::string> val =
       imap_->get<std::string, std::string>("nonexistent").get();
     ASSERT_TRUE(val);
     ASSERT_EQ(prefix, *val);
@@ -4024,7 +4024,7 @@ TEST_P(ClientMapTest, testJsonPutGet)
     std::shared_ptr<imap> map = client_.get_map(get_test_name()).get();
     hazelcast_json_value value("{ \"age\": 4 }");
     map->put("item1", value).get();
-    boost::optional<hazelcast_json_value> retrieved =
+    std::optional<hazelcast_json_value> retrieved =
       map->get<std::string, hazelcast_json_value>("item1").get();
 
     ASSERT_TRUE(retrieved.has_value());
@@ -4057,7 +4057,7 @@ TEST_P(ClientMapTest, testExtendedAsciiString)
     std::string value = "Num\xc3\xa9ro value";
     imap_->put<std::string, std::string>(key, value).get();
 
-    boost::optional<std::string> actualValue =
+    std::optional<std::string> actualValue =
       imap_->get<std::string, std::string>(key).get();
     ASSERT_TRUE(actualValue.has_value());
     ASSERT_EQ(value, actualValue.value());

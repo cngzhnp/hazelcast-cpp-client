@@ -77,7 +77,7 @@ TEST_F(CompactSerializationTest, testBits)
     expected.b = true;
     expected.i = true;
     expected.id = 121;
-    expected.booleans = boost::make_optional<std::vector<bool>>(
+    expected.booleans = std::make_optional<std::vector<bool>>(
       { true, false, false, false, true, false, false, false });
 
     const data& data = ss.to_data(expected);

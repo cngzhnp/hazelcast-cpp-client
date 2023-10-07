@@ -310,7 +310,7 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_generic_record_back)
 
     get_put_and_check_with_rc(map_name, expected);
 
-    boost::optional<named_compact> actualCompact =
+    std::optional<named_compact> actualCompact =
       map->get<int, named_compact>(2).get();
 
     ASSERT_TRUE(actualCompact.has_value());
@@ -322,7 +322,7 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_get)
     auto map = client->get_map(random_string()).get();
 
     map->put(1, create_generic_record()).get();
-    boost::optional<generic_record> record =
+    std::optional<generic_record> record =
       map->get<int, generic_record>(1).get();
 
     ASSERT_TRUE(record.has_value());
@@ -336,57 +336,57 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_get)
     EXPECT_EQ(record->get_float64("float64"), 64.64);
     EXPECT_EQ(record->get_nullable_boolean("nullable_boolean"), true);
     EXPECT_EQ(record->get_nullable_boolean("nullable_boolean_null"),
-              boost::none);
+              std::nullopt);
     EXPECT_EQ(record->get_nullable_int8("nullable_int8"),
-              boost::optional<int8_t>(88));
-    EXPECT_EQ(record->get_nullable_int8("nullable_int8_null"), boost::none);
+              std::optional<int8_t>(88));
+    EXPECT_EQ(record->get_nullable_int8("nullable_int8_null"), std::nullopt);
     EXPECT_EQ(record->get_nullable_int16("nullable_int16"),
-              boost::optional<int16_t>(1616));
-    EXPECT_EQ(record->get_nullable_int16("nullable_int16_null"), boost::none);
+              std::optional<int16_t>(1616));
+    EXPECT_EQ(record->get_nullable_int16("nullable_int16_null"), std::nullopt);
     EXPECT_EQ(record->get_nullable_int32("nullable_int32"),
-              boost::optional<int32_t>(3232));
-    EXPECT_EQ(record->get_nullable_int32("nullable_int32_null"), boost::none);
+              std::optional<int32_t>(3232));
+    EXPECT_EQ(record->get_nullable_int32("nullable_int32_null"), std::nullopt);
     EXPECT_EQ(record->get_nullable_int64("nullable_int64"),
-              boost::optional<int64_t>(6464));
-    EXPECT_EQ(record->get_nullable_int64("nullable_int64_null"), boost::none);
+              std::optional<int64_t>(6464));
+    EXPECT_EQ(record->get_nullable_int64("nullable_int64_null"), std::nullopt);
     EXPECT_EQ(record->get_nullable_float32("nullable_float32"),
-              boost::optional<float>(3232.3232f));
+              std::optional<float>(3232.3232f));
     EXPECT_EQ(record->get_nullable_float32("nullable_float32_null"),
-              boost::none);
+              std::nullopt);
     EXPECT_EQ(record->get_nullable_float64("nullable_float64"),
-              boost::optional<double>(6464.6464));
+              std::optional<double>(6464.6464));
     EXPECT_EQ(record->get_nullable_float64("nullable_float64_null"),
-              boost::none);
+              std::nullopt);
     EXPECT_EQ(record->get_string("string"),
-              boost::optional<std::string>("a_text"));
-    EXPECT_EQ(record->get_string("string_null"), boost::none);
+              std::optional<std::string>("a_text"));
+    EXPECT_EQ(record->get_string("string_null"), std::nullopt);
     EXPECT_EQ(record->get_generic_record("generic_record")
                 ->get_boolean("nested_boolean"),
               true);
-    EXPECT_EQ(record->get_generic_record("generic_record_null"), boost::none);
+    EXPECT_EQ(record->get_generic_record("generic_record_null"), std::nullopt);
 
     {
         big_decimal expected{ 14, 10 };
         EXPECT_TRUE(record->get_decimal("decimal") == expected);
-        EXPECT_TRUE(record->get_decimal("decimal_null") == boost::none);
+        EXPECT_TRUE(record->get_decimal("decimal_null") == std::nullopt);
     }
 
     {
         local_time expected{ 19, 52, 10, 123456789 };
         EXPECT_TRUE(record->get_time("time") == expected);
-        EXPECT_TRUE(record->get_time("time_null") == boost::none);
+        EXPECT_TRUE(record->get_time("time_null") == std::nullopt);
     }
 
     {
         local_date expected{ 2023, 2, 6 };
         EXPECT_TRUE(record->get_date("date") == expected);
-        EXPECT_TRUE(record->get_date("date_null") == boost::none);
+        EXPECT_TRUE(record->get_date("date_null") == std::nullopt);
     }
 
     {
         local_date_time expected{ { 2023, 2, 6 }, { 9, 2, 8, 123456789 } };
         EXPECT_TRUE(record->get_timestamp("timestamp") == expected);
-        EXPECT_TRUE(record->get_timestamp("timestamp_null") == boost::none);
+        EXPECT_TRUE(record->get_timestamp("timestamp_null") == std::nullopt);
     }
 
     {
@@ -396,7 +396,7 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_get)
         EXPECT_TRUE(record->get_timestamp_with_timezone(
                       "timestamp_with_timezone") == expected);
         EXPECT_TRUE(record->get_timestamp_with_timezone(
-                      "timestamp_with_timezone_null") == boost::none);
+                      "timestamp_with_timezone_null") == std::nullopt);
     }
 
     {
@@ -404,35 +404,35 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_get)
         EXPECT_TRUE(record->get_array_of_boolean("array_of_boolean") ==
                     expected);
         EXPECT_TRUE(record->get_array_of_boolean("array_of_boolean_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
         std::vector<int8_t> expected{ 8, 9 };
         EXPECT_TRUE(record->get_array_of_int8("array_of_int8") == expected);
         EXPECT_TRUE(record->get_array_of_int8("array_of_int8_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
         std::vector<int16_t> expected{ 16, 17 };
         EXPECT_TRUE(record->get_array_of_int16("array_of_int16") == expected);
         EXPECT_TRUE(record->get_array_of_int16("array_of_int16_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
         std::vector<int32_t> expected{ 32, 33 };
         EXPECT_TRUE(record->get_array_of_int32("array_of_int32") == expected);
         EXPECT_TRUE(record->get_array_of_int32("array_of_int32_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
         std::vector<int64_t> expected{ 64, 65 };
         EXPECT_TRUE(record->get_array_of_int64("array_of_int64") == expected);
         EXPECT_TRUE(record->get_array_of_int64("array_of_int64_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
@@ -440,7 +440,7 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_get)
         EXPECT_TRUE(record->get_array_of_float32("array_of_float32") ==
                     expected);
         EXPECT_TRUE(record->get_array_of_float32("array_of_float32_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
@@ -448,155 +448,155 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_get)
         EXPECT_TRUE(record->get_array_of_float64("array_of_float64") ==
                     expected);
         EXPECT_TRUE(record->get_array_of_float64("array_of_float64_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
-        std::vector<boost::optional<bool>> expected{
-            boost::optional<bool>{ true },
-            boost::optional<bool>{ false },
-            boost::none
+        std::vector<std::optional<bool>> expected{
+            std::optional<bool>{ true },
+            std::optional<bool>{ false },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_nullable_boolean(
                       "array_of_nullable_boolean") == expected);
         EXPECT_TRUE(record->get_array_of_nullable_boolean(
-                      "array_of_nullable_boolean_null") == boost::none);
+                      "array_of_nullable_boolean_null") == std::nullopt);
     }
 
     {
-        std::vector<boost::optional<int8_t>> expected{
-            boost::optional<int8_t>{ 88 },
-            boost::optional<int8_t>{ 89 },
-            boost::none
+        std::vector<std::optional<int8_t>> expected{
+            std::optional<int8_t>{ 88 },
+            std::optional<int8_t>{ 89 },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_nullable_int8(
                       "array_of_nullable_int8") == expected);
         EXPECT_TRUE(record->get_array_of_nullable_int8(
-                      "array_of_nullable_int8_null") == boost::none);
+                      "array_of_nullable_int8_null") == std::nullopt);
     }
 
     {
-        std::vector<boost::optional<int16_t>> expected{
-            boost::optional<int16_t>{ 1616 },
-            boost::optional<int16_t>{ 1717 },
-            boost::none
+        std::vector<std::optional<int16_t>> expected{
+            std::optional<int16_t>{ 1616 },
+            std::optional<int16_t>{ 1717 },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_nullable_int16(
                       "array_of_nullable_int16") == expected);
         EXPECT_TRUE(record->get_array_of_nullable_int16(
-                      "array_of_nullable_int16_null") == boost::none);
+                      "array_of_nullable_int16_null") == std::nullopt);
     }
 
     {
-        std::vector<boost::optional<int32_t>> expected{
-            boost::optional<int32_t>{ 3232 },
-            boost::optional<int32_t>{ 3333 },
-            boost::none
+        std::vector<std::optional<int32_t>> expected{
+            std::optional<int32_t>{ 3232 },
+            std::optional<int32_t>{ 3333 },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_nullable_int32(
                       "array_of_nullable_int32") == expected);
         EXPECT_TRUE(record->get_array_of_nullable_int32(
-                      "array_of_nullable_int32_null") == boost::none);
+                      "array_of_nullable_int32_null") == std::nullopt);
     }
 
     {
-        std::vector<boost::optional<int64_t>> expected{
-            boost::optional<int64_t>{ 6464 },
-            boost::optional<int64_t>{ 6565 },
-            boost::none
+        std::vector<std::optional<int64_t>> expected{
+            std::optional<int64_t>{ 6464 },
+            std::optional<int64_t>{ 6565 },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_nullable_int64(
                       "array_of_nullable_int64") == expected);
         EXPECT_TRUE(record->get_array_of_nullable_int64(
-                      "array_of_nullable_int64_null") == boost::none);
+                      "array_of_nullable_int64_null") == std::nullopt);
     }
 
     {
-        std::vector<boost::optional<float>> expected{
-            boost::optional<float>{ 3232.3232f },
-            boost::optional<float>{ 3333.3333f },
-            boost::none
+        std::vector<std::optional<float>> expected{
+            std::optional<float>{ 3232.3232f },
+            std::optional<float>{ 3333.3333f },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_nullable_float32(
                       "array_of_nullable_float32") == expected);
         EXPECT_TRUE(record->get_array_of_nullable_float32(
-                      "array_of_nullable_float32_null") == boost::none);
+                      "array_of_nullable_float32_null") == std::nullopt);
     }
 
     {
-        std::vector<boost::optional<double>> expected{
-            boost::optional<double>{ 6464.6464 },
-            boost::optional<double>{ 6565.6565 },
-            boost::none
+        std::vector<std::optional<double>> expected{
+            std::optional<double>{ 6464.6464 },
+            std::optional<double>{ 6565.6565 },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_nullable_float64(
                       "array_of_nullable_float64") == expected);
         EXPECT_TRUE(record->get_array_of_nullable_float64(
-                      "array_of_nullable_float64_null") == boost::none);
+                      "array_of_nullable_float64_null") == std::nullopt);
     }
 
     {
-        std::vector<boost::optional<std::string>> expected{
-            boost::optional<std::string>{ "str1" },
-            boost::optional<std::string>{ "str2" },
-            boost::none
+        std::vector<std::optional<std::string>> expected{
+            std::optional<std::string>{ "str1" },
+            std::optional<std::string>{ "str2" },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_string("array_of_string") == expected);
         EXPECT_TRUE(record->get_array_of_string("array_of_string_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
-        std::vector<boost::optional<big_decimal>> expected{
-            boost::optional<big_decimal>{ big_decimal{ 14, 10 } }, boost::none
+        std::vector<std::optional<big_decimal>> expected{
+            std::optional<big_decimal>{ big_decimal{ 14, 10 } }, std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_decimal("array_of_decimal") ==
                     expected);
         EXPECT_TRUE(record->get_array_of_decimal("array_of_decimal_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
-        std::vector<boost::optional<local_time>> expected{
-            boost::optional<local_time>{ local_time{ 19, 52, 10, 123456789 } },
-            boost::none
+        std::vector<std::optional<local_time>> expected{
+            std::optional<local_time>{ local_time{ 19, 52, 10, 123456789 } },
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_time("array_of_time") == expected);
         EXPECT_TRUE(record->get_array_of_time("array_of_time_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
-        std::vector<boost::optional<local_date>> expected{
-            boost::optional<local_date>{ local_date{ 2023, 2, 6 } }, boost::none
+        std::vector<std::optional<local_date>> expected{
+            std::optional<local_date>{ local_date{ 2023, 2, 6 } }, std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_date("array_of_date") == expected);
         EXPECT_TRUE(record->get_array_of_date("array_of_date_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
-        std::vector<boost::optional<local_date_time>> expected{
-            boost::optional<local_date_time>{
+        std::vector<std::optional<local_date_time>> expected{
+            std::optional<local_date_time>{
               local_date_time{ { 2023, 2, 6 }, { 19, 52, 10, 123456789 } } },
-            boost::none
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_timestamp("array_of_timestamp") ==
                     expected);
         EXPECT_TRUE(record->get_array_of_timestamp("array_of_timestamp_null") ==
-                    boost::none);
+                    std::nullopt);
     }
 
     {
-        std::vector<boost::optional<offset_date_time>> expected{
-            boost::optional<offset_date_time>{ offset_date_time{
+        std::vector<std::optional<offset_date_time>> expected{
+            std::optional<offset_date_time>{ offset_date_time{
               { { 2023, 2, 6 }, { 19, 52, 10, 123456789 } }, 5000 } },
-            boost::none
+            std::nullopt
         };
         EXPECT_TRUE(record->get_array_of_timestamp_with_timezone(
                       "array_of_timestamp_with_timezone") == expected);
         EXPECT_TRUE(record->get_array_of_timestamp_with_timezone(
-                      "array_of_timestamp_with_timezone_null") == boost::none);
+                      "array_of_timestamp_with_timezone_null") == std::nullopt);
     }
 
     {
@@ -606,9 +606,9 @@ TEST_F(CompactGenericRecordIntegrationTest, test_put_get)
             ->get_boolean("nested_boolean") == true);
         EXPECT_TRUE(
           record->get_array_of_generic_record("array_of_generic_record")
-            ->at(1) == boost::none);
+            ->at(1) == std::nullopt);
         EXPECT_TRUE(record->get_array_of_generic_record(
-                      "array_of_generic_record_null") == boost::none);
+                      "array_of_generic_record_null") == std::nullopt);
     }
 }
 

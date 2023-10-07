@@ -126,9 +126,9 @@ TEST_F(CompactRabinFingerprintTest, test_schema)
       hazelcast::client::serialization::pimpl::create_compact_writer(&s_writer);
 
     writer.write_int32("id", 0);
-    writer.write_string("name", boost::none);
+    writer.write_string("name", std::nullopt);
     writer.write_int8("age", 0);
-    writer.write_array_of_timestamp("times", boost::none);
+    writer.write_array_of_timestamp("times", std::nullopt);
 
     auto schema_id = std::move(s_writer).build().schema_id();
     ASSERT_EQ(3662264393229655598, schema_id);

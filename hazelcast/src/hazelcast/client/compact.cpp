@@ -77,8 +77,8 @@ generic_record_builder&
 generic_record_builder::set_string(std::string field_name, const char* cstr)
 {
     return set_string(field_name,
-                      cstr ? boost::optional<std::string>{ std::string{ cstr } }
-                           : boost::none);
+                      cstr ? std::optional<std::string>{ std::string{ cstr } }
+                           : std::nullopt);
 }
 
 generic_record_builder::generic_record_builder(std::string type_name)
@@ -110,7 +110,7 @@ generic_record_builder::check_type_with_schema(const pimpl::schema& schema,
                                                const std::string& field_name,
                                                field_kind kind) const
 {
-    boost::optional<pimpl::field_descriptor> fd = schema.get_field(field_name);
+    std::optional<pimpl::field_descriptor> fd = schema.get_field(field_name);
 
     if (!fd) {
         BOOST_THROW_EXCEPTION(exception::hazelcast_serialization{
@@ -201,49 +201,49 @@ generic_record_builder::set_float64(std::string field_name, double value)
 
 generic_record_builder&
 generic_record_builder::set_nullable_boolean(std::string field_name,
-                                             boost::optional<bool> value)
+                                             std::optional<bool> value)
 {
     return write(move(field_name), value, field_kind::NULLABLE_BOOLEAN);
 }
 
 generic_record_builder&
 generic_record_builder::set_nullable_int8(std::string field_name,
-                                          boost::optional<int8_t> value)
+                                          std::optional<int8_t> value)
 {
     return write(move(field_name), value, field_kind::NULLABLE_INT8);
 }
 
 generic_record_builder&
 generic_record_builder::set_nullable_int16(std::string field_name,
-                                           boost::optional<int16_t> value)
+                                           std::optional<int16_t> value)
 {
     return write(move(field_name), value, field_kind::NULLABLE_INT16);
 }
 
 generic_record_builder&
 generic_record_builder::set_nullable_int32(std::string field_name,
-                                           boost::optional<int32_t> value)
+                                           std::optional<int32_t> value)
 {
     return write(move(field_name), value, field_kind::NULLABLE_INT32);
 }
 
 generic_record_builder&
 generic_record_builder::set_nullable_int64(std::string field_name,
-                                           boost::optional<int64_t> value)
+                                           std::optional<int64_t> value)
 {
     return write(move(field_name), value, field_kind::NULLABLE_INT64);
 }
 
 generic_record_builder&
 generic_record_builder::set_nullable_float32(std::string field_name,
-                                             boost::optional<float> value)
+                                             std::optional<float> value)
 {
     return write(move(field_name), value, field_kind::NULLABLE_FLOAT32);
 }
 
 generic_record_builder&
 generic_record_builder::set_nullable_float64(std::string field_name,
-                                             boost::optional<double> value)
+                                             std::optional<double> value)
 {
     return write(move(field_name), value, field_kind::NULLABLE_FLOAT64);
 }
@@ -251,35 +251,35 @@ generic_record_builder::set_nullable_float64(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_generic_record(
   std::string field_name,
-  boost::optional<generic_record> value)
+  std::optional<generic_record> value)
 {
     return write(move(field_name), std::move(value), field_kind::COMPACT);
 }
 
 generic_record_builder&
 generic_record_builder::set_decimal(std::string field_name,
-                                    boost::optional<big_decimal> value)
+                                    std::optional<big_decimal> value)
 {
     return write(move(field_name), value, field_kind::DECIMAL);
 }
 
 generic_record_builder&
 generic_record_builder::set_time(std::string field_name,
-                                 boost::optional<local_time> value)
+                                 std::optional<local_time> value)
 {
     return write(move(field_name), value, field_kind::TIME);
 }
 
 generic_record_builder&
 generic_record_builder::set_date(std::string field_name,
-                                 boost::optional<local_date> value)
+                                 std::optional<local_date> value)
 {
     return write(move(field_name), value, field_kind::DATE);
 }
 
 generic_record_builder&
 generic_record_builder::set_timestamp(std::string field_name,
-                                      boost::optional<local_date_time> value)
+                                      std::optional<local_date_time> value)
 {
     return write(move(field_name), value, field_kind::TIMESTAMP);
 }
@@ -287,14 +287,14 @@ generic_record_builder::set_timestamp(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_timestamp_with_timezone(
   std::string field_name,
-  boost::optional<offset_date_time> value)
+  std::optional<offset_date_time> value)
 {
     return write(move(field_name), value, field_kind::TIMESTAMP_WITH_TIMEZONE);
 }
 
 generic_record_builder&
 generic_record_builder::set_string(std::string field_name,
-                                   boost::optional<std::string> value)
+                                   std::optional<std::string> value)
 {
     return write(move(field_name), std::move(value), field_kind::STRING);
 }
@@ -302,7 +302,7 @@ generic_record_builder::set_string(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_boolean(
   std::string field_name,
-  boost::optional<std::vector<bool>> value)
+  std::optional<std::vector<bool>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_BOOLEAN);
@@ -313,7 +313,7 @@ generic_record_builder::set_array_of_boolean(std::string field_name,
                                              std::vector<bool> value)
 {
     return set_array_of_boolean(
-      move(field_name), boost::optional<std::vector<bool>>(move(value)));
+      move(field_name), std::optional<std::vector<bool>>(move(value)));
 }
 
 generic_record_builder&
@@ -327,7 +327,7 @@ generic_record_builder::set_array_of_boolean(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_int8(
   std::string field_name,
-  boost::optional<std::vector<int8_t>> value)
+  std::optional<std::vector<int8_t>> value)
 {
     return write(move(field_name), std::move(value), field_kind::ARRAY_OF_INT8);
 }
@@ -337,7 +337,7 @@ generic_record_builder::set_array_of_int8(std::string field_name,
                                           std::vector<int8_t> value)
 {
     return set_array_of_int8(move(field_name),
-                             boost::optional<std::vector<int8_t>>(move(value)));
+                             std::optional<std::vector<int8_t>>(move(value)));
 }
 
 generic_record_builder&
@@ -351,7 +351,7 @@ generic_record_builder::set_array_of_int8(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_int16(
   std::string field_name,
-  boost::optional<std::vector<int16_t>> value)
+  std::optional<std::vector<int16_t>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_INT16);
@@ -362,7 +362,7 @@ generic_record_builder::set_array_of_int16(std::string field_name,
                                            std::vector<int16_t> value)
 {
     return set_array_of_int16(
-      move(field_name), boost::optional<std::vector<int16_t>>(move(value)));
+      move(field_name), std::optional<std::vector<int16_t>>(move(value)));
 }
 
 generic_record_builder&
@@ -376,7 +376,7 @@ generic_record_builder::set_array_of_int16(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_int32(
   std::string field_name,
-  boost::optional<std::vector<int32_t>> value)
+  std::optional<std::vector<int32_t>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_INT32);
@@ -387,7 +387,7 @@ generic_record_builder::set_array_of_int32(std::string field_name,
                                            std::vector<int32_t> value)
 {
     return set_array_of_int32(
-      move(field_name), boost::optional<std::vector<int32_t>>(move(value)));
+      move(field_name), std::optional<std::vector<int32_t>>(move(value)));
 }
 
 generic_record_builder&
@@ -401,7 +401,7 @@ generic_record_builder::set_array_of_int32(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_int64(
   std::string field_name,
-  boost::optional<std::vector<int64_t>> value)
+  std::optional<std::vector<int64_t>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_INT64);
@@ -412,7 +412,7 @@ generic_record_builder::set_array_of_int64(std::string field_name,
                                            std::vector<int64_t> value)
 {
     return set_array_of_int64(
-      move(field_name), boost::optional<std::vector<int64_t>>(move(value)));
+      move(field_name), std::optional<std::vector<int64_t>>(move(value)));
 }
 
 generic_record_builder&
@@ -426,7 +426,7 @@ generic_record_builder::set_array_of_int64(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_float32(
   std::string field_name,
-  boost::optional<std::vector<float>> value)
+  std::optional<std::vector<float>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_FLOAT32);
@@ -437,7 +437,7 @@ generic_record_builder::set_array_of_float32(std::string field_name,
                                              std::vector<float> value)
 {
     return set_array_of_float32(
-      move(field_name), boost::optional<std::vector<float>>(move(value)));
+      move(field_name), std::optional<std::vector<float>>(move(value)));
 }
 
 generic_record_builder&
@@ -451,7 +451,7 @@ generic_record_builder::set_array_of_float32(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_float64(
   std::string field_name,
-  boost::optional<std::vector<double>> value)
+  std::optional<std::vector<double>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_FLOAT64);
@@ -462,7 +462,7 @@ generic_record_builder::set_array_of_float64(std::string field_name,
                                              std::vector<double> value)
 {
     return set_array_of_float64(
-      move(field_name), boost::optional<std::vector<double>>(move(value)));
+      move(field_name), std::optional<std::vector<double>>(move(value)));
 }
 
 generic_record_builder&
@@ -474,15 +474,15 @@ generic_record_builder::set_array_of_float64(std::string field_name,
 }
 
 template<typename T>
-std::vector<boost::optional<T>>
+std::vector<std::optional<T>>
 to_nullable(std::vector<T> value)
 {
-	std::vector<boost::optional<T>> value_opt;
+	std::vector<std::optional<T>> value_opt;
 
 	value_opt.reserve(value.size());
 
 	transform(begin(value), end(value), back_inserter(value_opt), [](T value) {
-		return boost::optional<T>{ value };
+		return std::optional<T>{ value };
 		});
 
 	return value_opt;
@@ -491,7 +491,7 @@ to_nullable(std::vector<T> value)
 generic_record_builder&
 generic_record_builder::set_array_of_nullable_boolean(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<bool>>> value)
+  std::optional<std::vector<std::optional<bool>>> value)
 {
     return write(move(field_name),
                  std::move(value),
@@ -517,7 +517,7 @@ generic_record_builder::set_array_of_nullable_boolean(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_nullable_int8(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<int8_t>>> value)
+  std::optional<std::vector<std::optional<int8_t>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_NULLABLE_INT8);
@@ -542,7 +542,7 @@ generic_record_builder::set_array_of_nullable_int8(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_nullable_int16(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<int16_t>>> value)
+  std::optional<std::vector<std::optional<int16_t>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_NULLABLE_INT16);
@@ -567,7 +567,7 @@ generic_record_builder::set_array_of_nullable_int16(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_nullable_int32(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<int32_t>>> value)
+  std::optional<std::vector<std::optional<int32_t>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_NULLABLE_INT32);
@@ -592,7 +592,7 @@ generic_record_builder::set_array_of_nullable_int32(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_nullable_int64(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<int64_t>>> value)
+  std::optional<std::vector<std::optional<int64_t>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_NULLABLE_INT64);
@@ -617,7 +617,7 @@ generic_record_builder::set_array_of_nullable_int64(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_nullable_float32(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<float>>> value)
+  std::optional<std::vector<std::optional<float>>> value)
 {
     return write(move(field_name),
                  std::move(value),
@@ -643,7 +643,7 @@ generic_record_builder::set_array_of_nullable_float32(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_nullable_float64(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<double>>> value)
+  std::optional<std::vector<std::optional<double>>> value)
 {
     return write(move(field_name),
                  std::move(value),
@@ -669,7 +669,7 @@ generic_record_builder::set_array_of_nullable_float64(std::string field_name,
 generic_record_builder&
 generic_record_builder::set_array_of_string(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<std::string>>> value)
+  std::optional<std::vector<std::optional<std::string>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_STRING);
@@ -678,7 +678,7 @@ generic_record_builder::set_array_of_string(
 generic_record_builder&
 generic_record_builder::set_array_of_decimal(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<big_decimal>>> value)
+  std::optional<std::vector<std::optional<big_decimal>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_DECIMAL);
@@ -687,7 +687,7 @@ generic_record_builder::set_array_of_decimal(
 generic_record_builder&
 generic_record_builder::set_array_of_time(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<local_time>>> value)
+  std::optional<std::vector<std::optional<local_time>>> value)
 {
     return write(move(field_name), std::move(value), field_kind::ARRAY_OF_TIME);
 }
@@ -695,7 +695,7 @@ generic_record_builder::set_array_of_time(
 generic_record_builder&
 generic_record_builder::set_array_of_date(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<local_date>>> value)
+  std::optional<std::vector<std::optional<local_date>>> value)
 {
     return write(move(field_name), std::move(value), field_kind::ARRAY_OF_DATE);
 }
@@ -703,7 +703,7 @@ generic_record_builder::set_array_of_date(
 generic_record_builder&
 generic_record_builder::set_array_of_timestamp(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<local_date_time>>> value)
+  std::optional<std::vector<std::optional<local_date_time>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_TIMESTAMP);
@@ -712,7 +712,7 @@ generic_record_builder::set_array_of_timestamp(
 generic_record_builder&
 generic_record_builder::set_array_of_timestamp_with_timezone(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<offset_date_time>>> value)
+  std::optional<std::vector<std::optional<offset_date_time>>> value)
 {
     return write(move(field_name),
                  std::move(value),
@@ -722,7 +722,7 @@ generic_record_builder::set_array_of_timestamp_with_timezone(
 generic_record_builder&
 generic_record_builder::set_array_of_generic_record(
   std::string field_name,
-  boost::optional<std::vector<boost::optional<generic_record>>> value)
+  std::optional<std::vector<std::optional<generic_record>>> value)
 {
     return write(
       move(field_name), std::move(value), field_kind::ARRAY_OF_COMPACT);
@@ -887,191 +887,191 @@ generic_record::get_float64(const std::string& field_name)
       field_name, field_kind::FLOAT64, field_kind::NULLABLE_FLOAT64, "Float64");
 }
 
-boost::optional<bool>
+std::optional<bool>
 generic_record::get_nullable_boolean(const std::string& field_name) const
 {
-    return get<boost::optional<bool>>(field_name, field_kind::NULLABLE_BOOLEAN);
+    return get<std::optional<bool>>(field_name, field_kind::NULLABLE_BOOLEAN);
 }
 
-boost::optional<bool>&
+std::optional<bool>&
 generic_record::get_nullable_boolean(const std::string& field_name)
 {
-    return get<boost::optional<bool>>(field_name, field_kind::NULLABLE_BOOLEAN);
+    return get<std::optional<bool>>(field_name, field_kind::NULLABLE_BOOLEAN);
 }
 
-boost::optional<int8_t>
+std::optional<int8_t>
 generic_record::get_nullable_int8(const std::string& field_name) const
 {
-    return get<boost::optional<int8_t>>(field_name, field_kind::NULLABLE_INT8);
+    return get<std::optional<int8_t>>(field_name, field_kind::NULLABLE_INT8);
 }
 
-boost::optional<int8_t>&
+std::optional<int8_t>&
 generic_record::get_nullable_int8(const std::string& field_name)
 {
-    return get<boost::optional<int8_t>>(field_name, field_kind::NULLABLE_INT8);
+    return get<std::optional<int8_t>>(field_name, field_kind::NULLABLE_INT8);
 }
 
-boost::optional<int16_t>
+std::optional<int16_t>
 generic_record::get_nullable_int16(const std::string& field_name) const
 {
-    return get<boost::optional<int16_t>>(field_name,
+    return get<std::optional<int16_t>>(field_name,
                                          field_kind::NULLABLE_INT16);
 }
 
-boost::optional<int16_t>&
+std::optional<int16_t>&
 generic_record::get_nullable_int16(const std::string& field_name)
 {
-    return get<boost::optional<int16_t>>(field_name,
+    return get<std::optional<int16_t>>(field_name,
                                          field_kind::NULLABLE_INT16);
 }
 
-boost::optional<int32_t>
+std::optional<int32_t>
 generic_record::get_nullable_int32(const std::string& field_name) const
 {
-    return get<boost::optional<int32_t>>(field_name,
+    return get<std::optional<int32_t>>(field_name,
                                          field_kind::NULLABLE_INT32);
 }
 
-boost::optional<int32_t>&
+std::optional<int32_t>&
 generic_record::get_nullable_int32(const std::string& field_name)
 {
-    return get<boost::optional<int32_t>>(field_name,
+    return get<std::optional<int32_t>>(field_name,
                                          field_kind::NULLABLE_INT32);
 }
 
-boost::optional<int64_t>
+std::optional<int64_t>
 generic_record::get_nullable_int64(const std::string& field_name) const
 {
-    return get<boost::optional<int64_t>>(field_name,
+    return get<std::optional<int64_t>>(field_name,
                                          field_kind::NULLABLE_INT64);
 }
 
-boost::optional<int64_t>&
+std::optional<int64_t>&
 generic_record::get_nullable_int64(const std::string& field_name)
 {
-    return get<boost::optional<int64_t>>(field_name,
+    return get<std::optional<int64_t>>(field_name,
                                          field_kind::NULLABLE_INT64);
 }
 
-boost::optional<float>
+std::optional<float>
 generic_record::get_nullable_float32(const std::string& field_name) const
 {
-    return get<boost::optional<float>>(field_name,
+    return get<std::optional<float>>(field_name,
                                        field_kind::NULLABLE_FLOAT32);
 }
 
-boost::optional<float>&
+std::optional<float>&
 generic_record::get_nullable_float32(const std::string& field_name)
 {
-    return get<boost::optional<float>>(field_name,
+    return get<std::optional<float>>(field_name,
                                        field_kind::NULLABLE_FLOAT32);
 }
 
-boost::optional<double>
+std::optional<double>
 generic_record::get_nullable_float64(const std::string& field_name) const
 {
-    return get<boost::optional<double>>(field_name,
+    return get<std::optional<double>>(field_name,
                                         field_kind::NULLABLE_FLOAT64);
 }
 
-boost::optional<double>&
+std::optional<double>&
 generic_record::get_nullable_float64(const std::string& field_name)
 {
-    return get<boost::optional<double>>(field_name,
+    return get<std::optional<double>>(field_name,
                                         field_kind::NULLABLE_FLOAT64);
 }
 
-const boost::optional<std::string>&
+const std::optional<std::string>&
 generic_record::get_string(const std::string& field_name) const
 {
-    return get<boost::optional<std::string>>(field_name, field_kind::STRING);
+    return get<std::optional<std::string>>(field_name, field_kind::STRING);
 }
 
-boost::optional<std::string>&
+std::optional<std::string>&
 generic_record::get_string(const std::string& field_name)
 {
-    return get<boost::optional<std::string>>(field_name, field_kind::STRING);
+    return get<std::optional<std::string>>(field_name, field_kind::STRING);
 }
 
-const boost::optional<generic_record>&
+const std::optional<generic_record>&
 generic_record::get_generic_record(const std::string& field_name) const
 {
-    return get<boost::optional<generic_record>>(field_name,
+    return get<std::optional<generic_record>>(field_name,
                                                 field_kind::COMPACT);
 }
 
-boost::optional<generic_record>&
+std::optional<generic_record>&
 generic_record::get_generic_record(const std::string& field_name)
 {
-    return get<boost::optional<generic_record>>(field_name,
+    return get<std::optional<generic_record>>(field_name,
                                                 field_kind::COMPACT);
 }
 
-const boost::optional<big_decimal>&
+const std::optional<big_decimal>&
 generic_record::get_decimal(const std::string& field_name) const
 {
-    return get<boost::optional<big_decimal>>(field_name, field_kind::DECIMAL);
+    return get<std::optional<big_decimal>>(field_name, field_kind::DECIMAL);
 }
 
-boost::optional<big_decimal>&
+std::optional<big_decimal>&
 generic_record::get_decimal(const std::string& field_name)
 {
-    return get<boost::optional<big_decimal>>(field_name, field_kind::DECIMAL);
+    return get<std::optional<big_decimal>>(field_name, field_kind::DECIMAL);
 }
 
-const boost::optional<local_time>&
+const std::optional<local_time>&
 generic_record::get_time(const std::string& field_name) const
 {
-    return get<boost::optional<local_time>>(field_name, field_kind::TIME);
+    return get<std::optional<local_time>>(field_name, field_kind::TIME);
 }
 
-boost::optional<local_time>&
+std::optional<local_time>&
 generic_record::get_time(const std::string& field_name)
 {
-    return get<boost::optional<local_time>>(field_name, field_kind::TIME);
+    return get<std::optional<local_time>>(field_name, field_kind::TIME);
 }
 
-const boost::optional<local_date>&
+const std::optional<local_date>&
 generic_record::get_date(const std::string& field_name) const
 {
-    return get<boost::optional<local_date>>(field_name, field_kind::DATE);
+    return get<std::optional<local_date>>(field_name, field_kind::DATE);
 }
 
-boost::optional<local_date>&
+std::optional<local_date>&
 generic_record::get_date(const std::string& field_name)
 {
-    return get<boost::optional<local_date>>(field_name, field_kind::DATE);
+    return get<std::optional<local_date>>(field_name, field_kind::DATE);
 }
 
-const boost::optional<local_date_time>&
+const std::optional<local_date_time>&
 generic_record::get_timestamp(const std::string& field_name) const
 {
-    return get<boost::optional<local_date_time>>(field_name,
+    return get<std::optional<local_date_time>>(field_name,
                                                  field_kind::TIMESTAMP);
 }
 
-boost::optional<local_date_time>&
+std::optional<local_date_time>&
 generic_record::get_timestamp(const std::string& field_name)
 {
-    return get<boost::optional<local_date_time>>(field_name,
+    return get<std::optional<local_date_time>>(field_name,
                                                  field_kind::TIMESTAMP);
 }
 
-const boost::optional<offset_date_time>&
+const std::optional<offset_date_time>&
 generic_record::get_timestamp_with_timezone(const std::string& field_name) const
 {
-    return get<boost::optional<offset_date_time>>(
+    return get<std::optional<offset_date_time>>(
       field_name, field_kind::TIMESTAMP_WITH_TIMEZONE);
 }
 
-boost::optional<offset_date_time>&
+std::optional<offset_date_time>&
 generic_record::get_timestamp_with_timezone(const std::string& field_name)
 {
-    return get<boost::optional<offset_date_time>>(
+    return get<std::optional<offset_date_time>>(
       field_name, field_kind::TIMESTAMP_WITH_TIMEZONE);
 }
 
-const boost::optional<std::vector<bool>>&
+const std::optional<std::vector<bool>>&
 generic_record::get_array_of_boolean(const std::string& field_name) const
 {
     return get_array_of_primitive<bool>(field_name,
@@ -1080,7 +1080,7 @@ generic_record::get_array_of_boolean(const std::string& field_name) const
                                         "boolean");
 }
 
-boost::optional<std::vector<bool>>&
+std::optional<std::vector<bool>>&
 generic_record::get_array_of_boolean(const std::string& field_name)
 {
     return get_array_of_primitive<bool>(field_name,
@@ -1089,7 +1089,7 @@ generic_record::get_array_of_boolean(const std::string& field_name)
                                         "boolean");
 }
 
-const boost::optional<std::vector<int8_t>>&
+const std::optional<std::vector<int8_t>>&
 generic_record::get_array_of_int8(const std::string& field_name) const
 {
     return get_array_of_primitive<int8_t>(field_name,
@@ -1098,7 +1098,7 @@ generic_record::get_array_of_int8(const std::string& field_name) const
                                           "int8");
 }
 
-boost::optional<std::vector<int8_t>>&
+std::optional<std::vector<int8_t>>&
 generic_record::get_array_of_int8(const std::string& field_name)
 {
     return get_array_of_primitive<int8_t>(field_name,
@@ -1107,7 +1107,7 @@ generic_record::get_array_of_int8(const std::string& field_name)
                                           "int8");
 }
 
-const boost::optional<std::vector<int16_t>>&
+const std::optional<std::vector<int16_t>>&
 generic_record::get_array_of_int16(const std::string& field_name) const
 {
     return get_array_of_primitive<int16_t>(field_name,
@@ -1116,7 +1116,7 @@ generic_record::get_array_of_int16(const std::string& field_name) const
                                            "int16");
 }
 
-boost::optional<std::vector<int16_t>>&
+std::optional<std::vector<int16_t>>&
 generic_record::get_array_of_int16(const std::string& field_name)
 {
     return get_array_of_primitive<int16_t>(field_name,
@@ -1125,7 +1125,7 @@ generic_record::get_array_of_int16(const std::string& field_name)
                                            "int16");
 }
 
-const boost::optional<std::vector<int32_t>>&
+const std::optional<std::vector<int32_t>>&
 generic_record::get_array_of_int32(const std::string& field_name) const
 {
     return get_array_of_primitive<int32_t>(field_name,
@@ -1134,7 +1134,7 @@ generic_record::get_array_of_int32(const std::string& field_name) const
                                            "int32");
 }
 
-boost::optional<std::vector<int32_t>>&
+std::optional<std::vector<int32_t>>&
 generic_record::get_array_of_int32(const std::string& field_name)
 {
     return get_array_of_primitive<int32_t>(field_name,
@@ -1143,7 +1143,7 @@ generic_record::get_array_of_int32(const std::string& field_name)
                                            "int32");
 }
 
-const boost::optional<std::vector<int64_t>>&
+const std::optional<std::vector<int64_t>>&
 generic_record::get_array_of_int64(const std::string& field_name) const
 {
     return get_array_of_primitive<int64_t>(field_name,
@@ -1152,7 +1152,7 @@ generic_record::get_array_of_int64(const std::string& field_name) const
                                            "int64");
 }
 
-boost::optional<std::vector<int64_t>>&
+std::optional<std::vector<int64_t>>&
 generic_record::get_array_of_int64(const std::string& field_name)
 {
     return get_array_of_primitive<int64_t>(field_name,
@@ -1161,7 +1161,7 @@ generic_record::get_array_of_int64(const std::string& field_name)
                                            "int64");
 }
 
-const boost::optional<std::vector<float>>&
+const std::optional<std::vector<float>>&
 generic_record::get_array_of_float32(const std::string& field_name) const
 {
     return get_array_of_primitive<float>(field_name,
@@ -1170,7 +1170,7 @@ generic_record::get_array_of_float32(const std::string& field_name) const
                                          "float32");
 }
 
-boost::optional<std::vector<float>>&
+std::optional<std::vector<float>>&
 generic_record::get_array_of_float32(const std::string& field_name)
 {
     return get_array_of_primitive<float>(field_name,
@@ -1179,7 +1179,7 @@ generic_record::get_array_of_float32(const std::string& field_name)
                                          "float32");
 }
 
-const boost::optional<std::vector<double>>&
+const std::optional<std::vector<double>>&
 generic_record::get_array_of_float64(const std::string& field_name) const
 {
     return get_array_of_primitive<double>(field_name,
@@ -1188,7 +1188,7 @@ generic_record::get_array_of_float64(const std::string& field_name) const
                                           "float64");
 }
 
-boost::optional<std::vector<double>>&
+std::optional<std::vector<double>>&
 generic_record::get_array_of_float64(const std::string& field_name)
 {
     return get_array_of_primitive<double>(field_name,
@@ -1197,7 +1197,7 @@ generic_record::get_array_of_float64(const std::string& field_name)
                                           "float64");
 }
 
-const boost::optional<std::vector<boost::optional<bool>>>&
+const std::optional<std::vector<std::optional<bool>>>&
 generic_record::get_array_of_nullable_boolean(
   const std::string& field_name) const
 {
@@ -1207,7 +1207,7 @@ generic_record::get_array_of_nullable_boolean(
                                        "boolean");
 }
 
-boost::optional<std::vector<boost::optional<bool>>>&
+std::optional<std::vector<std::optional<bool>>>&
 generic_record::get_array_of_nullable_boolean(const std::string& field_name)
 {
     return get_array_of_nullable<bool>(field_name,
@@ -1216,7 +1216,7 @@ generic_record::get_array_of_nullable_boolean(const std::string& field_name)
                                        "boolean");
 }
 
-const boost::optional<std::vector<boost::optional<int8_t>>>&
+const std::optional<std::vector<std::optional<int8_t>>>&
 generic_record::get_array_of_nullable_int8(const std::string& field_name) const
 {
     return get_array_of_nullable<int8_t>(field_name,
@@ -1225,7 +1225,7 @@ generic_record::get_array_of_nullable_int8(const std::string& field_name) const
                                          "int8");
 }
 
-boost::optional<std::vector<boost::optional<int8_t>>>&
+std::optional<std::vector<std::optional<int8_t>>>&
 generic_record::get_array_of_nullable_int8(const std::string& field_name)
 {
     return get_array_of_nullable<int8_t>(field_name,
@@ -1234,7 +1234,7 @@ generic_record::get_array_of_nullable_int8(const std::string& field_name)
                                          "int8");
 }
 
-const boost::optional<std::vector<boost::optional<int16_t>>>&
+const std::optional<std::vector<std::optional<int16_t>>>&
 generic_record::get_array_of_nullable_int16(const std::string& field_name) const
 {
     return get_array_of_nullable<int16_t>(field_name,
@@ -1243,7 +1243,7 @@ generic_record::get_array_of_nullable_int16(const std::string& field_name) const
                                           "int16");
 }
 
-boost::optional<std::vector<boost::optional<int16_t>>>&
+std::optional<std::vector<std::optional<int16_t>>>&
 generic_record::get_array_of_nullable_int16(const std::string& field_name)
 {
     return get_array_of_nullable<int16_t>(field_name,
@@ -1252,7 +1252,7 @@ generic_record::get_array_of_nullable_int16(const std::string& field_name)
                                           "int16");
 }
 
-const boost::optional<std::vector<boost::optional<int32_t>>>&
+const std::optional<std::vector<std::optional<int32_t>>>&
 generic_record::get_array_of_nullable_int32(const std::string& field_name) const
 {
     return get_array_of_nullable<int32_t>(field_name,
@@ -1261,7 +1261,7 @@ generic_record::get_array_of_nullable_int32(const std::string& field_name) const
                                           "int32");
 }
 
-boost::optional<std::vector<boost::optional<int32_t>>>&
+std::optional<std::vector<std::optional<int32_t>>>&
 generic_record::get_array_of_nullable_int32(const std::string& field_name)
 {
     return get_array_of_nullable<int32_t>(field_name,
@@ -1270,7 +1270,7 @@ generic_record::get_array_of_nullable_int32(const std::string& field_name)
                                           "int32");
 }
 
-const boost::optional<std::vector<boost::optional<int64_t>>>&
+const std::optional<std::vector<std::optional<int64_t>>>&
 generic_record::get_array_of_nullable_int64(const std::string& field_name) const
 {
     return get_array_of_nullable<int64_t>(field_name,
@@ -1279,7 +1279,7 @@ generic_record::get_array_of_nullable_int64(const std::string& field_name) const
                                           "int64");
 }
 
-boost::optional<std::vector<boost::optional<int64_t>>>&
+std::optional<std::vector<std::optional<int64_t>>>&
 generic_record::get_array_of_nullable_int64(const std::string& field_name)
 {
     return get_array_of_nullable<int64_t>(field_name,
@@ -1288,7 +1288,7 @@ generic_record::get_array_of_nullable_int64(const std::string& field_name)
                                           "int64");
 }
 
-const boost::optional<std::vector<boost::optional<float>>>&
+const std::optional<std::vector<std::optional<float>>>&
 generic_record::get_array_of_nullable_float32(
   const std::string& field_name) const
 {
@@ -1298,7 +1298,7 @@ generic_record::get_array_of_nullable_float32(
                                         "float32");
 }
 
-boost::optional<std::vector<boost::optional<float>>>&
+std::optional<std::vector<std::optional<float>>>&
 generic_record::get_array_of_nullable_float32(const std::string& field_name)
 {
     return get_array_of_nullable<float>(field_name,
@@ -1307,7 +1307,7 @@ generic_record::get_array_of_nullable_float32(const std::string& field_name)
                                         "float32");
 }
 
-const boost::optional<std::vector<boost::optional<double>>>&
+const std::optional<std::vector<std::optional<double>>>&
 generic_record::get_array_of_nullable_float64(
   const std::string& field_name) const
 {
@@ -1317,7 +1317,7 @@ generic_record::get_array_of_nullable_float64(
                                          "float64");
 }
 
-boost::optional<std::vector<boost::optional<double>>>&
+std::optional<std::vector<std::optional<double>>>&
 generic_record::get_array_of_nullable_float64(const std::string& field_name)
 {
     return get_array_of_nullable<double>(field_name,
@@ -1326,103 +1326,103 @@ generic_record::get_array_of_nullable_float64(const std::string& field_name)
                                          "float64");
 }
 
-const boost::optional<std::vector<boost::optional<std::string>>>&
+const std::optional<std::vector<std::optional<std::string>>>&
 generic_record::get_array_of_string(const std::string& field_name) const
 {
-    return get<boost::optional<std::vector<boost::optional<std::string>>>>(
+    return get<std::optional<std::vector<std::optional<std::string>>>>(
       field_name, field_kind::ARRAY_OF_STRING);
 }
 
-boost::optional<std::vector<boost::optional<std::string>>>&
+std::optional<std::vector<std::optional<std::string>>>&
 generic_record::get_array_of_string(const std::string& field_name)
 {
-    return get<boost::optional<std::vector<boost::optional<std::string>>>>(
+    return get<std::optional<std::vector<std::optional<std::string>>>>(
       field_name, field_kind::ARRAY_OF_STRING);
 }
 
-const boost::optional<std::vector<boost::optional<big_decimal>>>&
+const std::optional<std::vector<std::optional<big_decimal>>>&
 generic_record::get_array_of_decimal(const std::string& field_name) const
 {
-    return get<boost::optional<std::vector<boost::optional<big_decimal>>>>(
+    return get<std::optional<std::vector<std::optional<big_decimal>>>>(
       field_name, field_kind::ARRAY_OF_DECIMAL);
 }
 
-boost::optional<std::vector<boost::optional<big_decimal>>>&
+std::optional<std::vector<std::optional<big_decimal>>>&
 generic_record::get_array_of_decimal(const std::string& field_name)
 {
-    return get<boost::optional<std::vector<boost::optional<big_decimal>>>>(
+    return get<std::optional<std::vector<std::optional<big_decimal>>>>(
       field_name, field_kind::ARRAY_OF_DECIMAL);
 }
 
-const boost::optional<std::vector<boost::optional<local_time>>>&
+const std::optional<std::vector<std::optional<local_time>>>&
 generic_record::get_array_of_time(const std::string& field_name) const
 {
-    return get<boost::optional<std::vector<boost::optional<local_time>>>>(
+    return get<std::optional<std::vector<std::optional<local_time>>>>(
       field_name, field_kind::ARRAY_OF_TIME);
 }
 
-boost::optional<std::vector<boost::optional<local_time>>>&
+std::optional<std::vector<std::optional<local_time>>>&
 generic_record::get_array_of_time(const std::string& field_name)
 {
-    return get<boost::optional<std::vector<boost::optional<local_time>>>>(
+    return get<std::optional<std::vector<std::optional<local_time>>>>(
       field_name, field_kind::ARRAY_OF_TIME);
 }
 
-const boost::optional<std::vector<boost::optional<local_date>>>&
+const std::optional<std::vector<std::optional<local_date>>>&
 generic_record::get_array_of_date(const std::string& field_name) const
 {
-    return get<boost::optional<std::vector<boost::optional<local_date>>>>(
+    return get<std::optional<std::vector<std::optional<local_date>>>>(
       field_name, field_kind::ARRAY_OF_DATE);
 }
 
-boost::optional<std::vector<boost::optional<local_date>>>&
+std::optional<std::vector<std::optional<local_date>>>&
 generic_record::get_array_of_date(const std::string& field_name)
 {
-    return get<boost::optional<std::vector<boost::optional<local_date>>>>(
+    return get<std::optional<std::vector<std::optional<local_date>>>>(
       field_name, field_kind::ARRAY_OF_DATE);
 }
 
-const boost::optional<std::vector<boost::optional<local_date_time>>>&
+const std::optional<std::vector<std::optional<local_date_time>>>&
 generic_record::get_array_of_timestamp(const std::string& field_name) const
 {
-    return get<boost::optional<std::vector<boost::optional<local_date_time>>>>(
+    return get<std::optional<std::vector<std::optional<local_date_time>>>>(
       field_name, field_kind::ARRAY_OF_TIMESTAMP);
 }
 
-boost::optional<std::vector<boost::optional<local_date_time>>>&
+std::optional<std::vector<std::optional<local_date_time>>>&
 generic_record::get_array_of_timestamp(const std::string& field_name)
 {
-    return get<boost::optional<std::vector<boost::optional<local_date_time>>>>(
+    return get<std::optional<std::vector<std::optional<local_date_time>>>>(
       field_name, field_kind::ARRAY_OF_TIMESTAMP);
 }
 
-const boost::optional<std::vector<boost::optional<offset_date_time>>>&
+const std::optional<std::vector<std::optional<offset_date_time>>>&
 generic_record::get_array_of_timestamp_with_timezone(
   const std::string& field_name) const
 {
-    return get<boost::optional<std::vector<boost::optional<offset_date_time>>>>(
+    return get<std::optional<std::vector<std::optional<offset_date_time>>>>(
       field_name, field_kind::ARRAY_OF_TIMESTAMP_WITH_TIMEZONE);
 }
 
-boost::optional<std::vector<boost::optional<offset_date_time>>>&
+std::optional<std::vector<std::optional<offset_date_time>>>&
 generic_record::get_array_of_timestamp_with_timezone(
   const std::string& field_name)
 {
-    return get<boost::optional<std::vector<boost::optional<offset_date_time>>>>(
+    return get<std::optional<std::vector<std::optional<offset_date_time>>>>(
       field_name, field_kind::ARRAY_OF_TIMESTAMP_WITH_TIMEZONE);
 }
 
-const boost::optional<std::vector<boost::optional<generic_record>>>&
+const std::optional<std::vector<std::optional<generic_record>>>&
 generic_record::get_array_of_generic_record(const std::string& field_name) const
 {
-    return get<boost::optional<std::vector<boost::optional<generic_record>>>>(
+    return get<std::optional<std::vector<std::optional<generic_record>>>>(
       field_name, field_kind::ARRAY_OF_COMPACT);
 }
 
-boost::optional<std::vector<boost::optional<generic_record>>>&
+std::optional<std::vector<std::optional<generic_record>>>&
 generic_record::get_array_of_generic_record(const std::string& field_name)
 {
-    return get<boost::optional<std::vector<boost::optional<generic_record>>>>(
+    return get<std::optional<std::vector<std::optional<generic_record>>>>(
       field_name, field_kind::ARRAY_OF_COMPACT);
 }
 
@@ -1467,15 +1467,15 @@ operator==(const generic_record& x, const generic_record& y)
               return boost::any_cast<bool>(x) == boost::any_cast<bool>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[2] ARRAY_OF_BOOLEAN
-              return boost::any_cast<boost::optional<std::vector<bool>>>(x) ==
-                     boost::any_cast<boost::optional<std::vector<bool>>>(y);
+              return boost::any_cast<std::optional<std::vector<bool>>>(x) ==
+                     boost::any_cast<std::optional<std::vector<bool>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[3] INT8
               return boost::any_cast<int8_t>(x) == boost::any_cast<int8_t>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[4] ARRAY_OF_INT8
-              return boost::any_cast<boost::optional<std::vector<int8_t>>>(x) ==
-                     boost::any_cast<boost::optional<std::vector<int8_t>>>(y);
+              return boost::any_cast<std::optional<std::vector<int8_t>>>(x) ==
+                     boost::any_cast<std::optional<std::vector<int8_t>>>(y);
           },
           [](const boost::any&, const boost::any&) { return false; }, // [5]
           [](const boost::any&, const boost::any&) { return false; }, // [6]
@@ -1483,202 +1483,202 @@ operator==(const generic_record& x, const generic_record& y)
               return boost::any_cast<int16_t>(x) == boost::any_cast<int16_t>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[8] ARRAY_OF_INT16
-              return boost::any_cast<boost::optional<std::vector<int16_t>>>(
+              return boost::any_cast<std::optional<std::vector<int16_t>>>(
                        x) ==
-                     boost::any_cast<boost::optional<std::vector<int16_t>>>(y);
+                     boost::any_cast<std::optional<std::vector<int16_t>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[9] INT32
               return boost::any_cast<int32_t>(x) == boost::any_cast<int32_t>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[10] ARRAY_OF_INT32
-              return boost::any_cast<boost::optional<std::vector<int32_t>>>(
+              return boost::any_cast<std::optional<std::vector<int32_t>>>(
                        x) ==
-                     boost::any_cast<boost::optional<std::vector<int32_t>>>(y);
+                     boost::any_cast<std::optional<std::vector<int32_t>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[11] INT64
               return boost::any_cast<int64_t>(x) == boost::any_cast<int64_t>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[12] ARRAY_OF_INT64
-              return boost::any_cast<boost::optional<std::vector<int64_t>>>(
+              return boost::any_cast<std::optional<std::vector<int64_t>>>(
                        x) ==
-                     boost::any_cast<boost::optional<std::vector<int64_t>>>(y);
+                     boost::any_cast<std::optional<std::vector<int64_t>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[13] FLOAT32
               return boost::any_cast<float>(x) == boost::any_cast<float>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[14] ARRAY_OF_FLOAT32
-              return boost::any_cast<boost::optional<std::vector<float>>>(x) ==
-                     boost::any_cast<boost::optional<std::vector<float>>>(y);
+              return boost::any_cast<std::optional<std::vector<float>>>(x) ==
+                     boost::any_cast<std::optional<std::vector<float>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[15] FLOAT64
               return boost::any_cast<double>(x) == boost::any_cast<double>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[16] ARRAY_OF_FLOAT64
-              return boost::any_cast<boost::optional<std::vector<double>>>(x) ==
-                     boost::any_cast<boost::optional<std::vector<double>>>(y);
+              return boost::any_cast<std::optional<std::vector<double>>>(x) ==
+                     boost::any_cast<std::optional<std::vector<double>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[17] STRING
-              return boost::any_cast<boost::optional<std::string>>(x) ==
-                     boost::any_cast<boost::optional<std::string>>(y);
+              return boost::any_cast<std::optional<std::string>>(x) ==
+                     boost::any_cast<std::optional<std::string>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[18] ARRAY_OF_STRING
-              return boost::any_cast<boost::optional<
-                       std::vector<boost::optional<std::string>>>>(x) ==
-                     boost::any_cast<boost::optional<
-                       std::vector<boost::optional<std::string>>>>(y);
+              return boost::any_cast<std::optional<
+                       std::vector<std::optional<std::string>>>>(x) ==
+                     boost::any_cast<std::optional<
+                       std::vector<std::optional<std::string>>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[19] DECIMAL
-              return boost::any_cast<boost::optional<big_decimal>>(x) ==
-                     boost::any_cast<boost::optional<big_decimal>>(y);
+              return boost::any_cast<std::optional<big_decimal>>(x) ==
+                     boost::any_cast<std::optional<big_decimal>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[20] ARRAY_OF_DECIMAL
-              return boost::any_cast<boost::optional<
-                       std::vector<boost::optional<big_decimal>>>>(x) ==
-                     boost::any_cast<boost::optional<
-                       std::vector<boost::optional<big_decimal>>>>(y);
+              return boost::any_cast<std::optional<
+                       std::vector<std::optional<big_decimal>>>>(x) ==
+                     boost::any_cast<std::optional<
+                       std::vector<std::optional<big_decimal>>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[21] TIME
-              return boost::any_cast<boost::optional<local_time>>(x) ==
-                     boost::any_cast<boost::optional<local_time>>(y);
+              return boost::any_cast<std::optional<local_time>>(x) ==
+                     boost::any_cast<std::optional<local_time>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[22] ARRAY_OF_TIME
-              return boost::any_cast<boost::optional<
-                       std::vector<boost::optional<local_time>>>>(x) ==
-                     boost::any_cast<boost::optional<
-                       std::vector<boost::optional<local_time>>>>(y);
+              return boost::any_cast<std::optional<
+                       std::vector<std::optional<local_time>>>>(x) ==
+                     boost::any_cast<std::optional<
+                       std::vector<std::optional<local_time>>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[23] DATE
-              return boost::any_cast<boost::optional<local_date>>(x) ==
-                     boost::any_cast<boost::optional<local_date>>(y);
+              return boost::any_cast<std::optional<local_date>>(x) ==
+                     boost::any_cast<std::optional<local_date>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[24] ARRAY_OF_DATE
-              return boost::any_cast<boost::optional<
-                       std::vector<boost::optional<local_date>>>>(x) ==
-                     boost::any_cast<boost::optional<
-                       std::vector<boost::optional<local_date>>>>(y);
+              return boost::any_cast<std::optional<
+                       std::vector<std::optional<local_date>>>>(x) ==
+                     boost::any_cast<std::optional<
+                       std::vector<std::optional<local_date>>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[25] TIMESTAMP
-              return boost::any_cast<boost::optional<local_date_time>>(x) ==
-                     boost::any_cast<boost::optional<local_date_time>>(y);
+              return boost::any_cast<std::optional<local_date_time>>(x) ==
+                     boost::any_cast<std::optional<local_date_time>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[26] ARRAY_OF_TIMESTAMP
-              return boost::any_cast<boost::optional<
-                       std::vector<boost::optional<local_date_time>>>>(x) ==
-                     boost::any_cast<boost::optional<
-                       std::vector<boost::optional<local_date_time>>>>(y);
+              return boost::any_cast<std::optional<
+                       std::vector<std::optional<local_date_time>>>>(x) ==
+                     boost::any_cast<std::optional<
+                       std::vector<std::optional<local_date_time>>>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[27] TIMESTAMP_WITH_TIMEZONE
-              return boost::any_cast<boost::optional<offset_date_time>>(x) ==
-                     boost::any_cast<boost::optional<offset_date_time>>(y);
+              return boost::any_cast<std::optional<offset_date_time>>(x) ==
+                     boost::any_cast<std::optional<offset_date_time>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[28] ARRAY_OF_TIMESTAMP_WITH_TIMEZON
-              return boost::any_cast<boost::optional<
-                       std::vector<boost::optional<offset_date_time>>>>(x) ==
-                     boost::any_cast<boost::optional<
-                       std::vector<boost::optional<offset_date_time>>>>(y);
+              return boost::any_cast<std::optional<
+                       std::vector<std::optional<offset_date_time>>>>(x) ==
+                     boost::any_cast<std::optional<
+                       std::vector<std::optional<offset_date_time>>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[29] COMPACT
-              return boost::any_cast<boost::optional<generic_record>>(x) ==
-                     boost::any_cast<boost::optional<generic_record>>(y);
+              return boost::any_cast<std::optional<generic_record>>(x) ==
+                     boost::any_cast<std::optional<generic_record>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[30] ARRAY_OF_COMPACT
-              return boost::any_cast<boost::optional<
-                       std::vector<boost::optional<generic_record>>>>(x) ==
-                     boost::any_cast<boost::optional<
-                       std::vector<boost::optional<generic_record>>>>(y);
+              return boost::any_cast<std::optional<
+                       std::vector<std::optional<generic_record>>>>(x) ==
+                     boost::any_cast<std::optional<
+                       std::vector<std::optional<generic_record>>>>(y);
           },
           [](const boost::any& /*x*/, const boost::any& /*y*/) { return false; }, //[31]
           [](const boost::any& /*x*/, const boost::any& /*y*/) { return false; }, //[32]
           [](const boost::any& x, const boost::any& y) { //[33] NULLABLE_BOOLEAN
-              return boost::any_cast<boost::optional<bool>>(x) ==
-                     boost::any_cast<boost::optional<bool>>(y);
+              return boost::any_cast<std::optional<bool>>(x) ==
+                     boost::any_cast<std::optional<bool>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[34] ARRAY_OF_NULLABLE_BOOLEAN
               return boost::any_cast<
-                       boost::optional<std::vector<boost::optional<bool>>>>(
+                       std::optional<std::vector<std::optional<bool>>>>(
                        x) ==
                      boost::any_cast<
-                       boost::optional<std::vector<boost::optional<bool>>>>(y);
+                       std::optional<std::vector<std::optional<bool>>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[35] NULLABLE_INT8
-              return boost::any_cast<boost::optional<int8_t>>(x) ==
-                     boost::any_cast<boost::optional<int8_t>>(y);
+              return boost::any_cast<std::optional<int8_t>>(x) ==
+                     boost::any_cast<std::optional<int8_t>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[36] ARRAY_OF_NULLABLE_INT8
               return boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int8_t>>>>(
+                       std::optional<std::vector<std::optional<int8_t>>>>(
                        x) ==
                      boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int8_t>>>>(
+                       std::optional<std::vector<std::optional<int8_t>>>>(
                        y);
           },
           [](const boost::any& x, const boost::any& y) { //[37] NULLABLE_INT16
-              return boost::any_cast<boost::optional<int16_t>>(x) ==
-                     boost::any_cast<boost::optional<int16_t>>(y);
+              return boost::any_cast<std::optional<int16_t>>(x) ==
+                     boost::any_cast<std::optional<int16_t>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[38] ARRAY_OF_NULLABLE_INT16
               return boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int16_t>>>>(
+                       std::optional<std::vector<std::optional<int16_t>>>>(
                        x) ==
                      boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int16_t>>>>(
+                       std::optional<std::vector<std::optional<int16_t>>>>(
                        y);
           },
           [](const boost::any& x, const boost::any& y) { //[39] NULLABLE_INT32
-              return boost::any_cast<boost::optional<int32_t>>(x) ==
-                     boost::any_cast<boost::optional<int32_t>>(y);
+              return boost::any_cast<std::optional<int32_t>>(x) ==
+                     boost::any_cast<std::optional<int32_t>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[40] ARRAY_OF_NULLABLE_INT32
               return boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int32_t>>>>(
+                       std::optional<std::vector<std::optional<int32_t>>>>(
                        x) ==
                      boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int32_t>>>>(
+                       std::optional<std::vector<std::optional<int32_t>>>>(
                        y);
           },
           [](const boost::any& x, const boost::any& y) { //[41] NULLABLE_INT64
-              return boost::any_cast<boost::optional<int64_t>>(x) ==
-                     boost::any_cast<boost::optional<int64_t>>(y);
+              return boost::any_cast<std::optional<int64_t>>(x) ==
+                     boost::any_cast<std::optional<int64_t>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[42] ARRAY_OF_NULLABLE_INT64
               return boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int64_t>>>>(
+                       std::optional<std::vector<std::optional<int64_t>>>>(
                        x) ==
                      boost::any_cast<
-                       boost::optional<std::vector<boost::optional<int64_t>>>>(
+                       std::optional<std::vector<std::optional<int64_t>>>>(
                        y);
           },
           [](const boost::any& x, const boost::any& y) { //[43] NULLABLE_FLOAT32
-              return boost::any_cast<boost::optional<float>>(x) ==
-                     boost::any_cast<boost::optional<float>>(y);
+              return boost::any_cast<std::optional<float>>(x) ==
+                     boost::any_cast<std::optional<float>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[44] ARRAY_OF_NULLABLE_FLOAT32
               return boost::any_cast<
-                       boost::optional<std::vector<boost::optional<float>>>>(
+                       std::optional<std::vector<std::optional<float>>>>(
                        x) ==
                      boost::any_cast<
-                       boost::optional<std::vector<boost::optional<float>>>>(y);
+                       std::optional<std::vector<std::optional<float>>>>(y);
           },
           [](const boost::any& x, const boost::any& y) { //[45] NULLABLE_FLOAT64
-              return boost::any_cast<boost::optional<double>>(x) ==
-                     boost::any_cast<boost::optional<double>>(y);
+              return boost::any_cast<std::optional<double>>(x) ==
+                     boost::any_cast<std::optional<double>>(y);
           },
           [](const boost::any& x,
              const boost::any& y) { //[46] ARRAY_OF_NULLABLE_FLOAT64
               return boost::any_cast<
-                       boost::optional<std::vector<boost::optional<double>>>>(
+                       std::optional<std::vector<std::optional<double>>>>(
                        x) ==
                      boost::any_cast<
-                       boost::optional<std::vector<boost::optional<double>>>>(
+                       std::optional<std::vector<std::optional<double>>>>(
                        y);
           }
       };
@@ -1694,7 +1694,7 @@ operator==(const generic_record& x, const generic_record& y)
         const boost::any& value_of_x = xp.second;
         const boost::any& value_of_y = y.objects_.at(field_name);
 
-        boost::optional<pimpl::field_descriptor> kind_opt =
+        std::optional<pimpl::field_descriptor> kind_opt =
           xs.get_field(field_name);
 
         if (!COMPARATORS[std::size_t(kind_opt->kind)](value_of_x, value_of_y))
@@ -1940,7 +1940,7 @@ compact_writer::write_float64(const std::string& field_name, double value)
 
 void
 compact_writer::write_string(const std::string& field_name,
-                             const boost::optional<std::string>& value)
+                             const std::optional<std::string>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_string(field_name, value);
@@ -1951,7 +1951,7 @@ compact_writer::write_string(const std::string& field_name,
 
 void
 compact_writer::write_decimal(const std::string& field_name,
-                              const boost::optional<big_decimal>& value)
+                              const std::optional<big_decimal>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_decimal(field_name, value);
@@ -1963,7 +1963,7 @@ compact_writer::write_decimal(const std::string& field_name,
 void
 compact_writer::write_time(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::local_time>& value)
+  const std::optional<hazelcast::client::local_time>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_time(field_name, value);
@@ -1975,7 +1975,7 @@ compact_writer::write_time(
 void
 compact_writer::write_date(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::local_date>& value)
+  const std::optional<hazelcast::client::local_date>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_date(field_name, value);
@@ -1987,7 +1987,7 @@ compact_writer::write_date(
 void
 compact_writer::write_timestamp(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::local_date_time>& value)
+  const std::optional<hazelcast::client::local_date_time>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_timestamp(field_name, value);
@@ -1999,7 +1999,7 @@ compact_writer::write_timestamp(
 void
 compact_writer::write_timestamp_with_timezone(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::offset_date_time>& value)
+  const std::optional<hazelcast::client::offset_date_time>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_timestamp_with_timezone(field_name,
@@ -2013,7 +2013,7 @@ compact_writer::write_timestamp_with_timezone(
 void
 compact_writer::write_array_of_boolean(
   const std::string& field_name,
-  const boost::optional<std::vector<bool>>& value)
+  const std::optional<std::vector<bool>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_boolean(field_name, value);
@@ -2025,7 +2025,7 @@ compact_writer::write_array_of_boolean(
 void
 compact_writer::write_array_of_int8(
   const std::string& field_name,
-  const boost::optional<std::vector<int8_t>>& value)
+  const std::optional<std::vector<int8_t>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_int8(field_name, value);
@@ -2037,7 +2037,7 @@ compact_writer::write_array_of_int8(
 void
 compact_writer::write_array_of_int16(
   const std::string& field_name,
-  const boost::optional<std::vector<int16_t>>& value)
+  const std::optional<std::vector<int16_t>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_int16(field_name, value);
@@ -2049,7 +2049,7 @@ compact_writer::write_array_of_int16(
 void
 compact_writer::write_array_of_int32(
   const std::string& field_name,
-  const boost::optional<std::vector<int32_t>>& value)
+  const std::optional<std::vector<int32_t>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_int32(field_name, value);
@@ -2061,7 +2061,7 @@ compact_writer::write_array_of_int32(
 void
 compact_writer::write_array_of_int64(
   const std::string& field_name,
-  const boost::optional<std::vector<int64_t>>& value)
+  const std::optional<std::vector<int64_t>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_int64(field_name, value);
@@ -2073,7 +2073,7 @@ compact_writer::write_array_of_int64(
 void
 compact_writer::write_array_of_float32(
   const std::string& field_name,
-  const boost::optional<std::vector<float>>& value)
+  const std::optional<std::vector<float>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_float32(field_name, value);
@@ -2085,7 +2085,7 @@ compact_writer::write_array_of_float32(
 void
 compact_writer::write_array_of_float64(
   const std::string& field_name,
-  const boost::optional<std::vector<double>>& value)
+  const std::optional<std::vector<double>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_float64(field_name, value);
@@ -2097,7 +2097,7 @@ compact_writer::write_array_of_float64(
 void
 compact_writer::write_array_of_string(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<std::string>>>& value)
+  const std::optional<std::vector<std::optional<std::string>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_string(field_name, value);
@@ -2109,7 +2109,7 @@ compact_writer::write_array_of_string(
 void
 compact_writer::write_array_of_decimal(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<big_decimal>>>& value)
+  const std::optional<std::vector<std::optional<big_decimal>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_decimal(field_name, value);
@@ -2121,7 +2121,7 @@ compact_writer::write_array_of_decimal(
 void
 compact_writer::write_array_of_time(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<local_time>>>& value)
+  const std::optional<std::vector<std::optional<local_time>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_time(field_name, value);
@@ -2133,7 +2133,7 @@ compact_writer::write_array_of_time(
 void
 compact_writer::write_array_of_date(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<local_date>>>& value)
+  const std::optional<std::vector<std::optional<local_date>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_date(field_name, value);
@@ -2145,7 +2145,7 @@ compact_writer::write_array_of_date(
 void
 compact_writer::write_array_of_timestamp(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<local_date_time>>>& value)
+  const std::optional<std::vector<std::optional<local_date_time>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_timestamp(field_name, value);
@@ -2157,7 +2157,7 @@ compact_writer::write_array_of_timestamp(
 void
 compact_writer::write_array_of_timestamp_with_timezone(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<offset_date_time>>>& value)
+  const std::optional<std::vector<std::optional<offset_date_time>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_timestamp_with_timezone(
@@ -2170,7 +2170,7 @@ compact_writer::write_array_of_timestamp_with_timezone(
 
 void
 compact_writer::write_nullable_boolean(const std::string& field_name,
-                                       const boost::optional<bool>& value)
+                                       const std::optional<bool>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_nullable_boolean(field_name, value);
@@ -2181,7 +2181,7 @@ compact_writer::write_nullable_boolean(const std::string& field_name,
 
 void
 compact_writer::write_nullable_int8(const std::string& field_name,
-                                    const boost::optional<int8_t>& value)
+                                    const std::optional<int8_t>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_nullable_int8(field_name, value);
@@ -2192,7 +2192,7 @@ compact_writer::write_nullable_int8(const std::string& field_name,
 
 void
 compact_writer::write_nullable_int16(const std::string& field_name,
-                                     const boost::optional<int16_t>& value)
+                                     const std::optional<int16_t>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_nullable_int16(field_name, value);
@@ -2203,7 +2203,7 @@ compact_writer::write_nullable_int16(const std::string& field_name,
 
 void
 compact_writer::write_nullable_int32(const std::string& field_name,
-                                     const boost::optional<int32_t>& value)
+                                     const std::optional<int32_t>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_nullable_int32(field_name, value);
@@ -2214,7 +2214,7 @@ compact_writer::write_nullable_int32(const std::string& field_name,
 
 void
 compact_writer::write_nullable_int64(const std::string& field_name,
-                                     const boost::optional<int64_t>& value)
+                                     const std::optional<int64_t>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_nullable_int64(field_name, value);
@@ -2225,7 +2225,7 @@ compact_writer::write_nullable_int64(const std::string& field_name,
 
 void
 compact_writer::write_nullable_float32(const std::string& field_name,
-                                       const boost::optional<float>& value)
+                                       const std::optional<float>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_nullable_float32(field_name, value);
@@ -2236,7 +2236,7 @@ compact_writer::write_nullable_float32(const std::string& field_name,
 
 void
 compact_writer::write_nullable_float64(const std::string& field_name,
-                                       const boost::optional<double>& value)
+                                       const std::optional<double>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_nullable_float64(field_name, value);
@@ -2248,7 +2248,7 @@ compact_writer::write_nullable_float64(const std::string& field_name,
 void
 compact_writer::write_array_of_nullable_boolean(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<bool>>>& value)
+  const std::optional<std::vector<std::optional<bool>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_nullable_boolean(field_name,
@@ -2262,7 +2262,7 @@ compact_writer::write_array_of_nullable_boolean(
 void
 compact_writer::write_array_of_nullable_int8(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int8_t>>>& value)
+  const std::optional<std::vector<std::optional<int8_t>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_nullable_int8(field_name, value);
@@ -2275,7 +2275,7 @@ compact_writer::write_array_of_nullable_int8(
 void
 compact_writer::write_array_of_nullable_int16(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int16_t>>>& value)
+  const std::optional<std::vector<std::optional<int16_t>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_nullable_int16(field_name,
@@ -2289,7 +2289,7 @@ compact_writer::write_array_of_nullable_int16(
 void
 compact_writer::write_array_of_nullable_int32(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int32_t>>>& value)
+  const std::optional<std::vector<std::optional<int32_t>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_nullable_int32(field_name,
@@ -2303,7 +2303,7 @@ compact_writer::write_array_of_nullable_int32(
 void
 compact_writer::write_array_of_nullable_int64(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int64_t>>>& value)
+  const std::optional<std::vector<std::optional<int64_t>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_nullable_int64(field_name,
@@ -2317,7 +2317,7 @@ compact_writer::write_array_of_nullable_int64(
 void
 compact_writer::write_array_of_nullable_float32(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<float>>>& value)
+  const std::optional<std::vector<std::optional<float>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_nullable_float32(field_name,
@@ -2331,7 +2331,7 @@ compact_writer::write_array_of_nullable_float32(
 void
 compact_writer::write_array_of_nullable_float64(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<double>>>& value)
+  const std::optional<std::vector<std::optional<double>>>& value)
 {
     if (default_compact_writer != nullptr) {
         default_compact_writer->write_array_of_nullable_float64(field_name,
@@ -2583,47 +2583,47 @@ compact_reader::read_float64(const std::string& field_name)
       field_name, field_kind::FLOAT64, field_kind::NULLABLE_FLOAT64, "float64");
 }
 
-boost::optional<std::string>
+std::optional<std::string>
 compact_reader::read_string(const std::string& field_name)
 {
     return read_variable_size<std::string>(field_name, field_kind::STRING);
 }
 
-boost::optional<big_decimal>
+std::optional<big_decimal>
 compact_reader::read_decimal(const std::string& field_name)
 {
     return read_variable_size<big_decimal>(field_name, field_kind::DECIMAL);
 }
 
-boost::optional<hazelcast::client::local_time>
+std::optional<hazelcast::client::local_time>
 compact_reader::read_time(const std::string& field_name)
 {
     return read_variable_size<hazelcast::client::local_time>(field_name,
                                                              field_kind::TIME);
 }
 
-boost::optional<hazelcast::client::local_date>
+std::optional<hazelcast::client::local_date>
 compact_reader::read_date(const std::string& field_name)
 {
     return read_variable_size<hazelcast::client::local_date>(field_name,
                                                              field_kind::DATE);
 }
 
-boost::optional<hazelcast::client::local_date_time>
+std::optional<hazelcast::client::local_date_time>
 compact_reader::read_timestamp(const std::string& field_name)
 {
     return read_variable_size<hazelcast::client::local_date_time>(
       field_name, field_kind::TIMESTAMP);
 }
 
-boost::optional<hazelcast::client::offset_date_time>
+std::optional<hazelcast::client::offset_date_time>
 compact_reader::read_timestamp_with_timezone(const std::string& field_name)
 {
     return read_variable_size<hazelcast::client::offset_date_time>(
       field_name, field_kind::TIMESTAMP_WITH_TIMEZONE);
 }
 
-boost::optional<std::vector<bool>>
+std::optional<std::vector<bool>>
 compact_reader::read_array_of_boolean(const std::string& field_name)
 {
     return read_array_of_primitive<std::vector<bool>>(
@@ -2633,7 +2633,7 @@ compact_reader::read_array_of_boolean(const std::string& field_name)
       "boolean");
 }
 
-boost::optional<std::vector<int8_t>>
+std::optional<std::vector<int8_t>>
 compact_reader::read_array_of_int8(const std::string& field_name)
 {
     return read_array_of_primitive<std::vector<int8_t>>(
@@ -2643,7 +2643,7 @@ compact_reader::read_array_of_int8(const std::string& field_name)
       "int8");
 }
 
-boost::optional<std::vector<int16_t>>
+std::optional<std::vector<int16_t>>
 compact_reader::read_array_of_int16(const std::string& field_name)
 {
     return read_array_of_primitive<std::vector<int16_t>>(
@@ -2653,7 +2653,7 @@ compact_reader::read_array_of_int16(const std::string& field_name)
       "int16");
 }
 
-boost::optional<std::vector<int32_t>>
+std::optional<std::vector<int32_t>>
 compact_reader::read_array_of_int32(const std::string& field_name)
 {
     return read_array_of_primitive<std::vector<int32_t>>(
@@ -2662,7 +2662,7 @@ compact_reader::read_array_of_int32(const std::string& field_name)
       field_kind::ARRAY_OF_NULLABLE_INT32,
       "int32");
 }
-boost::optional<std::vector<int64_t>>
+std::optional<std::vector<int64_t>>
 compact_reader::read_array_of_int64(const std::string& field_name)
 {
     return read_array_of_primitive<std::vector<int64_t>>(
@@ -2672,7 +2672,7 @@ compact_reader::read_array_of_int64(const std::string& field_name)
       "int64");
 }
 
-boost::optional<std::vector<float>>
+std::optional<std::vector<float>>
 compact_reader::read_array_of_float32(const std::string& field_name)
 {
     return read_array_of_primitive<std::vector<float>>(
@@ -2682,7 +2682,7 @@ compact_reader::read_array_of_float32(const std::string& field_name)
       "float32");
 }
 
-boost::optional<std::vector<double>>
+std::optional<std::vector<double>>
 compact_reader::read_array_of_float64(const std::string& field_name)
 {
     return read_array_of_primitive<std::vector<double>>(
@@ -2692,7 +2692,7 @@ compact_reader::read_array_of_float64(const std::string& field_name)
       "float64");
 }
 
-boost::optional<std::vector<boost::optional<std::string>>>
+std::optional<std::vector<std::optional<std::string>>>
 compact_reader::read_array_of_string(const std::string& field_name)
 {
     const auto& descriptor =
@@ -2700,7 +2700,7 @@ compact_reader::read_array_of_string(const std::string& field_name)
     return read_array_of_variable_size<std::string>(descriptor);
 }
 
-boost::optional<std::vector<boost::optional<big_decimal>>>
+std::optional<std::vector<std::optional<big_decimal>>>
 compact_reader::read_array_of_decimal(const std::string& field_name)
 {
     const auto& descriptor =
@@ -2708,7 +2708,7 @@ compact_reader::read_array_of_decimal(const std::string& field_name)
     return read_array_of_variable_size<big_decimal>(descriptor);
 }
 
-boost::optional<std::vector<boost::optional<local_time>>>
+std::optional<std::vector<std::optional<local_time>>>
 compact_reader::read_array_of_time(const std::string& field_name)
 {
     const auto& descriptor =
@@ -2716,7 +2716,7 @@ compact_reader::read_array_of_time(const std::string& field_name)
     return read_array_of_variable_size<local_time>(descriptor);
 }
 
-boost::optional<std::vector<boost::optional<local_date>>>
+std::optional<std::vector<std::optional<local_date>>>
 compact_reader::read_array_of_date(const std::string& field_name)
 {
     const auto& descriptor =
@@ -2724,7 +2724,7 @@ compact_reader::read_array_of_date(const std::string& field_name)
     return read_array_of_variable_size<local_date>(descriptor);
 }
 
-boost::optional<std::vector<boost::optional<local_date_time>>>
+std::optional<std::vector<std::optional<local_date_time>>>
 compact_reader::read_array_of_timestamp(const std::string& field_name)
 {
     const auto& descriptor =
@@ -2732,7 +2732,7 @@ compact_reader::read_array_of_timestamp(const std::string& field_name)
     return read_array_of_variable_size<local_date_time>(descriptor);
 }
 
-boost::optional<std::vector<boost::optional<offset_date_time>>>
+std::optional<std::vector<std::optional<offset_date_time>>>
 compact_reader::read_array_of_timestamp_with_timezone(
   const std::string& field_name)
 {
@@ -2741,56 +2741,56 @@ compact_reader::read_array_of_timestamp_with_timezone(
     return read_array_of_variable_size<offset_date_time>(descriptor);
 }
 
-boost::optional<bool>
+std::optional<bool>
 compact_reader::read_nullable_boolean(const std::string& field_name)
 {
     return read_nullable_primitive<bool>(
       field_name, field_kind::BOOLEAN, field_kind::NULLABLE_BOOLEAN);
 }
 
-boost::optional<int8_t>
+std::optional<int8_t>
 compact_reader::read_nullable_int8(const std::string& field_name)
 {
     return read_nullable_primitive<int8_t>(
       field_name, field_kind::INT8, field_kind::NULLABLE_INT8);
 }
 
-boost::optional<int16_t>
+std::optional<int16_t>
 compact_reader::read_nullable_int16(const std::string& field_name)
 {
     return read_nullable_primitive<int16_t>(
       field_name, field_kind::INT16, field_kind::NULLABLE_INT16);
 }
 
-boost::optional<int32_t>
+std::optional<int32_t>
 compact_reader::read_nullable_int32(const std::string& field_name)
 {
     return read_nullable_primitive<int32_t>(
       field_name, field_kind::INT32, field_kind::NULLABLE_INT32);
 }
 
-boost::optional<int64_t>
+std::optional<int64_t>
 compact_reader::read_nullable_int64(const std::string& field_name)
 {
     return read_nullable_primitive<int64_t>(
       field_name, field_kind::INT64, field_kind::NULLABLE_INT64);
 }
 
-boost::optional<float>
+std::optional<float>
 compact_reader::read_nullable_float32(const std::string& field_name)
 {
     return read_nullable_primitive<float>(
       field_name, field_kind::FLOAT32, field_kind::NULLABLE_FLOAT32);
 }
 
-boost::optional<double>
+std::optional<double>
 compact_reader::read_nullable_float64(const std::string& field_name)
 {
     return read_nullable_primitive<double>(
       field_name, field_kind::FLOAT64, field_kind::NULLABLE_FLOAT64);
 }
 
-boost::optional<std::vector<boost::optional<bool>>>
+std::optional<std::vector<std::optional<bool>>>
 compact_reader::read_array_of_nullable_boolean(const std::string& field_name)
 {
     return read_array_of_nullable<bool>(field_name,
@@ -2798,7 +2798,7 @@ compact_reader::read_array_of_nullable_boolean(const std::string& field_name)
                                         field_kind::ARRAY_OF_NULLABLE_BOOLEAN);
 }
 
-boost::optional<std::vector<boost::optional<int8_t>>>
+std::optional<std::vector<std::optional<int8_t>>>
 compact_reader::read_array_of_nullable_int8(const std::string& field_name)
 {
     return read_array_of_nullable<int8_t>(field_name,
@@ -2806,7 +2806,7 @@ compact_reader::read_array_of_nullable_int8(const std::string& field_name)
                                           field_kind::ARRAY_OF_NULLABLE_INT8);
 }
 
-boost::optional<std::vector<boost::optional<int16_t>>>
+std::optional<std::vector<std::optional<int16_t>>>
 compact_reader::read_array_of_nullable_int16(const std::string& field_name)
 {
     return read_array_of_nullable<int16_t>(field_name,
@@ -2814,7 +2814,7 @@ compact_reader::read_array_of_nullable_int16(const std::string& field_name)
                                            field_kind::ARRAY_OF_NULLABLE_INT16);
 }
 
-boost::optional<std::vector<boost::optional<int32_t>>>
+std::optional<std::vector<std::optional<int32_t>>>
 compact_reader::read_array_of_nullable_int32(const std::string& field_name)
 {
     return read_array_of_nullable<int32_t>(field_name,
@@ -2822,7 +2822,7 @@ compact_reader::read_array_of_nullable_int32(const std::string& field_name)
                                            field_kind::ARRAY_OF_NULLABLE_INT32);
 }
 
-boost::optional<std::vector<boost::optional<int64_t>>>
+std::optional<std::vector<std::optional<int64_t>>>
 compact_reader::read_array_of_nullable_int64(const std::string& field_name)
 {
     return read_array_of_nullable<int64_t>(field_name,
@@ -2830,7 +2830,7 @@ compact_reader::read_array_of_nullable_int64(const std::string& field_name)
                                            field_kind::ARRAY_OF_NULLABLE_INT64);
 }
 
-boost::optional<std::vector<boost::optional<float>>>
+std::optional<std::vector<std::optional<float>>>
 compact_reader::read_array_of_nullable_float32(const std::string& field_name)
 {
     return read_array_of_nullable<float>(field_name,
@@ -2838,7 +2838,7 @@ compact_reader::read_array_of_nullable_float32(const std::string& field_name)
                                          field_kind::ARRAY_OF_NULLABLE_FLOAT32);
 }
 
-boost::optional<std::vector<boost::optional<double>>>
+std::optional<std::vector<std::optional<double>>>
 compact_reader::read_array_of_nullable_float64(const std::string& field_name)
 {
     return read_array_of_nullable<double>(
@@ -2953,14 +2953,14 @@ default_compact_writer::write_float64(const std::string& field_name,
 
 void
 default_compact_writer::write_string(const std::string& field_name,
-                                     const boost::optional<std::string>& value)
+                                     const std::optional<std::string>& value)
 {
     write_variable_size_field(field_name, field_kind::STRING, value);
 }
 
 void
 default_compact_writer::write_decimal(const std::string& field_name,
-                                      const boost::optional<big_decimal>& value)
+                                      const std::optional<big_decimal>& value)
 {
     write_variable_size_field(field_name, field_kind::DECIMAL, value);
 }
@@ -2968,14 +2968,14 @@ default_compact_writer::write_decimal(const std::string& field_name,
 void
 default_compact_writer::write_time(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::local_time>& value)
+  const std::optional<hazelcast::client::local_time>& value)
 {
     write_variable_size_field(field_name, field_kind::TIME, value);
 }
 void
 default_compact_writer::write_date(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::local_date>& value)
+  const std::optional<hazelcast::client::local_date>& value)
 {
     write_variable_size_field(field_name, field_kind::DATE, value);
 }
@@ -2983,7 +2983,7 @@ default_compact_writer::write_date(
 void
 default_compact_writer::write_timestamp(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::local_date_time>& value)
+  const std::optional<hazelcast::client::local_date_time>& value)
 {
     write_variable_size_field(field_name, field_kind::TIMESTAMP, value);
 }
@@ -2991,7 +2991,7 @@ default_compact_writer::write_timestamp(
 void
 default_compact_writer::write_timestamp_with_timezone(
   const std::string& field_name,
-  const boost::optional<hazelcast::client::offset_date_time>& value)
+  const std::optional<hazelcast::client::offset_date_time>& value)
 {
     write_variable_size_field(
       field_name, field_kind::TIMESTAMP_WITH_TIMEZONE, value);
@@ -3000,7 +3000,7 @@ default_compact_writer::write_timestamp_with_timezone(
 void
 default_compact_writer::write_array_of_boolean(
   const std::string& field_name,
-  const boost::optional<std::vector<bool>>& value)
+  const std::optional<std::vector<bool>>& value)
 {
     write_variable_size_field(field_name, field_kind::ARRAY_OF_BOOLEAN, value);
 }
@@ -3008,7 +3008,7 @@ default_compact_writer::write_array_of_boolean(
 void
 default_compact_writer::write_array_of_int8(
   const std::string& field_name,
-  const boost::optional<std::vector<int8_t>>& value)
+  const std::optional<std::vector<int8_t>>& value)
 {
     write_variable_size_field(field_name, field_kind::ARRAY_OF_INT8, value);
 }
@@ -3016,7 +3016,7 @@ default_compact_writer::write_array_of_int8(
 void
 default_compact_writer::write_array_of_int16(
   const std::string& field_name,
-  const boost::optional<std::vector<int16_t>>& value)
+  const std::optional<std::vector<int16_t>>& value)
 {
     write_variable_size_field(field_name, field_kind::ARRAY_OF_INT16, value);
 }
@@ -3024,7 +3024,7 @@ default_compact_writer::write_array_of_int16(
 void
 default_compact_writer::write_array_of_int32(
   const std::string& field_name,
-  const boost::optional<std::vector<int32_t>>& value)
+  const std::optional<std::vector<int32_t>>& value)
 {
     write_variable_size_field(field_name, field_kind::ARRAY_OF_INT32, value);
 }
@@ -3032,7 +3032,7 @@ default_compact_writer::write_array_of_int32(
 void
 default_compact_writer::write_array_of_int64(
   const std::string& field_name,
-  const boost::optional<std::vector<int64_t>>& value)
+  const std::optional<std::vector<int64_t>>& value)
 {
     write_variable_size_field(field_name, field_kind::ARRAY_OF_INT64, value);
 }
@@ -3040,7 +3040,7 @@ default_compact_writer::write_array_of_int64(
 void
 default_compact_writer::write_array_of_float32(
   const std::string& field_name,
-  const boost::optional<std::vector<float>>& value)
+  const std::optional<std::vector<float>>& value)
 {
     write_variable_size_field(field_name, field_kind::ARRAY_OF_FLOAT32, value);
 }
@@ -3048,7 +3048,7 @@ default_compact_writer::write_array_of_float32(
 void
 default_compact_writer::write_array_of_float64(
   const std::string& field_name,
-  const boost::optional<std::vector<double>>& value)
+  const std::optional<std::vector<double>>& value)
 {
     write_variable_size_field(field_name, field_kind::ARRAY_OF_FLOAT64, value);
 }
@@ -3056,7 +3056,7 @@ default_compact_writer::write_array_of_float64(
 void
 default_compact_writer::write_array_of_string(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<std::string>>>& value)
+  const std::optional<std::vector<std::optional<std::string>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_STRING, value);
@@ -3065,7 +3065,7 @@ default_compact_writer::write_array_of_string(
 void
 default_compact_writer::write_array_of_decimal(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<big_decimal>>>& value)
+  const std::optional<std::vector<std::optional<big_decimal>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_DECIMAL, value);
@@ -3074,7 +3074,7 @@ default_compact_writer::write_array_of_decimal(
 void
 default_compact_writer::write_array_of_time(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<local_time>>>& value)
+  const std::optional<std::vector<std::optional<local_time>>>& value)
 {
     write_array_of_variable_size(field_name, field_kind::ARRAY_OF_TIME, value);
 }
@@ -3082,7 +3082,7 @@ default_compact_writer::write_array_of_time(
 void
 default_compact_writer::write_array_of_date(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<local_date>>>& value)
+  const std::optional<std::vector<std::optional<local_date>>>& value)
 {
     write_array_of_variable_size(field_name, field_kind::ARRAY_OF_DATE, value);
 }
@@ -3090,7 +3090,7 @@ default_compact_writer::write_array_of_date(
 void
 default_compact_writer::write_array_of_timestamp(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<local_date_time>>>& value)
+  const std::optional<std::vector<std::optional<local_date_time>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_TIMESTAMP, value);
@@ -3099,7 +3099,7 @@ default_compact_writer::write_array_of_timestamp(
 void
 default_compact_writer::write_array_of_timestamp_with_timezone(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<offset_date_time>>>& value)
+  const std::optional<std::vector<std::optional<offset_date_time>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_TIMESTAMP_WITH_TIMEZONE, value);
@@ -3108,49 +3108,49 @@ default_compact_writer::write_array_of_timestamp_with_timezone(
 void
 default_compact_writer::write_nullable_boolean(
   const std::string& field_name,
-  const boost::optional<bool>& value)
+  const std::optional<bool>& value)
 {
     write_variable_size_field(field_name, field_kind::NULLABLE_BOOLEAN, value);
 }
 void
 default_compact_writer::write_nullable_int8(
   const std::string& field_name,
-  const boost::optional<int8_t>& value)
+  const std::optional<int8_t>& value)
 {
     write_variable_size_field(field_name, field_kind::NULLABLE_INT8, value);
 }
 void
 default_compact_writer::write_nullable_int16(
   const std::string& field_name,
-  const boost::optional<int16_t>& value)
+  const std::optional<int16_t>& value)
 {
     write_variable_size_field(field_name, field_kind::NULLABLE_INT16, value);
 }
 void
 default_compact_writer::write_nullable_int32(
   const std::string& field_name,
-  const boost::optional<int32_t>& value)
+  const std::optional<int32_t>& value)
 {
     write_variable_size_field(field_name, field_kind::NULLABLE_INT32, value);
 }
 void
 default_compact_writer::write_nullable_int64(
   const std::string& field_name,
-  const boost::optional<int64_t>& value)
+  const std::optional<int64_t>& value)
 {
     write_variable_size_field(field_name, field_kind::NULLABLE_INT64, value);
 }
 void
 default_compact_writer::write_nullable_float32(
   const std::string& field_name,
-  const boost::optional<float>& value)
+  const std::optional<float>& value)
 {
     write_variable_size_field(field_name, field_kind::NULLABLE_FLOAT32, value);
 }
 void
 default_compact_writer::write_nullable_float64(
   const std::string& field_name,
-  const boost::optional<double>& value)
+  const std::optional<double>& value)
 {
     write_variable_size_field(field_name, field_kind::NULLABLE_FLOAT64, value);
 }
@@ -3158,7 +3158,7 @@ default_compact_writer::write_nullable_float64(
 void
 default_compact_writer::write_array_of_nullable_boolean(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<bool>>>& value)
+  const std::optional<std::vector<std::optional<bool>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_NULLABLE_BOOLEAN, value);
@@ -3167,7 +3167,7 @@ default_compact_writer::write_array_of_nullable_boolean(
 void
 default_compact_writer::write_array_of_nullable_int8(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int8_t>>>& value)
+  const std::optional<std::vector<std::optional<int8_t>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_NULLABLE_INT8, value);
@@ -3176,7 +3176,7 @@ default_compact_writer::write_array_of_nullable_int8(
 void
 default_compact_writer::write_array_of_nullable_int16(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int16_t>>>& value)
+  const std::optional<std::vector<std::optional<int16_t>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_NULLABLE_INT16, value);
@@ -3185,7 +3185,7 @@ default_compact_writer::write_array_of_nullable_int16(
 void
 default_compact_writer::write_array_of_nullable_int32(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int32_t>>>& value)
+  const std::optional<std::vector<std::optional<int32_t>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_NULLABLE_INT32, value);
@@ -3194,7 +3194,7 @@ default_compact_writer::write_array_of_nullable_int32(
 void
 default_compact_writer::write_array_of_nullable_int64(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<int64_t>>>& value)
+  const std::optional<std::vector<std::optional<int64_t>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_NULLABLE_INT64, value);
@@ -3203,7 +3203,7 @@ default_compact_writer::write_array_of_nullable_int64(
 void
 default_compact_writer::write_array_of_nullable_float32(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<float>>>& value)
+  const std::optional<std::vector<std::optional<float>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_NULLABLE_FLOAT32, value);
@@ -3212,7 +3212,7 @@ default_compact_writer::write_array_of_nullable_float32(
 void
 default_compact_writer::write_array_of_nullable_float64(
   const std::string& field_name,
-  const boost::optional<std::vector<boost::optional<double>>>& value)
+  const std::optional<std::vector<std::optional<double>>>& value)
 {
     write_array_of_variable_size(
       field_name, field_kind::ARRAY_OF_NULLABLE_FLOAT64, value);
@@ -3478,13 +3478,13 @@ schema::fields() const
     return field_definition_map_;
 }
 
-boost::optional<field_descriptor>
+std::optional<field_descriptor>
 schema::get_field(const std::string& field_name) const
 {
     auto descriptor_itr = field_definition_map_.find(field_name);
 
     if (descriptor_itr == end(field_definition_map_))
-        return boost::none;
+        return std::nullopt;
 
     return descriptor_itr->second;
 }

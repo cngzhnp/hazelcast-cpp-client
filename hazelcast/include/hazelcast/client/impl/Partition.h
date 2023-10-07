@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "hazelcast/util/export.h"
 
@@ -51,7 +51,7 @@ public:
      *
      * @return the owner member of the partition
      */
-    virtual boost::optional<member> get_owner() const = 0;
+    virtual std::optional<member> get_owner() const = 0;
 
     virtual ~Partition() = default;
 };
